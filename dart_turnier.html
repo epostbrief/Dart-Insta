@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎯 Dart Turnier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#060608; --bg2:#0e0e16; --bg3:#161622; --bg4:#1e1e2e;
+  --acc:#00ff77; --acc2:#00cc55; --red:#ff3355; --gold:#ffd700; --blue:#4488ff;
+  --txt:#dde0f0; --txt2:#6688aa; --brd:#252535; --brd2:#353550;
+  --r:8px; --r2:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:'Rajdhani',sans-serif;font-size:16px;min-height:100vh;
+  background-image:radial-gradient(ellipse at 15% 40%,rgba(0,255,119,.04) 0,transparent 55%),
+  radial-gradient(ellipse at 85% 15%,rgba(68,136,255,.03) 0,transparent 55%)}
+h1,h2,h3,.bb{font-family:'Bebas Neue',sans-serif;letter-spacing:.5px}
+.screen{display:none;max-width:1500px;margin:0 auto;padding:20px}
+.screen.active{display:block}
+
+/* ── HEADER ── */
+.hdr{display:grid;grid-template-columns:88px 1fr 88px;align-items:center;
+  padding:14px 20px 14px;border-bottom:1px solid var(--brd);margin-bottom:24px;gap:12px}
+.hdr-logo{display:flex;align-items:center;justify-content:flex-start}
+.hdr-logo svg{width:74px;height:74px;flex-shrink:0;filter:drop-shadow(0 0 8px rgba(0,255,119,.25))}
+.hdr-center{text-align:center}
+.hdr h1{font-size:2.6rem;color:var(--acc);line-height:1}
+.hdr .sub{color:var(--txt2);font-size:.75rem;letter-spacing:4px;text-transform:uppercase;margin-top:3px}
+.phases{display:flex;justify-content:center;gap:6px;margin-top:12px;flex-wrap:wrap}
+.pdot{padding:3px 12px;border-radius:20px;font-size:.72rem;letter-spacing:1px;border:1px solid var(--brd2);
+  color:var(--txt2);text-transform:uppercase;font-weight:600;transition:.2s}
+.pdot.active{border-color:var(--acc);color:var(--acc);background:rgba(0,255,119,.1)}
+.pdot.done{border-color:var(--acc2);color:var(--acc2)}
+/* tournament name input */
+.tname-wrap{margin-bottom:18px}
+.tname-lbl{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--txt2);letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:6px;display:block}
+.tname-inp{font-family:'Bebas Neue',sans-serif!important;font-size:1.45rem!important;
+  letter-spacing:1px!important;color:var(--acc)!important;text-align:center;
+  background:var(--bg3);border:1px solid var(--brd2);border-radius:var(--r);
+  padding:10px 16px!important;width:100%}
+.tname-inp:focus{border-color:var(--acc);box-shadow:0 0 0 2px rgba(0,255,119,.12)}
+.tname-inp::placeholder{color:var(--txt2);opacity:.6}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border-radius:var(--r);border:none;
+  cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.8px;
+  text-transform:uppercase;transition:all .18s}
+.bp{background:var(--acc);color:#000}.bp:hover{background:#00ff99;transform:translateY(-2px)}
+.bd{background:var(--red);color:#fff}.bd:hover{background:#ff5577}
+.bg{background:transparent;color:var(--txt2);border:1px solid var(--brd2)}.bg:hover{border-color:var(--acc);color:var(--acc)}
+.bgold{background:var(--gold);color:#000}.bgold:hover{background:#ffe033;transform:translateY(-2px)}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none!important}
+.btn-sm{padding:5px 12px;font-size:.8rem}
+
+/* ── CARDS ── */
+.card{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r2);padding:18px}
+.ct{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;color:var(--acc);margin-bottom:13px;
+  letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+
+/* ── INPUTS ── */
+input[type=text],input[type=number],select{background:var(--bg3);border:1px solid var(--brd2);
+  border-radius:var(--r);padding:9px 13px;color:var(--txt);font-family:'Rajdhani',sans-serif;
+  font-size:1rem;font-weight:500;outline:none;transition:border-color .2s;width:100%}
+input:focus,select:focus{border-color:var(--acc);box-shadow:0 0 0 2px rgba(0,255,119,.1)}
+select option{background:var(--bg3)}
+
+/* ── REGISTRATION ── */
+.reg-wrap{max-width:580px;margin:0 auto}
+.plist{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.prow{display:flex;align-items:center;gap:9px;animation:sli .28s ease}
+@keyframes sli{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.pnum{font-family:'Share Tech Mono',monospace;color:var(--txt2);width:26px;text-align:right;font-size:.82rem}
+.rm-btn{background:none;border:none;cursor:pointer;color:var(--txt2);font-size:1.1rem;padding:4px;transition:color .2s}
+.rm-btn:hover{color:var(--red)}
+.pinfo{text-align:center;padding:8px;color:var(--txt2);font-size:.9rem}
+.pinfo span{color:var(--acc);font-weight:700;font-size:1.05rem}
+
+/* ── SETUP ── */
+.cfg-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;
+  border-bottom:1px solid var(--brd);flex-wrap:wrap;gap:8px}
+.cfg-row:last-child{border-bottom:none}
+.cfg-lbl{font-weight:600}
+.cfg-btns{display:flex;gap:7px;flex-wrap:wrap}
+.sel-btn{padding:7px 14px;font-size:.82rem;min-width:80px;text-align:center}
+.sum-card{background:var(--bg3);border-radius:var(--r);padding:14px 16px;margin-top:14px}
+.sum-row{display:flex;gap:20px;flex-wrap:wrap;font-size:.92rem}
+.sum-row span{color:var(--txt2)}.sum-row strong{color:var(--acc)}
+
+/* ── DRAW SCREEN ── */
+.draw-grid{display:grid;gap:14px}
+.draw-gcard{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r2);padding:14px}
+.draw-gtitle{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--acc);text-align:center;margin-bottom:8px}
+.chip{padding:5px 11px;border-radius:18px;background:var(--bg3);margin:3px;display:inline-block;
+  font-weight:600;font-size:.88rem;animation:capp .4s ease}
+@keyframes capp{from{opacity:0;transform:scale(.5) rotate(-8deg)}to{opacity:1;transform:none}}
+
+.draw-overlay{position:fixed;inset:0;background:rgba(6,6,8,.96);z-index:1000;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.draw-ball{width:130px;height:130px;border-radius:50%;background:var(--bg3);border:2px solid var(--acc);
+  display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;
+  font-size:1.6rem;color:var(--acc);text-align:center;padding:10px;animation:bspin .35s ease}
+@keyframes bspin{0%{transform:scale(.4) rotate(-20deg);opacity:0}65%{transform:scale(1.12)}100%{transform:none;opacity:1}}
+.draw-arrow{font-size:2.5rem;color:var(--acc);animation:pls .5s ease infinite alternate}
+@keyframes pls{from{opacity:.5;transform:scale(1)}to{opacity:1;transform:scale(1.15)}}
+.draw-badge{padding:18px 48px;border-radius:var(--r2);background:var(--bg4);border:2px solid var(--acc);
+  font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--acc);animation:bdg .4s ease}
+@keyframes bdg{from{transform:scale(0);opacity:0}to{transform:none;opacity:1}}
+
+/* ── GROUP PHASE ── */
+.boards-section{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r2);padding:18px;margin-bottom:18px}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.boards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
+.bslot{background:var(--bg3);border:1px solid var(--brd2);border-radius:var(--r);padding:13px;transition:border-color .2s}
+.bslot.live{border-color:var(--acc)}
+.bnum{font-family:'Bebas Neue',sans-serif;font-size:.88rem;color:var(--txt2);margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.bnum::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--acc)}
+.bslot.live .bnum::before{animation:blink 1s ease infinite alternate}
+@keyframes blink{from{opacity:.4}to{opacity:1}}
+.gtag{font-size:.68rem;padding:2px 7px;border-radius:9px;background:var(--bg4);color:var(--txt2);margin-bottom:7px;display:inline-block}
+.bplayers{display:flex;flex-direction:column;gap:5px;margin-bottom:9px}
+.bplayer{font-weight:700;font-size:.92rem;padding:5px 9px;border-radius:6px;background:var(--bg4);text-align:center}
+.bvs{text-align:center;color:var(--txt2);font-size:.75rem;font-weight:700;letter-spacing:2px}
+.score-row{display:flex;align-items:center;gap:5px;margin-top:8px}
+.si{width:48px!important;text-align:center;font-size:1.15rem!important;font-family:'Share Tech Mono',monospace!important;padding:5px!important}
+.ssep{color:var(--txt2);font-weight:700;font-size:1.05rem}
+.bacts{display:flex;gap:5px;margin-top:7px}
+.bacts .btn{flex:1;padding:5px 8px;font-size:.77rem}
+.bempty{display:flex;align-items:center;justify-content:center;min-height:110px;color:var(--txt2);font-size:.83rem}
+.prog-wrap{background:var(--bg3);border-radius:8px;height:5px;overflow:hidden;margin-top:8px}
+.prog-bar{height:100%;background:var(--acc);border-radius:8px;transition:width .5s ease}
+
+/* ── BOTTOM LAYOUT ── */
+.bot{display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start}
+.col-tables{}
+.col-done{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r2);padding:14px;
+  max-height:620px;overflow-y:auto}
+.done-match{padding:7px 10px;border-bottom:1px solid var(--brd);font-size:.83rem;
+  display:flex;justify-content:space-between;align-items:center;gap:7px}
+.done-match:last-child{border-bottom:none}
+.dm-players{flex:1;min-width:0}
+.dm-win{font-weight:700}.dm-loss{color:var(--txt2);font-size:.78rem}
+.dm-score{font-family:'Share Tech Mono',monospace;font-weight:700;color:var(--acc);white-space:nowrap}
+.dm-grp{font-size:.68rem;color:var(--txt2)}
+
+/* ── TABLES ── */
+.gtables{columns:2;gap:14px}
+.gtables .gcard{break-inside:avoid;margin-bottom:14px;background:var(--bg2);border:1px solid var(--brd);
+  border-radius:var(--r2);padding:14px}
+.gtitle{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--acc);margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{text-align:left;padding:5px 9px;color:var(--txt2);font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.8px;border-bottom:1px solid var(--brd)}
+td{padding:7px 9px;border-bottom:1px solid var(--brd);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.rc{width:28px;font-family:'Share Tech Mono',monospace;color:var(--txt2)}
+.r1{color:var(--gold)!important}.r2{color:#c0c0c0!important}.r3{color:#cd7f32!important}
+.nc{font-weight:700}
+.mono{font-family:'Share Tech Mono',monospace;font-size:.82rem}
+.pos{color:var(--acc)}.neg{color:var(--red)}
+.rq{background:rgba(0,255,119,.08)}.rmb{background:rgba(255,215,0,.06)}.rel{opacity:.45}
+.qbdg{font-size:.62rem;padding:1px 5px;border-radius:3px;background:rgba(0,255,119,.2);
+  color:var(--acc);margin-left:5px;font-weight:700}
+.mbbdg{font-size:.62rem;padding:1px 5px;border-radius:3px;background:rgba(255,215,0,.2);
+  color:var(--gold);margin-left:5px;font-weight:700}
+.sep-line td{padding:1px 0;background:var(--acc2);height:2px;border:none}
+
+/* ── MODAL ── */
+.modal-over{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:500;
+  display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.modal-box{background:var(--bg2);border:1px solid var(--brd2);border-radius:var(--r2);
+  padding:22px;max-width:480px;width:95%;max-height:82vh;overflow-y:auto}
+.mttl{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--acc);margin-bottom:14px}
+.mopt{padding:11px 14px;border-radius:var(--r);border:1px solid var(--brd);margin-bottom:7px;
+  cursor:pointer;transition:all .18s}
+.mopt:hover{border-color:var(--acc);background:rgba(0,255,119,.05)}
+.mopt .glbl{font-size:.72rem;color:var(--txt2);margin-bottom:3px}
+.mopt .mpls{font-weight:700}
+.hidden{display:none!important}
+
+/* ── KO PHASE ── */
+.bracket-outer{overflow-x:auto;padding:20px 0}
+.bracket-flex{display:flex;align-items:center;justify-content:center;gap:0;min-width:fit-content}
+.br-half{display:flex;flex-direction:row;gap:0}
+.br-round{display:flex;flex-direction:column;justify-content:space-around;min-width:175px;padding:0 7px}
+.br-round-lbl{text-align:center;font-size:.72rem;color:var(--txt2);padding:3px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;margin-bottom:7px}
+.br-match{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);
+  margin:7px 0;overflow:hidden;transition:border-color .2s}
+.br-match.open{border-color:var(--acc)}
+.br-match.done{border-color:var(--brd2)}
+.br-player{padding:7px 11px;display:flex;justify-content:space-between;align-items:center;
+  font-size:.88rem;font-weight:600;border-bottom:1px solid var(--brd);cursor:default}
+.br-player:last-of-type{border-bottom:none}
+.br-player.win{background:rgba(0,255,119,.1);color:var(--acc)}
+.br-player.lose{color:var(--txt2);text-decoration:line-through}
+.br-player.tbd{color:var(--txt2);font-style:italic;font-size:.78rem}
+.br-legs{font-family:'Share Tech Mono',monospace;font-size:.82rem;color:var(--txt2);min-width:24px;text-align:right}
+.br-legs.wl{color:var(--acc)}
+.score-btn{width:100%;padding:4px;background:var(--bg4);border:none;border-top:1px solid var(--brd);
+  color:var(--acc);font-size:.78rem;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;
+  letter-spacing:.8px;transition:background .18s;text-transform:uppercase}
+.score-btn:hover{background:rgba(0,255,119,.1)}
+.br-center{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 18px;gap:9px}
+.final-lbl{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;color:var(--gold);letter-spacing:2px;text-align:center}
+
+/* ── CHAMPION ── */
+.champ{text-align:center;padding:44px 20px}
+.trophy{font-size:5rem;display:block;margin-bottom:18px;animation:tf 3s ease-in-out infinite}
+@keyframes tf{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+.champ-name{font-family:'Bebas Neue',sans-serif;font-size:4.8rem;color:var(--gold);
+  line-height:1;animation:cg 2s ease-in-out infinite}
+@keyframes cg{0%,100%{text-shadow:0 0 25px rgba(255,215,0,.7)}50%{text-shadow:0 0 50px rgba(255,215,0,1),0 0 80px rgba(255,215,0,.5)}}
+.champ-sub{font-size:.95rem;color:var(--txt2);letter-spacing:4px;text-transform:uppercase;margin-top:9px}
+
+/* ── CONFETTI ── */
+.cpiece{position:fixed;animation:cfall linear forwards;pointer-events:none}
+@keyframes cfall{0%{transform:translateY(-80px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+
+/* ── KO SCORE MODAL ── */
+.ks-row{display:flex;align-items:center;gap:12px;padding:9px 0}
+.ks-name{flex:1;font-weight:700}
+
+/* ── NOTIFICATION ── */
+.notif{position:fixed;bottom:18px;right:18px;padding:12px 18px;border-radius:var(--r);
+  background:var(--bg3);border:1px solid var(--acc);color:var(--acc);font-weight:700;
+  z-index:2000;animation:nsl .3s ease;max-width:300px;font-size:.9rem}
+@keyframes nsl{from{transform:translateX(110%);opacity:0}to{transform:none;opacity:1}}
+
+/* ── UTILS ── */
+.flex{display:flex}.fca{align-items:center}.fjb{justify-content:space-between}
+.g8{gap:8px}.g12{gap:12px}.g16{gap:16px}.g20{gap:20px}
+.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}.mb16{margin-bottom:16px}.mb20{margin-bottom:20px}.mt20{margin-top:20px}
+.tc{text-align:center}.sm{font-size:.84rem}.muted{color:var(--txt2)}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:3px}
+
+@media(max-width:1000px){.boards-grid{grid-template-columns:repeat(2,1fr)}.bot{grid-template-columns:1fr}.gtables{columns:1}}
+@media(max-width:600px){.boards-grid{grid-template-columns:1fr}.hdr h1{font-size:2.4rem}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-logo">
+    <!-- TSV Pilsting Dart Logo -->
+    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1a1a2e"/>
+          <stop offset="100%" stop-color="#060608"/>
+        </radialGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="1.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Outer ring -->
+      <circle cx="60" cy="60" r="58" fill="url(#bgGrad)" stroke="#00ff77" stroke-width="2"/>
+      <circle cx="60" cy="60" r="53" fill="none" stroke="#00cc55" stroke-width="0.6" stroke-dasharray="3 2"/>
+      <!-- Dartboard rings -->
+      <circle cx="60" cy="60" r="44" fill="none" stroke="#1e3a2a" stroke-width="8"/>
+      <circle cx="60" cy="60" r="44" fill="none" stroke="#00ff77" stroke-width="0.5" opacity="0.4"/>
+      <circle cx="60" cy="60" r="36" fill="#0a1a12" stroke="#00cc55" stroke-width="0.5" opacity="0.5"/>
+      <circle cx="60" cy="60" r="28" fill="none" stroke="#00ff77" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="60" cy="60" r="20" fill="#001a0a" stroke="#00ff77" stroke-width="0.8" opacity="0.6"/>
+      <circle cx="60" cy="60" r="12" fill="#003318" stroke="#00ff77" stroke-width="1"/>
+      <!-- Bullseye -->
+      <circle cx="60" cy="60" r="6" fill="#00ff77" opacity="0.9" filter="url(#glow)"/>
+      <circle cx="60" cy="60" r="3" fill="#fff" opacity="0.95"/>
+      <!-- Segment lines on board -->
+      <line x1="60" y1="16" x2="60" y2="104" stroke="#00ff77" stroke-width="0.4" opacity="0.2"/>
+      <line x1="16" y1="60" x2="104" y2="60" stroke="#00ff77" stroke-width="0.4" opacity="0.2"/>
+      <line x1="27" y1="27" x2="93" y2="93" stroke="#00ff77" stroke-width="0.4" opacity="0.2"/>
+      <line x1="93" y1="27" x2="27" y2="93" stroke="#00ff77" stroke-width="0.4" opacity="0.2"/>
+      <!-- Dart (angled, thrown into board) -->
+      <g transform="translate(60,60) rotate(-38)">
+        <!-- dart shaft -->
+        <rect x="8" y="-1" width="30" height="2" rx="1" fill="#888" opacity="0.9"/>
+        <!-- dart barrel -->
+        <rect x="2" y="-2.2" width="8" height="4.4" rx="1.5" fill="#bbb"/>
+        <!-- dart tip -->
+        <polygon points="2,-1.2 2,1.2 -8,0" fill="#ddd"/>
+        <!-- flights -->
+        <polygon points="38,0 48,-7 45,0" fill="#00ff77" opacity="0.85"/>
+        <polygon points="38,0 48,7 45,0" fill="#00cc55" opacity="0.85"/>
+        <line x1="38" y1="0" x2="48" y2="0" stroke="#00ff77" stroke-width="0.8" opacity="0.5"/>
+      </g>
+      <!-- "TSV" top arc text -->
+      <path id="topArc" d="M 18,60 A 42,42 0 0,1 102,60" fill="none"/>
+      <text font-family="'Bebas Neue',sans-serif" font-size="13" fill="#00ff77" letter-spacing="4" filter="url(#glow)">
+        <textPath href="#topArc" startOffset="50%" text-anchor="middle">TSV</textPath>
+      </text>
+      <!-- "PILSTING" bottom arc text -->
+      <path id="botArc" d="M 14,65 A 46,46 0 0,0 106,65" fill="none"/>
+      <text font-family="'Bebas Neue',sans-serif" font-size="9.5" fill="#00cc55" letter-spacing="2.5">
+        <textPath href="#botArc" startOffset="50%" text-anchor="middle">PILSTING</textPath>
+      </text>
+      <!-- Small "DARTS" label -->
+      <text x="60" y="95" font-family="'Bebas Neue',sans-serif" font-size="6.5" fill="#336644"
+        letter-spacing="2" text-anchor="middle">DARTS</text>
+    </svg>
+  </div>
+  <div class="hdr-center">
+    <h1 id="hdr-title">🎯 Dart Turnier</h1>
+    <div class="sub">Turnierverwaltung · TSV Pilsting</div>
+    <div class="phases" id="phases">
+      <div class="pdot active" data-p="registration">Anmeldung</div>
+      <div class="pdot" data-p="setup">Konfiguration</div>
+      <div class="pdot" data-p="draw">Auslosung</div>
+      <div class="pdot" data-p="group">Gruppenphase</div>
+      <div class="pdot" data-p="ko">K.O.-Phase</div>
+    </div>
+  </div>
+  <div></div><!-- spacer for grid balance -->
+</header>
+
+<!-- REGISTRATION -->
+<div id="s-registration" class="screen active">
+  <div class="reg-wrap">
+    <div class="card mb20">
+      <div class="ct">🏆 Turniername</div>
+      <div class="tname-wrap">
+        <label class="tname-lbl" for="tname-inp">Turniername</label>
+        <input type="text" id="tname-inp" class="tname-inp"
+          placeholder="Dart Einzelmeisterschaft"
+          oninput="updateTournamentName(this.value)"
+          maxlength="60">
+      </div>
+    </div>
+    <div class="card mb20">
+      <div class="ct">👤 Spieler eintragen</div>
+      <div id="plist" class="plist"></div>
+      <div class="pinfo">
+        <span id="pcnt">0</span> Spieler eingetragen
+      </div>
+    </div><!-- /player card -->
+    <div class="tc">
+      <button class="btn bp" id="btn-to-setup" disabled onclick="goToSetup()">
+        Weiter zur Konfiguration →
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SETUP -->
+<div id="s-setup" class="screen">
+  <div style="max-width:820px;margin:0 auto">
+    <div class="card mb20">
+      <div class="ct">⚙️ Turnierformat</div>
+      <div id="setup-body"></div>
+    </div>
+    <div class="flex fca fjb">
+      <button class="btn bg" onclick="gotoScreen('registration')">← Zurück</button>
+      <button class="btn bp" onclick="startDraw()">Auslosung starten →</button>
+    </div>
+  </div>
+</div>
+
+<!-- DRAW -->
+<div id="s-draw" class="screen">
+  <div class="card mb20">
+    <div class="ct">🎲 Gruppenauslosung</div>
+    <div id="draw-body"></div>
+  </div>
+  <div id="draw-actions" class="tc hidden">
+    <button class="btn bp" onclick="goToGroupPhase()">Gruppenphase starten →</button>
+  </div>
+</div>
+
+<!-- GROUP PHASE -->
+<div id="s-group" class="screen">
+  <div class="boards-section mb20">
+    <div class="sec-hdr">
+      <span class="bb" style="font-size:1.5rem;color:var(--acc)">🎯 Aktuelle Spiele</span>
+      <span id="gprog" class="sm muted"></span>
+    </div>
+    <div class="prog-wrap mb12"><div class="prog-bar" id="pgbar" style="width:0%"></div></div>
+    <div class="boards-grid" id="boards"></div>
+  </div>
+  <div class="bot">
+    <div>
+      <div class="sec-hdr mb8">
+        <span class="bb" style="font-size:1.5rem">Gruppentabellen</span>
+        <span id="adv-info" class="sm muted"></span>
+      </div>
+      <div id="gtables" class="gtables"></div>
+    </div>
+    <div>
+      <div class="sec-hdr mb8">
+        <span class="bb" style="font-size:1.5rem">Abgeschlossen</span>
+        <span id="done-cnt" class="sm muted"></span>
+      </div>
+      <div id="done-list" class="col-done"></div>
+    </div>
+  </div>
+  <div id="ko-start-btn" class="tc mt20 hidden">
+    <button class="btn bgold" style="font-size:1.1rem;padding:12px 32px" onclick="startKO()">
+      🏆 K.O.-Phase starten →
+    </button>
+  </div>
+</div>
+
+<!-- KO PHASE -->
+<div id="s-ko" class="screen">
+  <div id="ko-body"></div>
+</div>
+
+<!-- CHANGE GAME MODAL -->
+<div id="cg-modal" class="modal-over hidden">
+  <div class="modal-box">
+    <div class="mttl">🔄 Spiel ändern — Board <span id="cg-bnum"></span></div>
+    <p class="sm muted mb12">Anderes Spiel für dieses Board auswählen:</p>
+    <div id="cg-list"></div>
+    <div style="margin-top:14px">
+      <button class="btn bg" style="width:100%" onclick="closeCG()">Abbrechen</button>
+    </div>
+  </div>
+</div>
+
+<!-- KO SCORE MODAL -->
+<div id="ks-modal" class="modal-over hidden">
+  <div class="modal-box">
+    <div class="mttl">📝 Ergebnis eintragen</div>
+    <div id="ks-body"></div>
+    <div class="flex g12 mt20">
+      <button class="btn bg" style="flex:1" onclick="closeKS()">Abbrechen</button>
+      <button class="btn bp" style="flex:1" onclick="confirmKS()">✓ Bestätigen</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════
+const S = {
+  phase: 'registration',
+  players: [],
+  name: '',
+  cfg: { groups: 4, koSize: 8, gBO: 5, kBOs: [5,7,9] },
+  groups: [],
+  // group phase
+  matches: [],
+  boards: [null,null,null,null],
+  // ko
+  seeds: [],
+  bracket: null
+};
+let cgBoard = -1, ksMatchId = null;
+
+// ════════════════════════════════════════
+//  UTILS
+// ════════════════════════════════════════
+const uid = () => Math.random().toString(36).slice(2,10);
+const el  = id => document.getElementById(id);
+const shuffle = a => { const b=[...a]; for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]]} return b; };
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+const ceil2 = bo => Math.ceil(bo/2);
+const grpName = i => String.fromCharCode(65+i);
+
+function defaultKBOs(koSize){
+  if(koSize===4)  return [7,9];
+  if(koSize===8)  return [5,7,9];
+  if(koSize===16) return [5,5,7,9];
+  return [7];
+}
+
+function getRoundNames(koSize){
+  const n=[];
+  if(koSize>=16)n.push('Achtelfinale');
+  if(koSize>=8) n.push('Viertelfinale');
+  if(koSize>=4) n.push('Halbfinale');
+  n.push('Finale');
+  return n;
+}
+
+function notify(msg, ms=2800) {
+  const d = document.createElement('div');
+  d.className='notif'; d.textContent=msg; document.body.appendChild(d);
+  setTimeout(()=>{ d.style.animation='nsl .3s ease reverse'; setTimeout(()=>d.remove(),300); },ms);
+}
+
+function updateTournamentName(val){
+  S.name = val.trim();
+  const display = S.name || 'Dart Turnier';
+  el('hdr-title').textContent = '🎯 ' + display;
+  document.title = '🎯 ' + display;
+}
+
+function gotoScreen(ph) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  el('s-'+ph).classList.add('active');
+  S.phase = ph;
+  const order = ['registration','setup','draw','group','ko'];
+  const idx = order.indexOf(ph);
+  document.querySelectorAll('.pdot').forEach((d,i)=>{
+    d.classList.remove('active','done');
+    if(i<idx)d.classList.add('done'); else if(i===idx)d.classList.add('active');
+  });
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════════════
+//  REGISTRATION
+// ════════════════════════════════════════
+function initReg() {
+  el('plist').innerHTML='';
+  addPRow(0,'');
+}
+
+function addPRow(idx,val) {
+  const list = el('plist');
+  const row = document.createElement('div');
+  row.className='prow'; row.dataset.idx=idx;
+  row.innerHTML=`<span class="pnum">${idx+1}.</span>
+    <input type="text" placeholder="Name eingeben…" value="${escHtml(val)}"
+      oninput="onPI(this,${idx})" onkeydown="if(event.key==='Enter')nextFocus(${idx})">
+    ${idx>0?`<button class="rm-btn" onclick="removeP(${idx})" title="Entfernen">✕</button>`:''}`;
+  list.appendChild(row);
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
+
+function onPI(inp,idx) {
+  const val = inp.value.trim();
+  while(S.players.length<=idx) S.players.push('');
+  S.players[idx] = val;
+  const rows = el('plist').querySelectorAll('.prow');
+  if(idx===rows.length-1 && val!=='') {
+    const ni = rows.length;
+    S.players.push('');
+    addPRow(ni,'');
+  }
+  updatePC();
+}
+
+function nextFocus(idx){
+  const ins = el('plist').querySelectorAll('input');
+  if(ins[idx+1]) ins[idx+1].focus();
+}
+
+function removeP(idx) {
+  S.players.splice(idx,1);
+  el('plist').innerHTML='';
+  const valid = S.players.filter(p=>p.trim()!=='');
+  S.players = valid;
+  [...valid,''].forEach((p,i)=>addPRow(i,p));
+  updatePC();
+}
+
+function updatePC(){
+  const n = getVP().length;
+  el('pcnt').textContent=n;
+  el('btn-to-setup').disabled = n<4;
+}
+
+function getVP(){ return S.players.filter(p=>p.trim()!=='').map(p=>p.trim()); }
+
+function goToSetup(){
+  S.players = getVP();
+  if(S.players.length<4){notify('Mindestens 4 Spieler benötigt!');return;}
+  renderSetup();
+  gotoScreen('setup');
+}
+
+// ════════════════════════════════════════
+//  SETUP
+// ════════════════════════════════════════
+function renderSetup(){
+  const n = S.players.length;
+  const body = el('setup-body');
+
+  const groupBtns = [];
+  for(let g=2;g<=Math.min(8,Math.floor(n/3));g++){
+    const mn=Math.floor(n/g), mx=Math.ceil(n/g);
+    if(mx>7)continue;
+    const lbl=mn===mx?`${g}×${mn}`:`${g}×(${mn}–${mx})`;
+    groupBtns.push(`<button class="btn sel-btn ${S.cfg.groups===g?'bp':'bg'}" onclick="setCfg('groups',${g})">${g}<br><small style="font-size:.68rem;font-family:'Share Tech Mono'">${lbl}</small></button>`);
+  }
+
+  const koOpts = [];
+  if(n>=4)koOpts.push(4); if(n>=8)koOpts.push(8); if(n>=16)koOpts.push(16);
+  if(!koOpts.includes(S.cfg.koSize)) S.cfg.koSize = koOpts[koOpts.length-1]||4;
+
+  const koLbls = {4:'Halbfinale (4)',8:'Viertelfinale (8)',16:'Achtelfinale (16)'};
+  const koBtns = koOpts.map(k=>`<button class="btn sel-btn ${S.cfg.koSize===k?'bp':'bg'}" onclick="setCfg('koSize',${k})">${koLbls[k]||k}</button>`).join('');
+  const gboBtns = [3,5,7].map(b=>`<button class="btn sel-btn ${S.cfg.gBO===b?'bp':'bg'}" onclick="setCfg('gBO',${b})">BO${b}</button>`).join('');
+  const roundNames = getRoundNames(S.cfg.koSize);
+  const kboRows = roundNames.map((rname,r)=>{
+    const btns=[5,7,9,11].map(b=>`<button class="btn sel-btn ${S.cfg.kBOs[r]===b?'bp':'bg'}" onclick="setKBO(${r},${b})">BO${b}</button>`).join('');
+    return `<div class="cfg-row"><span class="cfg-lbl">${rname} — Best of</span><div class="cfg-btns">${btns}</div></div>`;
+  }).join('');
+
+  body.innerHTML=`
+    <div style="font-size:.88rem;color:var(--txt2);margin-bottom:14px">
+      <strong style="color:var(--acc)">${n}</strong> Spieler angemeldet
+    </div>
+    <div class="cfg-row"><span class="cfg-lbl">Anzahl Gruppen</span><div class="cfg-btns">${groupBtns.join('')||'<span class="muted sm">Auto</span>'}</div></div>
+    <div class="cfg-row"><span class="cfg-lbl">K.O. startet ab</span><div class="cfg-btns">${koBtns}</div></div>
+    <div class="cfg-row"><span class="cfg-lbl">Gruppenphase — Best of</span><div class="cfg-btns">${gboBtns}</div></div>
+    ${kboRows}
+    <div id="cfg-sum" class="sum-card"></div>`;
+
+  updateSum();
+}
+
+function setCfg(k,v){
+  S.cfg[k]=v;
+  if(k==='koSize') S.cfg.kBOs=defaultKBOs(v);
+  renderSetup();
+}
+
+function setKBO(r,v){ S.cfg.kBOs[r]=v; renderSetup(); }
+
+function advCalc(){
+  const {groups:g,koSize:k} = S.cfg;
+  return {pp:Math.floor(k/g), ex:k%g};
+}
+
+function updateSum(){
+  const {groups:g,koSize:k,gBO,kBOs} = S.cfg;
+  const {pp,ex} = advCalc();
+  const rn = getRoundNames(k);
+  const s = el('cfg-sum'); if(!s)return;
+  const kboSummary = rn.map((n,r)=>`<div><span>${n}:</span> <strong>BO${kBOs[r]}</strong></div>`).join('');
+  s.innerHTML=`<div class="sum-row">
+    <div><span>Gruppen:</span> <strong>${g}</strong></div>
+    <div><span>K.O.-Plätze:</span> <strong>${k}</strong></div>
+    <div><span>Weiter/Gruppe:</span> <strong>${pp}</strong></div>
+    ${ex>0?`<div><span>Beste Drittpl.:</span> <strong style="color:var(--gold)">${ex}</strong></div>`:''}
+    <div><span>Gruppe BO:</span> <strong>${gBO}</strong></div>
+    ${kboSummary}
+  </div>`;
+}
+
+// ════════════════════════════════════════
+//  DRAW
+// ════════════════════════════════════════
+async function startDraw(){
+  S.players = getVP();
+  renderDrawGrid();
+  gotoScreen('draw');
+  await runDraw();
+}
+
+function renderDrawGrid(){
+  const g = S.cfg.groups;
+  const cols = Math.min(g,4);
+  el('draw-body').innerHTML=`<div id="draw-grid" class="draw-grid" style="grid-template-columns:repeat(${cols},1fr)">
+    ${Array.from({length:g},(_,i)=>`
+      <div class="draw-gcard" id="dg-${i}">
+        <div class="draw-gtitle">Gruppe ${grpName(i)}</div>
+        <div id="dgp-${i}" style="display:flex;flex-wrap:wrap;gap:3px;min-height:36px"></div>
+      </div>`).join('')}
+  </div>
+  <div class="tc mt20" style="color:var(--txt2)"><div id="draw-status">Auslosung läuft…</div></div>`;
+}
+
+async function runDraw(){
+  el('draw-actions').classList.add('hidden');
+  const players = shuffle([...S.players]);
+  const g = S.cfg.groups;
+  const groups = Array.from({length:g},()=>[]);
+  players.forEach((p,i)=>groups[i%g].push(p));
+
+  for(let i=0;i<players.length;i++){
+    const p=players[i], gi=i%g;
+    await showBall(p,gi);
+    const chip=document.createElement('div');
+    chip.className='chip'; chip.textContent=p;
+    el(`dgp-${gi}`).appendChild(chip);
+    await sleep(180);
+  }
+
+  el('draw-status').innerHTML='✅ <strong style="color:var(--acc)">Auslosung abgeschlossen!</strong>';
+  S.groups = groups;
+  el('draw-actions').classList.remove('hidden');
+}
+
+function showBall(name,gi){
+  return new Promise(r=>{
+    const o=document.createElement('div');
+    o.className='draw-overlay';
+    o.innerHTML=`<div class="draw-ball">${escHtml(name)}</div>
+      <div class="draw-arrow">⬇</div>
+      <div class="draw-badge">Gruppe ${grpName(gi)}</div>`;
+    document.body.appendChild(o);
+    setTimeout(()=>{ o.style.transition='opacity .3s'; o.style.opacity='0';
+      setTimeout(()=>o.remove(),300); r(); },820);
+  });
+}
+
+// ════════════════════════════════════════
+//  GROUP PHASE
+// ════════════════════════════════════════
+function goToGroupPhase(){
+  S.matches=[];
+  S.groups.forEach((grp,gi)=>{
+    for(let a=0;a<grp.length;a++)
+      for(let b=a+1;b<grp.length;b++)
+        S.matches.push({id:uid(),gi,p1:grp[a],p2:grp[b],result:null,done:false});
+  });
+  S.matches=shuffle(S.matches);
+  S.boards=[null,null,null,null];
+  fillBoards();
+  gotoScreen('group');
+  renderGP();
+}
+
+function pending(){ return S.matches.filter(m=>!m.done&&!S.boards.includes(m.id)); }
+
+function activePlayers(){
+  const s=new Set();
+  S.boards.forEach(id=>{ if(id){const m=S.matches.find(x=>x.id===id); if(m){s.add(m.p1);s.add(m.p2);}}});
+  return s;
+}
+
+function fillBoards(){
+  const empties=S.boards.map((v,i)=>i).filter(i=>S.boards[i]===null);
+  for(const bi of empties){
+    const ap=activePlayers();
+    const cands=pending().filter(m=>!ap.has(m.p1)&&!ap.has(m.p2));
+    if(cands.length){ S.boards[bi]=cands[0].id; ap.add(cands[0].p1); ap.add(cands[0].p2); }
+  }
+}
+
+function renderGP(){
+  renderBoards();
+  renderTables();
+  renderDone();
+  updateProgress();
+  checkDone();
+}
+
+function renderBoards(){
+  const g=el('boards'); if(!g)return;
+  g.innerHTML='';
+  const mx=ceil2(S.cfg.gBO);
+  for(let i=0;i<4;i++){
+    const id=S.boards[i], m=id?S.matches.find(x=>x.id===id):null;
+    const s=document.createElement('div');
+    s.className='bslot'+(m?' live':'');
+    if(m){
+      s.innerHTML=`<div class="bnum">Board ${i+1}</div>
+        <div class="gtag">Gruppe ${grpName(m.gi)}</div>
+        <div class="bplayers">
+          <div class="bplayer">${escHtml(m.p1)}</div>
+          <div class="bvs">VS</div>
+          <div class="bplayer">${escHtml(m.p2)}</div>
+        </div>
+        <div class="score-row">
+          <input type="number" class="si" id="s${i}a" min="0" max="${mx}" placeholder="0" oninput="clamp(this,${S.cfg.gBO})">
+          <span class="ssep">:</span>
+          <input type="number" class="si" id="s${i}b" min="0" max="${mx}" placeholder="0" oninput="clamp(this,${S.cfg.gBO})">
+        </div>
+        <div class="bacts">
+          <button class="btn bp btn-sm" onclick="confirmResult(${i})">✓ OK</button>
+          <button class="btn bg btn-sm" onclick="openCG(${i})" title="Spiel ändern">⇄</button>
+        </div>`;
+    } else {
+      s.innerHTML=`<div class="bnum">Board ${i+1}</div><div class="bempty">Kein Spiel verfügbar</div>`;
+    }
+    g.appendChild(s);
+  }
+}
+
+function clamp(inp,bo){
+  const mx=ceil2(bo), v=parseInt(inp.value);
+  if(v>mx)inp.value=mx; if(v<0)inp.value=0;
+}
+
+function confirmResult(bi){
+  const id=S.boards[bi]; if(!id)return;
+  const l1=parseInt(el(`s${bi}a`)?.value||''), l2=parseInt(el(`s${bi}b`)?.value||'');
+  const mx=ceil2(S.cfg.gBO);
+  if(isNaN(l1)||isNaN(l2)){notify('Ergebnis eingeben!');return;}
+  if(l1===0&&l2===0){notify('0:0 nicht möglich!');return;}
+  if(l1!==mx&&l2!==mx){notify(`Einer braucht ${mx} Legs!`);return;}
+  if(l1===l2){notify('Kein Unentschieden!');return;}
+
+  const m=S.matches.find(x=>x.id===id);
+  m.result={l1,l2}; m.done=true;
+  S.boards[bi]=null;
+
+  fillBoards();
+  renderGP();
+  notify(`✅ ${l1>l2?m.p1:m.p2} gewinnt ${Math.max(l1,l2)}:${Math.min(l1,l2)}`);
+}
+
+function openCG(bi){
+  cgBoard=bi;
+  const curId=S.boards[bi];
+  let ap=new Set(activePlayers());
+  if(curId){const cm=S.matches.find(m=>m.id===curId);if(cm){ap.delete(cm.p1);ap.delete(cm.p2);}}
+  const avail=pending().filter(m=>m.id!==curId&&!ap.has(m.p1)&&!ap.has(m.p2));
+  el('cg-bnum').textContent=bi+1;
+  el('cg-list').innerHTML=avail.length
+    ? avail.map(m=>`<div class="mopt" onclick="pickCG('${m.id}')">
+        <div class="glbl">Gruppe ${grpName(m.gi)}</div>
+        <div class="mpls">${escHtml(m.p1)} vs ${escHtml(m.p2)}</div>
+      </div>`).join('')
+    : '<p class="muted sm">Keine alternativen Spiele verfügbar.</p>';
+  el('cg-modal').classList.remove('hidden');
+}
+
+function pickCG(id){
+  S.boards[cgBoard]=id;
+  closeCG(); renderGP();
+}
+function closeCG(){el('cg-modal').classList.add('hidden');cgBoard=-1;}
+
+// ── Standings ──
+function standings(gi){
+  const grp=S.groups[gi];
+  const st={};
+  grp.forEach(p=>st[p]={p,mp:0,w:0,l:0,lf:0,la:0});
+  S.matches.filter(m=>m.gi===gi&&m.done).forEach(({p1,p2,result:{l1,l2}})=>{
+    st[p1].mp++;st[p2].mp++;
+    st[p1].lf+=l1;st[p1].la+=l2;st[p2].lf+=l2;st[p2].la+=l1;
+    l1>l2?(st[p1].w++,st[p2].l++):(st[p2].w++,st[p1].l++);
+  });
+  return Object.values(st).sort((a,b)=>{
+    if(b.w!==a.w)return b.w-a.w;
+    const da=a.lf-a.la,db=b.lf-b.la;
+    if(db!==da)return db-da;
+    return b.lf-a.lf;
+  });
+}
+
+function allAdvancement(){
+  const {groups:ng,koSize:k}=S.cfg, {pp,ex}=advCalc();
+  const all=S.groups.map((_,i)=>standings(i));
+  const qual=new Set(), maybe=new Set();
+  all.forEach(st=>st.slice(0,pp).forEach(p=>qual.add(p.p)));
+  if(ex>0){
+    const nth=all.map(st=>st[pp]).filter(Boolean);
+    nth.sort((a,b)=>{
+      if(b.w!==a.w)return b.w-a.w;
+      const da=a.lf-a.la,db=b.lf-b.la;
+      if(db!==da)return db-da;
+      return b.lf-a.lf;
+    });
+    nth.slice(0,ex).forEach(p=>qual.add(p.p));
+    nth.slice(ex).forEach(p=>maybe.add(p.p));
+  }
+  return {qual,maybe};
+}
+
+function renderTables(){
+  const c=el('gtables');if(!c)return;
+  const {qual,maybe}=allAdvancement();
+  const {pp,ex}=advCalc();
+  c.innerHTML='';
+  S.groups.forEach((_,gi)=>{
+    const st=standings(gi);
+    const card=document.createElement('div');
+    card.className='gcard';
+    const rows=st.map((p,r)=>{
+      let rc='',bdg='';
+      if(qual.has(p.p)){rc='rq';bdg='<span class="qbdg">✓ QF</span>';}
+      else if(maybe.has(p.p)){rc='rmb';bdg='<span class="mbbdg">? QF</span>';}
+      else if(p.mp===S.groups[gi].length-1){rc='rel';}
+      const d=p.lf-p.la;
+      const ds=d>0?`<span class="pos">+${d}</span>`:d<0?`<span class="neg">${d}</span>`:'0';
+      return `<tr class="${rc}">
+        <td class="rc r${r+1}">${r+1}.</td>
+        <td class="nc">${escHtml(p.p)}${bdg}</td>
+        <td class="mono">${p.w}–${p.l}</td>
+        <td class="mono">${p.lf}–${p.la}</td>
+        <td class="mono">${ds}</td>
+      </tr>`;
+    });
+    card.innerHTML=`<div class="gtitle">Gruppe ${grpName(gi)}</div>
+      <table>
+        <thead><tr><th>#</th><th>Name</th><th>S/N</th><th>Legs</th><th>Diff</th></tr></thead>
+        <tbody id="tb-${gi}">${rows.join('')}</tbody>
+      </table>
+      ${ex>0?`<div class="sm muted" style="margin-top:6px">Beste Drittplatzierte: ${ex}/${S.cfg.groups} kommen weiter</div>`:''}`;
+    c.appendChild(card);
+    // separator after pp-th place
+    const tbody=el(`tb-${gi}`);
+    if(tbody&&st.length>pp){
+      const trs=tbody.querySelectorAll('tr:not(.sep-line)');
+      if(trs[pp-1]){
+        const sep=document.createElement('tr');
+        sep.className='sep-line';
+        sep.innerHTML='<td colspan="5"></td>';
+        trs[pp-1].after(sep);
+      }
+    }
+  });
+}
+
+function renderDone(){
+  const done=S.matches.filter(m=>m.done).reverse();
+  el('done-cnt').textContent=`${done.length} Spiele`;
+  if(!done.length){el('done-list').innerHTML='<div class="bempty" style="padding:20px">Noch keine</div>';return;}
+  el('done-list').innerHTML=done.map(m=>{
+    const {l1,l2}=m.result, win=l1>l2?m.p1:m.p2, los=l1>l2?m.p2:m.p1;
+    const sc=`${Math.max(l1,l2)}:${Math.min(l1,l2)}`;
+    return `<div class="done-match">
+      <div class="dm-players"><div class="dm-win">${escHtml(win)}</div><div class="dm-loss">${escHtml(los)}</div></div>
+      <div class="dm-score">${sc}</div>
+      <div class="dm-grp">Gr.${grpName(m.gi)}</div>
+    </div>`;
+  }).join('');
+}
+
+function updateProgress(){
+  const tot=S.matches.length, dn=S.matches.filter(m=>m.done).length;
+  el('gprog').textContent=`${dn} / ${tot}`;
+  el('pgbar').style.width=`${tot?Math.round(dn/tot*100):0}%`;
+  const {pp,ex}=advCalc();
+  el('adv-info').textContent=`Top ${pp}/Gruppe${ex>0?` + ${ex} Drittplatz.`:''} → K.O.`;
+}
+
+function checkDone(){
+  const all=S.matches.every(m=>m.done);
+  el('ko-start-btn').classList.toggle('hidden',!all);
+  if(!all){fillBoards();renderBoards();}
+}
+
+// ════════════════════════════════════════
+//  KO PHASE
+// ════════════════════════════════════════
+function startKO(){
+  S.seeds = computeSeeds();
+  S.bracket = buildBracket(S.cfg.koSize, S.seeds);
+  gotoScreen('ko');
+  renderKO();
+}
+
+function computeSeeds(){
+  const {pp,ex}=advCalc();
+  const all=S.groups.map((_,i)=>standings(i));
+  const result=[];
+  for(let r=0;r<pp;r++){
+    const tier=all.map(s=>s[r]).filter(Boolean);
+    tier.sort((a,b)=>{ if(b.w!==a.w)return b.w-a.w; const da=a.lf-a.la,db=b.lf-b.la; if(db!==da)return db-da; return b.lf-a.lf; });
+    result.push(...tier);
+  }
+  if(ex>0){
+    const nth=all.map(s=>s[pp]).filter(Boolean);
+    nth.sort((a,b)=>{ if(b.w!==a.w)return b.w-a.w; const da=a.lf-a.la,db=b.lf-b.la; if(db!==da)return db-da; return b.lf-a.lf; });
+    result.push(...nth.slice(0,ex));
+  }
+  return result.map(p=>p.p);
+}
+
+function seedPairs(n){
+  if(n===4)  return [[1,4],[2,3]];
+  if(n===8)  return [[1,8],[4,5],[3,6],[2,7]];
+  if(n===16) return [[1,16],[8,9],[5,12],[4,13],[3,14],[6,11],[7,10],[2,15]];
+  return [];
+}
+
+function buildBracket(n, seeds){
+  const pairs=seedPairs(n);
+  const ms=[];
+  pairs.forEach((pair,pos)=>{
+    ms.push({id:uid(),round:0,pos,
+      p1:seeds[pair[0]-1]||`Seed ${pair[0]}`,
+      p2:seeds[pair[1]-1]||`Seed ${pair[1]}`,
+      result:null,winner:null,nextId:null,nextSlot:null});
+  });
+  const nr=Math.log2(n);
+  let prev=ms;
+  for(let r=1;r<nr;r++){
+    const cur=[];
+    for(let p=0;p<prev.length/2;p++){
+      const m={id:uid(),round:r,pos:p,p1:null,p2:null,result:null,winner:null,nextId:null,nextSlot:null};
+      prev[p*2].nextId=m.id; prev[p*2].nextSlot=1;
+      prev[p*2+1].nextId=m.id; prev[p*2+1].nextSlot=2;
+      cur.push(m);
+    }
+    ms.push(...cur); prev=cur;
+  }
+  const rn=[];
+  if(n>=16)rn.push('Achtelfinale');
+  if(n>=8) rn.push('Viertelfinale');
+  if(n>=4) rn.push('Halbfinale');
+  rn.push('Finale');
+  return {ms, nr, rn};
+}
+
+function renderKO(){
+  const {ms,nr,rn}=S.bracket;
+  const final=ms.find(m=>m.round===nr-1);
+  let html='<div>';
+  if(final?.winner){
+    html+=`<div class="champ">
+      <span class="trophy">🏆</span>
+      <div class="champ-name">${escHtml(final.winner)}</div>
+      <div class="champ-sub">Einzelmeister</div>
+    </div>`;
+    spawnConfetti();
+  }
+  const r0=ms.filter(m=>m.round===0);
+  const topFirst=r0.slice(0,Math.ceil(r0.length/2));
+  const botFirst=r0.slice(Math.ceil(r0.length/2));
+
+  html+=`<div class="bracket-outer"><div class="bracket-flex">`;
+  html+=buildHalf(ms,topFirst,nr,'left',rn);
+  html+=`<div class="br-center"><div class="final-lbl">🏆 FINALE 🏆</div>${renderBM(final)}</div>`;
+  html+=buildHalf(ms,botFirst,nr,'right',rn);
+  html+=`</div></div></div>`;
+  el('ko-body').innerHTML=html;
+}
+
+function buildHalf(all,first,nr,side,rn){
+  let rounds=[], cur=[...first];
+  for(let r=0;r<nr-1;r++){
+    rounds.push(cur);
+    const nids=new Set(cur.map(m=>m.nextId).filter(Boolean));
+    cur=all.filter(m=>nids.has(m.id));
+  }
+  if(side==='right') rounds.reverse();
+  let html=`<div class="br-half">`;
+  rounds.forEach((rms,i)=>{
+    const ri=side==='right'?rounds.length-1-i:i;
+    const lbl=rn[ri]||`Runde ${ri+1}`;
+    html+=`<div class="br-round"><div class="br-round-lbl">${lbl}</div>`;
+    rms.forEach(m=>html+=renderBM(m));
+    html+=`</div>`;
+  });
+  html+=`</div>`;
+  return html;
+}
+
+function renderBM(m){
+  if(!m)return'';
+  const canPlay=!m.result&&m.p1&&m.p2;
+  const p1c=m.result?(m.winner===m.p1?'win':'lose'):(m.p1?'':'tbd');
+  const p2c=m.result?(m.winner===m.p2?'win':'lose'):(m.p2?'':'tbd');
+  const p1l=m.result?`<span class="br-legs ${m.winner===m.p1?'wl':''}">${m.result.l1}</span>`:'';
+  const p2l=m.result?`<span class="br-legs ${m.winner===m.p2?'wl':''}">${m.result.l2}</span>`:'';
+  return `<div class="br-match ${canPlay?'open':m.result?'done':''}" id="bm-${m.id}">
+    <div class="br-player ${p1c}"><span>${escHtml(m.p1||'TBD')}</span>${p1l}</div>
+    <div class="br-player ${p2c}"><span>${escHtml(m.p2||'TBD')}</span>${p2l}</div>
+    ${canPlay?`<button class="score-btn" onclick="openKS('${m.id}')">Ergebnis eintragen</button>`:''}
+  </div>`;
+}
+
+function openKS(id){
+  const m=S.bracket.ms.find(x=>x.id===id);
+  if(!m||!m.p1||!m.p2)return;
+  ksMatchId=id;
+  const bo=S.cfg.kBOs[m.round]||7;
+  const mx=ceil2(bo);
+  el('ks-body').innerHTML=`
+    <div class="ks-row"><div class="ks-name">${escHtml(m.p1)}</div>
+      <input type="number" class="si" id="ks-l1" min="0" max="${mx}" placeholder="0" oninput="clamp(this,${bo})"></div>
+    <div class="ks-row"><div class="ks-name">${escHtml(m.p2)}</div>
+      <input type="number" class="si" id="ks-l2" min="0" max="${mx}" placeholder="0" oninput="clamp(this,${bo})"></div>
+    <div class="sm muted tc" style="margin-top:8px">Best of ${bo} — Erster auf ${mx} Legs gewinnt</div>`;
+  el('ks-modal').classList.remove('hidden');
+  setTimeout(()=>el('ks-l1')?.focus(),80);
+}
+
+function closeKS(){el('ks-modal').classList.add('hidden');ksMatchId=null;}
+
+function confirmKS(){
+  if(!ksMatchId)return;
+  const l1=parseInt(el('ks-l1')?.value||''), l2=parseInt(el('ks-l2')?.value||'');
+  const m=S.bracket.ms.find(x=>x.id===ksMatchId);
+  const bo=S.cfg.kBOs[m.round]||7;
+  const mx=ceil2(bo);
+  if(isNaN(l1)||isNaN(l2)){notify('Ergebnis eingeben!');return;}
+  if(l1===0&&l2===0){notify('0:0 nicht möglich!');return;}
+  if(l1!==mx&&l2!==mx){notify(`Einer braucht ${mx} Legs!`);return;}
+  if(l1===l2){notify('Kein Unentschieden!');return;}
+
+  m.result={l1,l2}; m.winner=l1>l2?m.p1:m.p2;
+  if(m.nextId){
+    const nx=S.bracket.ms.find(x=>x.id===m.nextId);
+    if(nx){if(m.nextSlot===1)nx.p1=m.winner;else nx.p2=m.winner;}
+  }
+  closeKS();
+  renderKO();
+  notify(`🏆 ${m.winner} weiter!`);
+}
+
+function spawnConfetti(){
+  if(document.querySelector('.cpiece'))return;
+  const cols=['#ffd700','#00ff77','#ff3355','#4488ff','#ff77ee','#00ccff'];
+  for(let i=0;i<90;i++){
+    setTimeout(()=>{
+      const c=document.createElement('div');
+      c.className='cpiece';
+      const sz=5+Math.random()*10;
+      c.style.cssText=`left:${Math.random()*100}vw;top:-30px;width:${sz}px;height:${sz}px;
+        background:${cols[0|Math.random()*cols.length]};
+        border-radius:${Math.random()>.5?'50%':'2px'};
+        animation-duration:${2.5+Math.random()*3}s;
+        animation-delay:${Math.random()*2.5}s;`;
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(),7000);
+    },i*55);
+  }
+}
+
+// ════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════
+initReg();
+</script>
+</body>
+</html>
