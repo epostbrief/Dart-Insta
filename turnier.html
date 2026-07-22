@@ -10,15 +10,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#060608; --bg2:#0e0e16; --bg3:#161622; --bg4:#1e1e2e;
-  --acc:#00ff77; --acc2:#00cc55; --red:#ff3355; --gold:#ffd700; --blue:#4488ff;
-  --txt:#dde0f0; --txt2:#6688aa; --brd:#252535; --brd2:#353550;
+  --bg:#070d08; --bg2:#0e1a12; --bg3:#142619; --bg4:#1b3320;
+  --acc:#ff4d4d; --acc2:#d81e2c; --red:#a91d2c; --white:#ffffff;
+  --txt:#f1efe6; --txt2:#7c9684; --brd:#1f3526; --brd2:#2d4c34;
   --r:8px; --r2:12px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--txt);font-family:'Rajdhani',sans-serif;font-size:16px;min-height:100vh;
-  background-image:radial-gradient(ellipse at 15% 40%,rgba(0,255,119,.04) 0,transparent 55%),
-  radial-gradient(ellipse at 85% 15%,rgba(68,136,255,.03) 0,transparent 55%)}
+  background-image:radial-gradient(ellipse at 15% 40%,rgba(20,80,45,.14) 0,transparent 55%),
+  radial-gradient(ellipse at 85% 15%,rgba(180,30,40,.07) 0,transparent 55%)}
 h1,h2,h3,.bb{font-family:'Bebas Neue',sans-serif;letter-spacing:.5px}
 .screen{display:none;max-width:1500px;margin:0 auto;padding:20px}
 .screen.active{display:block}
@@ -27,14 +27,14 @@ h1,h2,h3,.bb{font-family:'Bebas Neue',sans-serif;letter-spacing:.5px}
 .hdr{display:grid;grid-template-columns:88px 1fr 88px;align-items:center;
   padding:14px 20px 14px;border-bottom:1px solid var(--brd);margin-bottom:24px;gap:12px}
 .hdr-logo{display:flex;align-items:center;justify-content:flex-start}
-.hdr-logo img{width:74px;height:74px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 8px rgba(0,255,119,.25))}
+.hdr-logo img{width:74px;height:74px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 8px rgba(255,77,77,.25))}
 .hdr-center{text-align:center}
 .hdr h1{font-size:2.6rem;color:var(--acc);line-height:1}
 .hdr .sub{color:var(--txt2);font-size:.75rem;letter-spacing:4px;text-transform:uppercase;margin-top:3px}
 .phases{display:flex;justify-content:center;gap:6px;margin-top:12px;flex-wrap:wrap}
 .pdot{padding:3px 12px;border-radius:20px;font-size:.72rem;letter-spacing:1px;border:1px solid var(--brd2);
   color:var(--txt2);text-transform:uppercase;font-weight:600;transition:.2s}
-.pdot.active{border-color:var(--acc);color:var(--acc);background:rgba(0,255,119,.1)}
+.pdot.active{border-color:var(--acc);color:var(--acc);background:rgba(255,77,77,.1)}
 .pdot.done{border-color:var(--acc2);color:var(--acc2)}
 /* tournament name input */
 .tname-wrap{margin-bottom:18px}
@@ -44,17 +44,17 @@ h1,h2,h3,.bb{font-family:'Bebas Neue',sans-serif;letter-spacing:.5px}
   letter-spacing:1px!important;color:var(--acc)!important;text-align:center;
   background:var(--bg3);border:1px solid var(--brd2);border-radius:var(--r);
   padding:10px 16px!important;width:100%}
-.tname-inp:focus{border-color:var(--acc);box-shadow:0 0 0 2px rgba(0,255,119,.12)}
+.tname-inp:focus{border-color:var(--acc);box-shadow:0 0 0 2px rgba(255,77,77,.12)}
 .tname-inp::placeholder{color:var(--txt2);opacity:.6}
 
 /* ── BUTTONS ── */
 .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border-radius:var(--r);border:none;
   cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.8px;
   text-transform:uppercase;transition:all .18s}
-.bp{background:var(--acc);color:#000}.bp:hover{background:#00ff99;transform:translateY(-2px)}
-.bd{background:var(--red);color:#fff}.bd:hover{background:#ff5577}
+.bp{background:var(--acc);color:#000}.bp:hover{background:#ff7373;transform:translateY(-2px)}
+.bd{background:var(--red);color:#fff}.bd:hover{background:#c62b3c}
 .bg{background:transparent;color:var(--txt2);border:1px solid var(--brd2)}.bg:hover{border-color:var(--acc);color:var(--acc)}
-.bgold{background:var(--gold);color:#000}.bgold:hover{background:#ffe033;transform:translateY(-2px)}
+.bw{background:var(--white);color:#000}.bw:hover{background:#e2e2e2;transform:translateY(-2px)}
 .btn:disabled{opacity:.35;cursor:not-allowed;transform:none!important}
 .btn-sm{padding:5px 12px;font-size:.8rem}
 
@@ -67,7 +67,7 @@ h1,h2,h3,.bb{font-family:'Bebas Neue',sans-serif;letter-spacing:.5px}
 input[type=text],input[type=number],select{background:var(--bg3);border:1px solid var(--brd2);
   border-radius:var(--r);padding:9px 13px;color:var(--txt);font-family:'Rajdhani',sans-serif;
   font-size:1rem;font-weight:500;outline:none;transition:border-color .2s;width:100%}
-input:focus,select:focus{border-color:var(--acc);box-shadow:0 0 0 2px rgba(0,255,119,.1)}
+input:focus,select:focus{border-color:var(--acc);box-shadow:0 0 0 2px rgba(255,77,77,.1)}
 select option{background:var(--bg3)}
 
 /* ── REGISTRATION ── */
@@ -104,12 +104,12 @@ select option{background:var(--bg3)}
   display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
 .draw-ball{width:130px;height:130px;border-radius:50%;background:var(--bg3);border:2px solid var(--acc);
   display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;
-  font-size:1.6rem;color:var(--acc);text-align:center;padding:10px;animation:bspin .35s ease}
+  font-size:1.6rem;color:var(--acc);text-align:center;padding:10px;animation:bspin .7s ease}
 @keyframes bspin{0%{transform:scale(.4) rotate(-20deg);opacity:0}65%{transform:scale(1.12)}100%{transform:none;opacity:1}}
-.draw-arrow{font-size:2.5rem;color:var(--acc);animation:pls .5s ease infinite alternate}
+.draw-arrow{font-size:2.5rem;color:var(--acc);animation:pls .9s ease infinite alternate}
 @keyframes pls{from{opacity:.5;transform:scale(1)}to{opacity:1;transform:scale(1.15)}}
 .draw-badge{padding:18px 48px;border-radius:var(--r2);background:var(--bg4);border:2px solid var(--acc);
-  font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--acc);animation:bdg .4s ease}
+  font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--acc);animation:bdg .7s ease}
 @keyframes bdg{from{transform:scale(0);opacity:0}to{transform:none;opacity:1}}
 
 /* ── GROUP PHASE ── */
@@ -159,15 +159,15 @@ th{text-align:left;padding:5px 9px;color:var(--txt2);font-size:.72rem;text-trans
 td{padding:7px 9px;border-bottom:1px solid var(--brd);vertical-align:middle}
 tr:last-child td{border-bottom:none}
 .rc{width:28px;font-family:'Share Tech Mono',monospace;color:var(--txt2)}
-.r1{color:var(--gold)!important}.r2{color:#c0c0c0!important}.r3{color:#cd7f32!important}
+.r1{color:var(--acc)!important}.r2{color:#c0c0c0!important}.r3{color:#cd7f32!important}
 .nc{font-weight:700}
 .mono{font-family:'Share Tech Mono',monospace;font-size:.82rem}
-.pos{color:var(--acc)}.neg{color:var(--red)}
-.rq{background:rgba(0,255,119,.08)}.rmb{background:rgba(255,215,0,.06)}.rel{opacity:.45}
-.qbdg{font-size:.62rem;padding:1px 5px;border-radius:3px;background:rgba(0,255,119,.2);
+.pos{color:var(--white)}.neg{color:var(--red)}
+.rq{background:rgba(255,77,77,.08)}.rmb{background:rgba(255,255,255,.06)}.rel{opacity:.45}
+.qbdg{font-size:.62rem;padding:1px 5px;border-radius:3px;background:rgba(255,77,77,.2);
   color:var(--acc);margin-left:5px;font-weight:700}
-.mbbdg{font-size:.62rem;padding:1px 5px;border-radius:3px;background:rgba(255,215,0,.2);
-  color:var(--gold);margin-left:5px;font-weight:700}
+.mbbdg{font-size:.62rem;padding:1px 5px;border-radius:3px;background:rgba(255,255,255,.2);
+  color:var(--white);margin-left:5px;font-weight:700}
 .sep-line td{padding:1px 0;background:var(--acc2);height:2px;border:none}
 
 /* ── MODAL ── */
@@ -178,7 +178,7 @@ tr:last-child td{border-bottom:none}
 .mttl{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--acc);margin-bottom:14px}
 .mopt{padding:11px 14px;border-radius:var(--r);border:1px solid var(--brd);margin-bottom:7px;
   cursor:pointer;transition:all .18s}
-.mopt:hover{border-color:var(--acc);background:rgba(0,255,119,.05)}
+.mopt:hover{border-color:var(--acc);background:rgba(255,77,77,.05)}
 .mopt .glbl{font-size:.72rem;color:var(--txt2);margin-bottom:3px}
 .mopt .mpls{font-weight:700}
 .hidden{display:none!important}
@@ -197,7 +197,7 @@ tr:last-child td{border-bottom:none}
 .br-player{padding:7px 11px;display:flex;justify-content:space-between;align-items:center;
   font-size:.88rem;font-weight:600;border-bottom:1px solid var(--brd);cursor:default}
 .br-player:last-of-type{border-bottom:none}
-.br-player.win{background:rgba(0,255,119,.1);color:var(--acc)}
+.br-player.win{background:rgba(255,77,77,.1);color:var(--acc)}
 .br-player.lose{color:var(--txt2);text-decoration:line-through}
 .br-player.tbd{color:var(--txt2);font-style:italic;font-size:.78rem}
 .br-legs{font-family:'Share Tech Mono',monospace;font-size:.82rem;color:var(--txt2);min-width:24px;text-align:right}
@@ -205,17 +205,17 @@ tr:last-child td{border-bottom:none}
 .score-btn{width:100%;padding:4px;background:var(--bg4);border:none;border-top:1px solid var(--brd);
   color:var(--acc);font-size:.78rem;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;
   letter-spacing:.8px;transition:background .18s;text-transform:uppercase}
-.score-btn:hover{background:rgba(0,255,119,.1)}
+.score-btn:hover{background:rgba(255,77,77,.1)}
 .br-center{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 18px;gap:9px}
-.final-lbl{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;color:var(--gold);letter-spacing:2px;text-align:center}
+.final-lbl{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;color:var(--white);letter-spacing:2px;text-align:center}
 
 /* ── CHAMPION ── */
 .champ{text-align:center;padding:44px 20px}
 .trophy{font-size:5rem;display:block;margin-bottom:18px;animation:tf 3s ease-in-out infinite}
 @keyframes tf{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
-.champ-name{font-family:'Bebas Neue',sans-serif;font-size:4.8rem;color:var(--gold);
+.champ-name{font-family:'Bebas Neue',sans-serif;font-size:4.8rem;color:var(--white);
   line-height:1;animation:cg 2s ease-in-out infinite}
-@keyframes cg{0%,100%{text-shadow:0 0 25px rgba(255,215,0,.7)}50%{text-shadow:0 0 50px rgba(255,215,0,1),0 0 80px rgba(255,215,0,.5)}}
+@keyframes cg{0%,100%{text-shadow:0 0 25px rgba(255,77,77,.7)}50%{text-shadow:0 0 50px rgba(255,77,77,1),0 0 80px rgba(255,77,77,.5)}}
 .champ-sub{font-size:.95rem;color:var(--txt2);letter-spacing:4px;text-transform:uppercase;margin-top:9px}
 
 /* ── CONFETTI ── */
@@ -310,12 +310,10 @@ tr:last-child td{border-bottom:none}
 <!-- DRAW -->
 <div id="s-draw" class="screen">
   <div class="card mb20">
-    <div class="ct">🎲 Gruppenauslosung</div>
+    <div class="ct" id="draw-title">🎲 Gruppenauslosung</div>
     <div id="draw-body"></div>
   </div>
-  <div id="draw-actions" class="tc hidden">
-    <button class="btn bp" onclick="goToGroupPhase()">Gruppenphase starten →</button>
-  </div>
+  <div id="draw-actions" class="tc hidden"></div>
 </div>
 
 <!-- GROUP PHASE -->
@@ -345,7 +343,7 @@ tr:last-child td{border-bottom:none}
     </div>
   </div>
   <div id="ko-start-btn" class="tc mt20 hidden">
-    <button class="btn bgold" style="font-size:1.1rem;padding:12px 32px" onclick="startKO()">
+    <button class="btn bw" style="font-size:1.1rem;padding:12px 32px" onclick="startKO()">
       🏆 K.O.-Phase starten →
     </button>
   </div>
@@ -388,7 +386,7 @@ const S = {
   phase: 'registration',
   players: [],
   name: '',
-  cfg: { groups: 4, koSize: 8, gBO: 5, kBOs: [5,7,9] },
+  cfg: { mode: 'groups', groups: 4, koSize: 8, gBO: 5, kBOs: [5,7,9] },
   groups: [],
   // group phase
   matches: [],
@@ -438,15 +436,27 @@ function updateTournamentName(val){
   document.title = '🎯 ' + display;
 }
 
+function phaseOrder(){
+  return S.cfg.mode==='direct'
+    ? ['registration','setup','draw','ko']
+    : ['registration','setup','draw','group','ko'];
+}
+
 function gotoScreen(ph) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   el('s-'+ph).classList.add('active');
   S.phase = ph;
-  const order = ['registration','setup','draw','group','ko'];
+  const order = phaseOrder();
   const idx = order.indexOf(ph);
-  document.querySelectorAll('.pdot').forEach((d,i)=>{
+  const groupDot = document.querySelector('.pdot[data-p="group"]');
+  groupDot.classList.toggle('hidden', S.cfg.mode==='direct');
+  document.querySelectorAll('.pdot').forEach(d=>{
+    const p = d.dataset.p;
     d.classList.remove('active','done');
-    if(i<idx)d.classList.add('done'); else if(i===idx)d.classList.add('active');
+    if(order.includes(p)){
+      const i = order.indexOf(p);
+      if(i<idx)d.classList.add('done'); else if(i===idx)d.classList.add('active');
+    }
   });
   window.scrollTo(0,0);
 }
@@ -517,17 +527,33 @@ function goToSetup(){
 // ════════════════════════════════════════
 //  SETUP
 // ════════════════════════════════════════
+function groupOptions(n){
+  const opts=[1];
+  for(let g=2;g<=Math.min(8,Math.floor(n/3));g++){
+    const mx=Math.ceil(n/g);
+    if(mx>7)continue;
+    opts.push(g);
+  }
+  return opts;
+}
+
 function renderSetup(){
   const n = S.players.length;
   const body = el('setup-body');
+  const isDirect = S.cfg.mode==='direct';
 
-  const groupBtns = [];
-  for(let g=2;g<=Math.min(8,Math.floor(n/3));g++){
+  const modeBtns = `
+    <button class="btn sel-btn ${!isDirect?'bp':'bg'}" onclick="setMode('groups')">Gruppenphase + K.O.</button>
+    <button class="btn sel-btn ${isDirect?'bp':'bg'}" onclick="setMode('direct')">Direkt K.O.</button>`;
+
+  const groupOpts = groupOptions(n);
+  if(!groupOpts.includes(S.cfg.groups)) S.cfg.groups = groupOpts[groupOpts.length-1];
+  const groupBtns = groupOpts.map(g=>{
+    if(g===1) return `<button class="btn sel-btn ${S.cfg.groups===1?'bp':'bg'}" onclick="setCfg('groups',1)">1<br><small style="font-size:.68rem;font-family:'Share Tech Mono'">Alle (${n})</small></button>`;
     const mn=Math.floor(n/g), mx=Math.ceil(n/g);
-    if(mx>7)continue;
     const lbl=mn===mx?`${g}×${mn}`:`${g}×(${mn}–${mx})`;
-    groupBtns.push(`<button class="btn sel-btn ${S.cfg.groups===g?'bp':'bg'}" onclick="setCfg('groups',${g})">${g}<br><small style="font-size:.68rem;font-family:'Share Tech Mono'">${lbl}</small></button>`);
-  }
+    return `<button class="btn sel-btn ${S.cfg.groups===g?'bp':'bg'}" onclick="setCfg('groups',${g})">${g}<br><small style="font-size:.68rem;font-family:'Share Tech Mono'">${lbl}</small></button>`;
+  }).join('');
 
   const koOpts = [];
   if(n>=4)koOpts.push(4); if(n>=8)koOpts.push(8); if(n>=16)koOpts.push(16);
@@ -546,9 +572,10 @@ function renderSetup(){
     <div style="font-size:.88rem;color:var(--txt2);margin-bottom:14px">
       <strong style="color:var(--acc)">${n}</strong> Spieler angemeldet
     </div>
-    <div class="cfg-row"><span class="cfg-lbl">Anzahl Gruppen</span><div class="cfg-btns">${groupBtns.join('')||'<span class="muted sm">Auto</span>'}</div></div>
-    <div class="cfg-row"><span class="cfg-lbl">K.O. startet ab</span><div class="cfg-btns">${koBtns}</div></div>
-    <div class="cfg-row"><span class="cfg-lbl">Gruppenphase — Best of</span><div class="cfg-btns">${gboBtns}</div></div>
+    <div class="cfg-row"><span class="cfg-lbl">Modus</span><div class="cfg-btns">${modeBtns}</div></div>
+    ${isDirect ? '' : `<div class="cfg-row"><span class="cfg-lbl">Anzahl Gruppen</span><div class="cfg-btns">${groupBtns}</div></div>`}
+    <div class="cfg-row"><span class="cfg-lbl">${isDirect?'Teilnehmer im K.O.-Baum':'K.O. startet ab'}</span><div class="cfg-btns">${koBtns}</div></div>
+    ${isDirect ? '' : `<div class="cfg-row"><span class="cfg-lbl">Gruppenphase — Best of</span><div class="cfg-btns">${gboBtns}</div></div>`}
     ${kboRows}
     <div id="cfg-sum" class="sum-card"></div>`;
 
@@ -561,6 +588,11 @@ function setCfg(k,v){
   renderSetup();
 }
 
+function setMode(m){
+  S.cfg.mode=m;
+  renderSetup();
+}
+
 function setKBO(r,v){ S.cfg.kBOs[r]=v; renderSetup(); }
 
 function advCalc(){
@@ -569,17 +601,18 @@ function advCalc(){
 }
 
 function updateSum(){
-  const {groups:g,koSize:k,gBO,kBOs} = S.cfg;
+  const {mode,groups:g,koSize:k,gBO,kBOs} = S.cfg;
+  const isDirect = mode==='direct';
   const {pp,ex} = advCalc();
   const rn = getRoundNames(k);
   const s = el('cfg-sum'); if(!s)return;
   const kboSummary = rn.map((n,r)=>`<div><span>${n}:</span> <strong>BO${kBOs[r]}</strong></div>`).join('');
   s.innerHTML=`<div class="sum-row">
-    <div><span>Gruppen:</span> <strong>${g}</strong></div>
+    ${isDirect ? '' : `<div><span>Gruppen:</span> <strong>${g}</strong></div>`}
     <div><span>K.O.-Plätze:</span> <strong>${k}</strong></div>
-    <div><span>Weiter/Gruppe:</span> <strong>${pp}</strong></div>
-    ${ex>0?`<div><span>Beste Drittpl.:</span> <strong style="color:var(--gold)">${ex}</strong></div>`:''}
-    <div><span>Gruppe BO:</span> <strong>${gBO}</strong></div>
+    ${isDirect ? '' : `<div><span>Weiter/Gruppe:</span> <strong>${pp}</strong></div>`}
+    ${(!isDirect && ex>0)?`<div><span>Beste Drittpl.:</span> <strong style="color:var(--white)">${ex}</strong></div>`:''}
+    ${isDirect ? '' : `<div><span>Gruppe BO:</span> <strong>${gBO}</strong></div>`}
     ${kboSummary}
   </div>`;
 }
@@ -589,9 +622,16 @@ function updateSum(){
 // ════════════════════════════════════════
 async function startDraw(){
   S.players = getVP();
-  renderDrawGrid();
   gotoScreen('draw');
-  await runDraw();
+  if(S.cfg.mode==='direct'){
+    el('draw-title').textContent='🎲 K.O.-Auslosung';
+    renderDirectDrawGrid();
+    await runDirectDraw();
+  } else {
+    el('draw-title').textContent='🎲 Gruppenauslosung';
+    renderDrawGrid();
+    await runGroupDraw();
+  }
 }
 
 function renderDrawGrid(){
@@ -607,7 +647,7 @@ function renderDrawGrid(){
   <div class="tc mt20" style="color:var(--txt2)"><div id="draw-status">Auslosung läuft…</div></div>`;
 }
 
-async function runDraw(){
+async function runGroupDraw(){
   el('draw-actions').classList.add('hidden');
   const players = shuffle([...S.players]);
   const g = S.cfg.groups;
@@ -616,28 +656,62 @@ async function runDraw(){
 
   for(let i=0;i<players.length;i++){
     const p=players[i], gi=i%g;
-    await showBall(p,gi);
+    await showBall(p,`Gruppe ${grpName(gi)}`);
     const chip=document.createElement('div');
     chip.className='chip'; chip.textContent=p;
     el(`dgp-${gi}`).appendChild(chip);
-    await sleep(180);
+    await sleep(450);
   }
 
   el('draw-status').innerHTML='✅ <strong style="color:var(--acc)">Auslosung abgeschlossen!</strong>';
   S.groups = groups;
+  el('draw-actions').innerHTML=`<button class="btn bp" onclick="goToGroupPhase()">Gruppenphase starten →</button>`;
   el('draw-actions').classList.remove('hidden');
 }
 
-function showBall(name,gi){
+function renderDirectDrawGrid(){
+  const k = S.cfg.koSize;
+  const cols = Math.min(k,4);
+  el('draw-body').innerHTML=`<div id="draw-grid" class="draw-grid" style="grid-template-columns:repeat(${cols},1fr)">
+    ${Array.from({length:k},(_,i)=>`
+      <div class="draw-gcard" id="dg-${i}">
+        <div class="draw-gtitle">Startplatz ${i+1}</div>
+        <div id="dgp-${i}" style="display:flex;flex-wrap:wrap;gap:3px;min-height:36px;justify-content:center"></div>
+      </div>`).join('')}
+  </div>
+  <div class="tc mt20" style="color:var(--txt2)"><div id="draw-status">Auslosung läuft…</div></div>`;
+}
+
+async function runDirectDraw(){
+  el('draw-actions').classList.add('hidden');
+  const k = S.cfg.koSize;
+  const seeds = shuffle([...S.players]).slice(0,k);
+
+  for(let i=0;i<seeds.length;i++){
+    const p=seeds[i];
+    await showBall(p,`Startplatz ${i+1}`);
+    const chip=document.createElement('div');
+    chip.className='chip'; chip.textContent=p;
+    el(`dgp-${i}`).appendChild(chip);
+    await sleep(450);
+  }
+
+  el('draw-status').innerHTML='✅ <strong style="color:var(--acc)">Auslosung abgeschlossen!</strong>';
+  S.seeds = seeds;
+  el('draw-actions').innerHTML=`<button class="btn bp" onclick="startKO()">K.O.-Phase starten →</button>`;
+  el('draw-actions').classList.remove('hidden');
+}
+
+function showBall(name,badge){
   return new Promise(r=>{
     const o=document.createElement('div');
     o.className='draw-overlay';
     o.innerHTML=`<div class="draw-ball">${escHtml(name)}</div>
       <div class="draw-arrow">⬇</div>
-      <div class="draw-badge">Gruppe ${grpName(gi)}</div>`;
+      <div class="draw-badge">${badge}</div>`;
     document.body.appendChild(o);
-    setTimeout(()=>{ o.style.transition='opacity .3s'; o.style.opacity='0';
-      setTimeout(()=>o.remove(),300); r(); },820);
+    setTimeout(()=>{ o.style.transition='opacity .5s'; o.style.opacity='0';
+      setTimeout(()=>o.remove(),500); r(); },1500);
   });
 }
 
@@ -875,7 +949,7 @@ function checkDone(){
 //  KO PHASE
 // ════════════════════════════════════════
 function startKO(){
-  S.seeds = computeSeeds();
+  if(S.cfg.mode!=='direct') S.seeds = computeSeeds();
   S.bracket = buildBracket(S.cfg.koSize, S.seeds);
   gotoScreen('ko');
   renderKO();
@@ -1033,7 +1107,7 @@ function confirmKS(){
 
 function spawnConfetti(){
   if(document.querySelector('.cpiece'))return;
-  const cols=['#ffd700','#00ff77','#ff3355','#4488ff','#ff77ee','#00ccff'];
+  const cols=['#ff4d4d','#ffffff','#d81e2c','#ff8080','#f1efe6','#a91d2c'];
   for(let i=0;i<90;i++){
     setTimeout(()=>{
       const c=document.createElement('div');
