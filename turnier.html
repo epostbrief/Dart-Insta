@@ -403,7 +403,8 @@ const S = {
   boards: [null,null,null,null],
   // ko
   seeds: [],
-  bracket: null
+  bracket: null,
+  savedToArchive: false
 };
 let cgBoard = -1, ksMatchId = null;
 
@@ -1117,6 +1118,33 @@ function buildBracket(n, seeds){
   return {ms, nr, rn:getRoundNames(n)};
 }
 
+const ARCHIVE_KEY='dartTurnierArchiv';
+
+function saveTournamentToArchive(){
+  if(S.savedToArchive)return;
+  const {ms,nr,rn}=S.bracket;
+  const final=ms.find(m=>m.round===nr-1);
+  if(!final?.winner){notify('Turnier ist noch nicht abgeschlossen!');return;}
+
+  const entry={
+    id: uid(),
+    name: S.name || 'Dart Turnier',
+    date: new Date().toISOString(),
+    mode: S.cfg.mode,
+    winner: final.winner,
+    groupTables: S.cfg.mode==='groups' ? S.groups.map((_,gi)=>standings(gi)) : [],
+    groupMatches: S.cfg.mode==='groups' ? S.matches.map(m=>({gi:m.gi,p1:m.p1,p2:m.p2,result:m.result})) : [],
+    bracket: {ms:ms.map(m=>({round:m.round,pos:m.pos,p1:m.p1,p2:m.p2,result:m.result,winner:m.winner})), nr, rn}
+  };
+
+  const list=JSON.parse(localStorage.getItem(ARCHIVE_KEY)||'[]');
+  list.unshift(entry);
+  localStorage.setItem(ARCHIVE_KEY, JSON.stringify(list));
+  S.savedToArchive=true;
+  renderKO();
+  notify('💾 Turnier im Archiv gespeichert!');
+}
+
 function renderKO(){
   const {ms,nr,rn}=S.bracket;
   const final=ms.find(m=>m.round===nr-1);
@@ -1126,6 +1154,11 @@ function renderKO(){
       <span class="trophy">🏆</span>
       <div class="champ-name">${escHtml(final.winner)}</div>
       <div class="champ-sub">Einzelmeister</div>
+      <div class="mt20">
+        <button class="btn ${S.savedToArchive?'bg':'bw'}" ${S.savedToArchive?'disabled':''} onclick="saveTournamentToArchive()">
+          ${S.savedToArchive?'✓ Im Archiv gespeichert':'💾 Turnier im Archiv speichern'}
+        </button>
+      </div>
     </div>`;
     spawnConfetti();
   }
