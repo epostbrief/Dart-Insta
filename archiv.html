@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📁 Turnier-Archiv</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#070d08; --bg2:#0e1a12; --bg3:#142619; --bg4:#1b3320;
+  --acc:#ff4d4d; --acc2:#d81e2c; --red:#a91d2c; --white:#ffffff;
+  --txt:#f1efe6; --txt2:#7c9684; --brd:#1f3526; --brd2:#2d4c34;
+  --r:8px; --r2:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:'Rajdhani',sans-serif;font-size:16px;min-height:100vh;
+  background-image:radial-gradient(ellipse at 15% 40%,rgba(20,80,45,.14) 0,transparent 55%),
+  radial-gradient(ellipse at 85% 15%,rgba(180,30,40,.07) 0,transparent 55%)}
+h1,h2,h3,.bb{font-family:'Bebas Neue',sans-serif;letter-spacing:.5px}
+.wrap{max-width:1100px;margin:0 auto;padding:20px}
+
+/* ── HEADER ── */
+.hdr{display:grid;grid-template-columns:88px 1fr 88px;align-items:center;
+  padding:14px 20px 14px;border-bottom:1px solid var(--brd);margin-bottom:24px;gap:12px}
+.hdr-logo{display:flex;align-items:center;justify-content:flex-start}
+.hdr-logo img{width:74px;height:74px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 8px rgba(255,77,77,.25))}
+.hdr-center{text-align:center}
+.hdr h1{font-size:2.6rem;color:var(--acc);line-height:1}
+.hdr .sub{color:var(--txt2);font-size:.75rem;letter-spacing:4px;text-transform:uppercase;margin-top:3px}
+.hdr-back{display:flex;align-items:center;justify-content:flex-end}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border-radius:var(--r);border:none;
+  cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.8px;
+  text-transform:uppercase;transition:all .18s;text-decoration:none}
+.bp{background:var(--acc);color:#000}.bp:hover{background:#ff7373;transform:translateY(-2px)}
+.bg{background:transparent;color:var(--txt2);border:1px solid var(--brd2)}.bg:hover{border-color:var(--acc);color:var(--acc)}
+.bw{background:var(--white);color:#000}.bw:hover{background:#e2e2e2}
+.btn-sm{padding:5px 12px;font-size:.8rem}
+
+/* ── CARDS ── */
+.card{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r2);padding:18px}
+.ct{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;color:var(--acc);margin-bottom:13px;
+  letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.mb20{margin-bottom:20px}.mt20{margin-top:20px}.mb12{margin-bottom:12px}
+.sm{font-size:.84rem}.muted{color:var(--txt2)}.tc{text-align:center}
+.mono{font-family:'Share Tech Mono',monospace}
+
+/* ── ARCHIVE LIST ── */
+.empty{text-align:center;padding:60px 20px;color:var(--txt2)}
+.empty .big{font-size:3rem;display:block;margin-bottom:12px;opacity:.5}
+.arch-list{display:flex;flex-direction:column;gap:12px}
+.arch-item{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r2);padding:16px 20px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;transition:border-color .18s}
+.arch-item:hover{border-color:var(--brd2)}
+.arch-main{flex:1;min-width:200px;cursor:pointer}
+.arch-name{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--txt);letter-spacing:.5px}
+.arch-meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:4px;font-size:.85rem;color:var(--txt2)}
+.arch-winner{color:var(--acc);font-weight:700}
+.arch-winner .tr{margin-right:4px}
+.arch-acts{display:flex;gap:8px;flex-shrink:0}
+.del-btn{background:none;border:1px solid var(--brd2);color:var(--txt2);border-radius:var(--r);
+  padding:5px 10px;cursor:pointer;font-size:.8rem;transition:all .18s}
+.del-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* ── DETAIL VIEW ── */
+.det-hdr{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+.det-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--acc);line-height:1}
+.det-sub{color:var(--txt2);font-size:.85rem;margin-top:4px}
+.det-champ{background:var(--bg2);border:1px solid var(--acc);border-radius:var(--r2);padding:18px 24px;
+  text-align:center;margin-bottom:20px}
+.det-champ .trophy{font-size:2.2rem;display:block;margin-bottom:6px}
+.det-champ .name{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--white);
+  text-shadow:0 0 20px rgba(255,77,77,.6)}
+.det-champ .sub{color:var(--txt2);font-size:.78rem;letter-spacing:3px;text-transform:uppercase;margin-top:4px}
+
+/* ── TABLES ── */
+.gtables{columns:2;gap:14px;margin-bottom:20px}
+.gtables .gcard{break-inside:avoid;margin-bottom:14px;background:var(--bg2);border:1px solid var(--brd);
+  border-radius:var(--r2);padding:14px}
+.gtitle{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--acc);margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{text-align:left;padding:5px 9px;color:var(--txt2);font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.8px;border-bottom:1px solid var(--brd)}
+td{padding:7px 9px;border-bottom:1px solid var(--brd);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.rc{width:28px;font-family:'Share Tech Mono',monospace;color:var(--txt2)}
+.r1{color:var(--acc)!important}.r2{color:#c0c0c0!important}.r3{color:#cd7f32!important}
+.nc{font-weight:700}
+
+/* ── KO BRACKET (read-only) ── */
+.bracket-outer{overflow-x:auto;padding:10px 0 20px}
+.bracket-flex{display:flex;align-items:center;justify-content:center;gap:0;min-width:fit-content}
+.br-half{display:flex;flex-direction:row;gap:0}
+.br-round{display:flex;flex-direction:column;justify-content:space-around;min-width:165px;padding:0 7px}
+.br-round-lbl{text-align:center;font-size:.7rem;color:var(--txt2);padding:3px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;margin-bottom:7px}
+.br-match{background:var(--bg3);border:1px solid var(--brd);border-radius:var(--r);margin:7px 0;overflow:hidden}
+.br-player{padding:6px 10px;display:flex;justify-content:space-between;align-items:center;
+  font-size:.85rem;font-weight:600;border-bottom:1px solid var(--brd)}
+.br-player:last-of-type{border-bottom:none}
+.br-player.win{background:rgba(255,77,77,.1);color:var(--acc)}
+.br-player.lose{color:var(--txt2);text-decoration:line-through}
+.br-player.bye{color:var(--txt2);font-style:italic;opacity:.55}
+.br-legs{font-family:'Share Tech Mono',monospace;font-size:.8rem;color:var(--txt2);min-width:22px;text-align:right}
+.br-legs.wl{color:var(--acc)}
+.br-center{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 18px;gap:9px}
+.final-lbl{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;color:var(--white);letter-spacing:2px;text-align:center}
+
+/* ── MATCH LISTS ── */
+.match-list{display:flex;flex-direction:column;gap:5px}
+.match-row{display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:8px 12px;background:var(--bg3);border-radius:var(--r);font-size:.88rem;flex-wrap:wrap}
+.mr-names{flex:1;min-width:0}
+.mr-win{font-weight:700}.mr-loss{color:var(--txt2);font-size:.82rem}
+.mr-score{font-family:'Share Tech Mono',monospace;font-weight:700;color:var(--acc);white-space:nowrap}
+.mr-tag{font-size:.68rem;color:var(--txt2);background:var(--bg4);padding:2px 7px;border-radius:9px}
+
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:3px}
+
+@media(max-width:700px){.gtables{columns:1}.hdr h1{font-size:2rem}.hdr-logo img{width:52px;height:52px}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-logo"><img src="assets/logo.png" alt="TSV Pilsting e.V. Logo"></div>
+  <div class="hdr-center">
+    <h1>📁 Turnier-Archiv</h1>
+    <div class="sub">TSV Pilsting · Dart</div>
+  </div>
+  <div class="hdr-back"><a class="btn bg btn-sm" href="index.html">← Startseite</a></div>
+</header>
+
+<div class="wrap">
+
+  <div id="s-list">
+    <div id="list-body"></div>
+  </div>
+
+  <div id="s-detail" style="display:none">
+    <div class="tc mb20">
+      <button class="btn bg" onclick="showList()">← Zurück zur Übersicht</button>
+    </div>
+    <div id="detail-body"></div>
+  </div>
+
+</div>
+
+<script>
+const ARCHIVE_KEY='dartTurnierArchiv';
+const el = id => document.getElementById(id);
+const escHtml = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+const grpName = i => String.fromCharCode(65+i);
+
+function loadArchive(){ return JSON.parse(localStorage.getItem(ARCHIVE_KEY)||'[]'); }
+function saveArchive(list){ localStorage.setItem(ARCHIVE_KEY, JSON.stringify(list)); }
+
+function fmtDate(iso){
+  const d=new Date(iso);
+  return d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'}) + ' · ' +
+         d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+}
+
+function renderList(){
+  const list = loadArchive();
+  const body = el('list-body');
+  if(!list.length){
+    body.innerHTML = `<div class="empty"><span class="big">📭</span>Noch keine Turniere im Archiv.<br>
+      Turniere werden nach Abschluss der K.O.-Phase im <a class="mono" style="color:var(--acc)" href="turnier.html">Turnier</a> gespeichert.</div>`;
+    return;
+  }
+  body.innerHTML = `<div class="arch-list">${list.map(t=>`
+    <div class="arch-item">
+      <div class="arch-main" onclick="showDetail('${t.id}')">
+        <div class="arch-name">${escHtml(t.name)}</div>
+        <div class="arch-meta">
+          <span>🗓️ ${fmtDate(t.date)}</span>
+          <span class="arch-winner"><span class="tr">🏆</span>${escHtml(t.winner)}</span>
+        </div>
+      </div>
+      <div class="arch-acts">
+        <button class="btn bg btn-sm" onclick="showDetail('${t.id}')">Details</button>
+        <button class="del-btn" onclick="deleteEntry('${t.id}')" title="Löschen">✕</button>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+function deleteEntry(id){
+  if(!confirm('Dieses Turnier endgültig aus dem Archiv löschen?'))return;
+  saveArchive(loadArchive().filter(t=>t.id!==id));
+  renderList();
+}
+
+function showList(){
+  el('s-detail').style.display='none';
+  el('s-list').style.display='block';
+  window.scrollTo(0,0);
+}
+
+function showDetail(id){
+  const t = loadArchive().find(x=>x.id===id);
+  if(!t)return;
+  reconnectBracket(t.bracket);
+  el('detail-body').innerHTML = renderDetail(t);
+  el('s-list').style.display='none';
+  el('s-detail').style.display='block';
+  window.scrollTo(0,0);
+}
+
+function renderDetail(t){
+  let html = `<div class="det-hdr">
+    <div>
+      <div class="det-title">${escHtml(t.name)}</div>
+      <div class="det-sub">🗓️ ${fmtDate(t.date)} · ${t.mode==='direct'?'Direkt K.O.':'Gruppenphase + K.O.'}</div>
+    </div>
+  </div>
+  <div class="det-champ">
+    <span class="trophy">🏆</span>
+    <div class="name">${escHtml(t.winner)}</div>
+    <div class="sub">Einzelmeister</div>
+  </div>`;
+
+  if(t.mode==='groups' && t.groupTables?.length){
+    html += `<div class="card mb20"><div class="ct">📊 Finale Gruppentabellen</div>${renderGroupTables(t.groupTables)}</div>`;
+  }
+
+  html += `<div class="card mb20"><div class="ct">🏆 K.O.-Baum</div>${renderBracket(t.bracket)}</div>`;
+
+  if(t.mode==='groups' && t.groupMatches?.length){
+    html += `<div class="card mb20"><div class="ct">🎯 Gruppenphase — alle Spiele</div>${renderGroupMatchList(t.groupMatches)}</div>`;
+  }
+
+  html += `<div class="card"><div class="ct">🎯 K.O.-Phase — alle Spiele</div>${renderKOMatchList(t.bracket)}</div>`;
+
+  return html;
+}
+
+function renderGroupTables(tables){
+  return `<div class="gtables">${tables.map((st,gi)=>{
+    const rows = st.map((p,r)=>{
+      const d=p.lf-p.la;
+      const ds = d>0?`+${d}`:d;
+      return `<tr>
+        <td class="rc r${r+1}">${r+1}.</td>
+        <td class="nc">${escHtml(p.p)}</td>
+        <td class="mono">${p.w}–${p.l}</td>
+        <td class="mono">${p.lf}–${p.la}</td>
+        <td class="mono">${ds}</td>
+      </tr>`;
+    }).join('');
+    return `<div class="gcard">
+      <div class="gtitle">Gruppe ${grpName(gi)}</div>
+      <table>
+        <thead><tr><th>#</th><th>Name</th><th>S/N</th><th>Legs</th><th>Diff</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function renderGroupMatchList(matches){
+  return `<div class="match-list">${matches.map(m=>{
+    const {l1,l2}=m.result||{l1:0,l2:0};
+    const win = l1>l2?m.p1:m.p2, los = l1>l2?m.p2:m.p1;
+    return `<div class="match-row">
+      <div class="mr-names"><span class="mr-win">${escHtml(win)}</span> &nbsp;–&nbsp; <span class="mr-loss">${escHtml(los)}</span></div>
+      <span class="mr-tag">Gr.${grpName(m.gi)}</span>
+      <span class="mr-score">${Math.max(l1,l2)}:${Math.min(l1,l2)}</span>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function renderKOMatchList(bracket){
+  const played = bracket.ms.filter(m=>m.result && m.result!=='bye');
+  if(!played.length) return '<p class="muted sm">Keine gespielten K.O.-Partien.</p>';
+  return `<div class="match-list">${played.map(m=>{
+    const {l1,l2}=m.result, win=m.winner, los=m.winner===m.p1?m.p2:m.p1;
+    return `<div class="match-row">
+      <div class="mr-names"><span class="mr-win">${escHtml(win)}</span> &nbsp;–&nbsp; <span class="mr-loss">${escHtml(los)}</span></div>
+      <span class="mr-tag">${bracket.rn[m.round]||''}</span>
+      <span class="mr-score">${Math.max(l1,l2)}:${Math.min(l1,l2)}</span>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function renderBracket(bracket){
+  const {ms,nr,rn} = bracket;
+  const final = ms.find(m=>m.round===nr-1);
+  const r0 = ms.filter(m=>m.round===0);
+  const topFirst = r0.slice(0,Math.ceil(r0.length/2));
+  const botFirst = r0.slice(Math.ceil(r0.length/2));
+  return `<div class="bracket-outer"><div class="bracket-flex">
+    ${buildHalf(ms,topFirst,nr,'left',rn)}
+    <div class="br-center"><div class="final-lbl">🏆 FINALE 🏆</div>${renderBM(final)}</div>
+    ${buildHalf(ms,botFirst,nr,'right',rn)}
+  </div></div>`;
+}
+
+function buildHalf(all,first,nr,side,rn){
+  let rounds=[], cur=[...first];
+  for(let r=0;r<nr-1;r++){
+    rounds.push(cur);
+    const nids=new Set(cur.map(m=>m.nextId).filter(Boolean));
+    cur=all.filter(m=>nids.has(m.id));
+  }
+  if(side==='right') rounds.reverse();
+  let html=`<div class="br-half">`;
+  rounds.forEach((rms,i)=>{
+    const ri=side==='right'?rounds.length-1-i:i;
+    const lbl=rn[ri]||`Runde ${ri+1}`;
+    html+=`<div class="br-round"><div class="br-round-lbl">${lbl}</div>`;
+    rms.forEach(m=>html+=renderBM(m));
+    html+=`</div>`;
+  });
+  html+=`</div>`;
+  return html;
+}
+
+function renderBM(m){
+  if(!m)return'';
+  const isBye = m.p1==='BYE' || m.p2==='BYE';
+  const p1c = isBye ? (m.p1==='BYE'?'bye':'win') : (m.winner===m.p1?'win':'lose');
+  const p2c = isBye ? (m.p2==='BYE'?'bye':'win') : (m.winner===m.p2?'win':'lose');
+  const p1l = (!isBye&&m.result&&m.result!=='bye') ? `<span class="br-legs ${m.winner===m.p1?'wl':''}">${m.result.l1}</span>`:'';
+  const p2l = (!isBye&&m.result&&m.result!=='bye') ? `<span class="br-legs ${m.winner===m.p2?'wl':''}">${m.result.l2}</span>`:'';
+  const p1txt = m.p1==='BYE' ? 'Freilos' : (m.p1||'—');
+  const p2txt = m.p2==='BYE' ? 'Freilos' : (m.p2||'—');
+  return `<div class="br-match">
+    <div class="br-player ${p1c}"><span>${escHtml(p1txt)}</span>${p1l}</div>
+    <div class="br-player ${p2c}"><span>${escHtml(p2txt)}</span>${p2l}</div>
+  </div>`;
+}
+
+// buildHalf() needs nextId links which aren't stored in the saved bracket snapshot (only round/pos/p1/p2/result/winner) —
+// reconstruct them positionally the same way buildBracket() does, since round r's matches are always
+// produced from round r-1 pairs in stored order.
+function reconnectBracket(bracket){
+  const byRound = {};
+  bracket.ms.forEach(m=>{ (byRound[m.round]=byRound[m.round]||[]).push(m); });
+  Object.keys(byRound).forEach(r=>byRound[r].sort((a,b)=>a.pos-b.pos));
+  bracket.ms.forEach(m=>{ m.id = m.id || `${m.round}-${m.pos}`; });
+  const rounds = Object.keys(byRound).map(Number).sort((a,b)=>a-b);
+  rounds.forEach(r=>{
+    const cur = byRound[r], next = byRound[r+1];
+    if(!next)return;
+    cur.forEach((m,i)=>{
+      const nm = next[Math.floor(i/2)];
+      m.nextId = nm.id; m.nextSlot = (i%2===0)?1:2;
+    });
+  });
+}
+
+renderList();
+</script>
+</body>
+</html>
