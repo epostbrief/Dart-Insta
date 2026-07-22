@@ -112,6 +112,13 @@ select option{background:var(--bg3)}
   font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--acc);animation:bdg .7s ease}
 @keyframes bdg{from{transform:scale(0);opacity:0}to{transform:none;opacity:1}}
 
+/* ── DIRECT-KO FLY DRAW ── */
+.fly-ball{position:fixed;transform:translate(-50%,-50%);z-index:1500;background:var(--bg3);
+  border:2px solid var(--acc);border-radius:20px;color:var(--acc);font-family:'Bebas Neue',sans-serif;
+  font-size:2.1rem;padding:16px 26px;white-space:nowrap;pointer-events:none;text-align:center;
+  box-shadow:0 0 26px rgba(255,77,77,.5)}
+.fly-ball.appear{animation:bspin .5s ease}
+
 /* ── GROUP PHASE ── */
 .boards-section{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r2);padding:18px;margin-bottom:18px}
 .sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
@@ -200,6 +207,9 @@ tr:last-child td{border-bottom:none}
 .br-player.win{background:rgba(255,77,77,.1);color:var(--acc)}
 .br-player.lose{color:var(--txt2);text-decoration:line-through}
 .br-player.tbd{color:var(--txt2);font-style:italic;font-size:.78rem}
+.br-player.bye{color:var(--txt2);font-style:italic;opacity:.55}
+.br-player.just-landed{animation:landFlash .7s ease}
+@keyframes landFlash{0%{background:rgba(255,77,77,.45)}100%{background:transparent}}
 .br-legs{font-family:'Share Tech Mono',monospace;font-size:.82rem;color:var(--txt2);min-width:24px;text-align:right}
 .br-legs.wl{color:var(--acc)}
 .score-btn{width:100%;padding:4px;background:var(--bg4);border:none;border-top:1px solid var(--brd);
@@ -407,19 +417,20 @@ const sleep = ms => new Promise(r=>setTimeout(r,ms));
 const ceil2 = bo => Math.ceil(bo/2);
 const grpName = i => String.fromCharCode(65+i);
 
-function defaultKBOs(koSize){
-  if(koSize===4)  return [7,9];
-  if(koSize===8)  return [5,7,9];
-  if(koSize===16) return [5,5,7,9];
-  return [7];
+function nextPow2(n){ let p=2; while(p<n)p*=2; return p; }
+
+function defaultKBOs(bracketSize){
+  const r = Math.log2(bracketSize);
+  const table = {1:[7],2:[7,9],3:[5,7,9],4:[5,5,7,9]};
+  if(table[r]) return table[r];
+  return Array(r-4).fill(5).concat([5,5,7,9]);
 }
 
-function getRoundNames(koSize){
+const ROUND_NAMES = {2:'Finale',4:'Halbfinale',8:'Viertelfinale',16:'Achtelfinale',32:'Sechzehntelfinale',64:'32stel-Finale'};
+
+function getRoundNames(bracketSize){
   const n=[];
-  if(koSize>=16)n.push('Achtelfinale');
-  if(koSize>=8) n.push('Viertelfinale');
-  if(koSize>=4) n.push('Halbfinale');
-  n.push('Finale');
+  for(let s=bracketSize;s>=2;s/=2) n.push(ROUND_NAMES[s] || `Runde der letzten ${s}`);
   return n;
 }
 
@@ -546,36 +557,52 @@ function renderSetup(){
     <button class="btn sel-btn ${!isDirect?'bp':'bg'}" onclick="setMode('groups')">Gruppenphase + K.O.</button>
     <button class="btn sel-btn ${isDirect?'bp':'bg'}" onclick="setMode('direct')">Direkt K.O.</button>`;
 
-  const groupOpts = groupOptions(n);
-  if(!groupOpts.includes(S.cfg.groups)) S.cfg.groups = groupOpts[groupOpts.length-1];
-  const groupBtns = groupOpts.map(g=>{
-    if(g===1) return `<button class="btn sel-btn ${S.cfg.groups===1?'bp':'bg'}" onclick="setCfg('groups',1)">1<br><small style="font-size:.68rem;font-family:'Share Tech Mono'">Alle (${n})</small></button>`;
-    const mn=Math.floor(n/g), mx=Math.ceil(n/g);
-    const lbl=mn===mx?`${g}×${mn}`:`${g}×(${mn}–${mx})`;
-    return `<button class="btn sel-btn ${S.cfg.groups===g?'bp':'bg'}" onclick="setCfg('groups',${g})">${g}<br><small style="font-size:.68rem;font-family:'Share Tech Mono'">${lbl}</small></button>`;
-  }).join('');
+  let midRows, kboRows;
 
-  const koOpts = [];
-  if(n>=4)koOpts.push(4); if(n>=8)koOpts.push(8); if(n>=16)koOpts.push(16);
-  if(!koOpts.includes(S.cfg.koSize)) S.cfg.koSize = koOpts[koOpts.length-1]||4;
+  if(isDirect){
+    const bracketSize = nextPow2(n), byes = bracketSize-n;
+    const roundNames = getRoundNames(bracketSize);
+    if(S.cfg.kBOs.length!==roundNames.length) S.cfg.kBOs = defaultKBOs(bracketSize);
+    midRows = `<div class="cfg-row"><span class="cfg-lbl">K.O.-Baum</span>
+      <span class="sm muted">${bracketSize} Plätze für ${n} Spieler${byes>0?` · ${byes} Freilose (gerecht auf beide Seiten verteilt)`:''}</span></div>`;
+    kboRows = roundNames.map((rname,r)=>{
+      const btns=[5,7,9,11].map(b=>`<button class="btn sel-btn ${S.cfg.kBOs[r]===b?'bp':'bg'}" onclick="setKBO(${r},${b})">BO${b}</button>`).join('');
+      return `<div class="cfg-row"><span class="cfg-lbl">${rname} — Best of</span><div class="cfg-btns">${btns}</div></div>`;
+    }).join('');
+  } else {
+    const groupOpts = groupOptions(n);
+    if(!groupOpts.includes(S.cfg.groups)) S.cfg.groups = groupOpts[groupOpts.length-1];
+    const groupBtns = groupOpts.map(g=>{
+      if(g===1) return `<button class="btn sel-btn ${S.cfg.groups===1?'bp':'bg'}" onclick="setCfg('groups',1)">1<br><small style="font-size:.68rem;font-family:'Share Tech Mono'">Alle (${n})</small></button>`;
+      const mn=Math.floor(n/g), mx=Math.ceil(n/g);
+      const lbl=mn===mx?`${g}×${mn}`:`${g}×(${mn}–${mx})`;
+      return `<button class="btn sel-btn ${S.cfg.groups===g?'bp':'bg'}" onclick="setCfg('groups',${g})">${g}<br><small style="font-size:.68rem;font-family:'Share Tech Mono'">${lbl}</small></button>`;
+    }).join('');
 
-  const koLbls = {4:'Halbfinale (4)',8:'Viertelfinale (8)',16:'Achtelfinale (16)'};
-  const koBtns = koOpts.map(k=>`<button class="btn sel-btn ${S.cfg.koSize===k?'bp':'bg'}" onclick="setCfg('koSize',${k})">${koLbls[k]||k}</button>`).join('');
-  const gboBtns = [3,5,7].map(b=>`<button class="btn sel-btn ${S.cfg.gBO===b?'bp':'bg'}" onclick="setCfg('gBO',${b})">BO${b}</button>`).join('');
-  const roundNames = getRoundNames(S.cfg.koSize);
-  const kboRows = roundNames.map((rname,r)=>{
-    const btns=[5,7,9,11].map(b=>`<button class="btn sel-btn ${S.cfg.kBOs[r]===b?'bp':'bg'}" onclick="setKBO(${r},${b})">BO${b}</button>`).join('');
-    return `<div class="cfg-row"><span class="cfg-lbl">${rname} — Best of</span><div class="cfg-btns">${btns}</div></div>`;
-  }).join('');
+    const koOpts = [];
+    if(n>=4)koOpts.push(4); if(n>=8)koOpts.push(8); if(n>=16)koOpts.push(16);
+    if(!koOpts.includes(S.cfg.koSize)) S.cfg.koSize = koOpts[koOpts.length-1]||4;
+
+    const koLbls = {4:'Halbfinale (4)',8:'Viertelfinale (8)',16:'Achtelfinale (16)'};
+    const koBtns = koOpts.map(k=>`<button class="btn sel-btn ${S.cfg.koSize===k?'bp':'bg'}" onclick="setCfg('koSize',${k})">${koLbls[k]||k}</button>`).join('');
+    const gboBtns = [3,5,7].map(b=>`<button class="btn sel-btn ${S.cfg.gBO===b?'bp':'bg'}" onclick="setCfg('gBO',${b})">BO${b}</button>`).join('');
+    const roundNames = getRoundNames(S.cfg.koSize);
+    if(S.cfg.kBOs.length!==roundNames.length) S.cfg.kBOs = defaultKBOs(S.cfg.koSize);
+    kboRows = roundNames.map((rname,r)=>{
+      const btns=[5,7,9,11].map(b=>`<button class="btn sel-btn ${S.cfg.kBOs[r]===b?'bp':'bg'}" onclick="setKBO(${r},${b})">BO${b}</button>`).join('');
+      return `<div class="cfg-row"><span class="cfg-lbl">${rname} — Best of</span><div class="cfg-btns">${btns}</div></div>`;
+    }).join('');
+    midRows = `<div class="cfg-row"><span class="cfg-lbl">Anzahl Gruppen</span><div class="cfg-btns">${groupBtns}</div></div>
+    <div class="cfg-row"><span class="cfg-lbl">K.O. startet ab</span><div class="cfg-btns">${koBtns}</div></div>
+    <div class="cfg-row"><span class="cfg-lbl">Gruppenphase — Best of</span><div class="cfg-btns">${gboBtns}</div></div>`;
+  }
 
   body.innerHTML=`
     <div style="font-size:.88rem;color:var(--txt2);margin-bottom:14px">
       <strong style="color:var(--acc)">${n}</strong> Spieler angemeldet
     </div>
     <div class="cfg-row"><span class="cfg-lbl">Modus</span><div class="cfg-btns">${modeBtns}</div></div>
-    ${isDirect ? '' : `<div class="cfg-row"><span class="cfg-lbl">Anzahl Gruppen</span><div class="cfg-btns">${groupBtns}</div></div>`}
-    <div class="cfg-row"><span class="cfg-lbl">${isDirect?'Teilnehmer im K.O.-Baum':'K.O. startet ab'}</span><div class="cfg-btns">${koBtns}</div></div>
-    ${isDirect ? '' : `<div class="cfg-row"><span class="cfg-lbl">Gruppenphase — Best of</span><div class="cfg-btns">${gboBtns}</div></div>`}
+    ${midRows}
     ${kboRows}
     <div id="cfg-sum" class="sum-card"></div>`;
 
@@ -602,17 +629,27 @@ function advCalc(){
 
 function updateSum(){
   const {mode,groups:g,koSize:k,gBO,kBOs} = S.cfg;
-  const isDirect = mode==='direct';
+  const s = el('cfg-sum'); if(!s)return;
+  if(mode==='direct'){
+    const n=S.players.length, bracketSize=nextPow2(n), byes=bracketSize-n;
+    const rn = getRoundNames(bracketSize);
+    const kboSummary = rn.map((nm,r)=>`<div><span>${nm}:</span> <strong>BO${kBOs[r]}</strong></div>`).join('');
+    s.innerHTML=`<div class="sum-row">
+      <div><span>K.O.-Plätze:</span> <strong>${bracketSize}</strong></div>
+      <div><span>Freilose:</span> <strong>${byes}</strong></div>
+      ${kboSummary}
+    </div>`;
+    return;
+  }
   const {pp,ex} = advCalc();
   const rn = getRoundNames(k);
-  const s = el('cfg-sum'); if(!s)return;
   const kboSummary = rn.map((n,r)=>`<div><span>${n}:</span> <strong>BO${kBOs[r]}</strong></div>`).join('');
   s.innerHTML=`<div class="sum-row">
-    ${isDirect ? '' : `<div><span>Gruppen:</span> <strong>${g}</strong></div>`}
+    <div><span>Gruppen:</span> <strong>${g}</strong></div>
     <div><span>K.O.-Plätze:</span> <strong>${k}</strong></div>
-    ${isDirect ? '' : `<div><span>Weiter/Gruppe:</span> <strong>${pp}</strong></div>`}
-    ${(!isDirect && ex>0)?`<div><span>Beste Drittpl.:</span> <strong style="color:var(--white)">${ex}</strong></div>`:''}
-    ${isDirect ? '' : `<div><span>Gruppe BO:</span> <strong>${gBO}</strong></div>`}
+    <div><span>Weiter/Gruppe:</span> <strong>${pp}</strong></div>
+    ${ex>0?`<div><span>Beste Drittpl.:</span> <strong style="color:var(--white)">${ex}</strong></div>`:''}
+    <div><span>Gruppe BO:</span> <strong>${gBO}</strong></div>
     ${kboSummary}
   </div>`;
 }
@@ -622,12 +659,10 @@ function updateSum(){
 // ════════════════════════════════════════
 async function startDraw(){
   S.players = getVP();
-  gotoScreen('draw');
   if(S.cfg.mode==='direct'){
-    el('draw-title').textContent='🎲 K.O.-Auslosung';
-    renderDirectDrawGrid();
     await runDirectDraw();
   } else {
+    gotoScreen('draw');
     el('draw-title').textContent='🎲 Gruppenauslosung';
     renderDrawGrid();
     await runGroupDraw();
@@ -669,37 +704,116 @@ async function runGroupDraw(){
   el('draw-actions').classList.remove('hidden');
 }
 
-function renderDirectDrawGrid(){
-  const k = S.cfg.koSize;
-  const cols = Math.min(k,4);
-  el('draw-body').innerHTML=`<div id="draw-grid" class="draw-grid" style="grid-template-columns:repeat(${cols},1fr)">
-    ${Array.from({length:k},(_,i)=>`
-      <div class="draw-gcard" id="dg-${i}">
-        <div class="draw-gtitle">Startplatz ${i+1}</div>
-        <div id="dgp-${i}" style="display:flex;flex-wrap:wrap;gap:3px;min-height:36px;justify-content:center"></div>
-      </div>`).join('')}
-  </div>
-  <div class="tc mt20" style="color:var(--txt2)"><div id="draw-status">Auslosung läuft…</div></div>`;
+// ── Direct-KO bracket draw: byes split evenly across both bracket halves ──
+function distributeByesInHalf(half, byes){
+  const matches = half/2;
+  const slots = new Array(half).fill(false);
+  const byeMatches = shuffle([...Array(matches).keys()]).slice(0,Math.min(byes,matches));
+  byeMatches.forEach(mi=>{
+    const which = Math.random()<0.5?0:1;
+    slots[mi*2+which] = true;
+  });
+  return slots;
+}
+
+function buildByeMap(bracketSize, n){
+  const byes = bracketSize-n, half = bracketSize/2;
+  let byesLeft = Math.floor(byes/2), byesRight = byes-byesLeft;
+  if(byes%2===1 && Math.random()<0.5){ const t=byesLeft; byesLeft=byesRight; byesRight=t; }
+  return [...distributeByesInHalf(half,byesLeft), ...distributeByesInHalf(half,byesRight)];
+}
+
+function buildDirectBracket(bracketSize, byeMap){
+  const ms=[];
+  for(let i=0;i<bracketSize;i+=2){
+    ms.push({id:uid(),round:0,pos:i/2,
+      p1:byeMap[i]?'BYE':null, p2:byeMap[i+1]?'BYE':null,
+      result:null,winner:null,nextId:null,nextSlot:null});
+  }
+  const nr=Math.log2(bracketSize);
+  let prev=ms;
+  for(let r=1;r<nr;r++){
+    const cur=[];
+    for(let p=0;p<prev.length/2;p++){
+      const m={id:uid(),round:r,pos:p,p1:null,p2:null,result:null,winner:null,nextId:null,nextSlot:null};
+      prev[p*2].nextId=m.id; prev[p*2].nextSlot=1;
+      prev[p*2+1].nextId=m.id; prev[p*2+1].nextSlot=2;
+      cur.push(m);
+    }
+    ms.push(...cur); prev=cur;
+  }
+  return {ms, nr, rn:getRoundNames(bracketSize)};
+}
+
+function propagateWinner(m){
+  if(!m.nextId)return;
+  const nx=S.bracket.ms.find(x=>x.id===m.nextId);
+  if(!nx)return;
+  if(m.nextSlot===1) nx.p1=m.winner; else nx.p2=m.winner;
+}
+
+function maybeResolveBye(m){
+  if(m.round!==0||m.result)return;
+  if(m.p1==='BYE'&&m.p2&&m.p2!=='BYE'){ m.result='bye'; m.winner=m.p2; propagateWinner(m); }
+  else if(m.p2==='BYE'&&m.p1&&m.p1!=='BYE'){ m.result='bye'; m.winner=m.p1; propagateWinner(m); }
+}
+
+function flyNameToSlot(name,targetEl){
+  return new Promise(resolve=>{
+    const ball=document.createElement('div');
+    ball.className='fly-ball appear';
+    ball.textContent=name;
+    ball.style.left=(window.innerWidth/2)+'px';
+    ball.style.top=(window.innerHeight/2)+'px';
+    document.body.appendChild(ball);
+    setTimeout(()=>{
+      const tr=targetEl.getBoundingClientRect();
+      ball.classList.remove('appear');
+      ball.style.transition='left .9s cubic-bezier(.5,0,.5,1),top .9s cubic-bezier(.5,0,.5,1),font-size .9s ease,padding .9s ease,opacity .25s ease .7s';
+      ball.style.left=(tr.left+tr.width/2)+'px';
+      ball.style.top=(tr.top+tr.height/2)+'px';
+      ball.style.fontSize='.92rem';
+      ball.style.padding='7px 11px';
+      ball.style.opacity='0';
+      ball.addEventListener('transitionend', function h(e){
+        if(e.propertyName!=='left')return;
+        ball.removeEventListener('transitionend',h);
+        ball.remove();
+        resolve();
+      });
+    },950);
+  });
 }
 
 async function runDirectDraw(){
-  el('draw-actions').classList.add('hidden');
-  const k = S.cfg.koSize;
-  const seeds = shuffle([...S.players]).slice(0,k);
+  const n = S.players.length;
+  const bracketSize = nextPow2(n);
+  const byeMap = buildByeMap(bracketSize,n);
+  S.bracket = buildDirectBracket(bracketSize, byeMap);
+  gotoScreen('ko');
+  renderKO();
 
-  for(let i=0;i<seeds.length;i++){
-    const p=seeds[i];
-    await showBall(p,`Startplatz ${i+1}`);
-    const chip=document.createElement('div');
-    chip.className='chip'; chip.textContent=p;
-    el(`dgp-${i}`).appendChild(chip);
-    await sleep(450);
+  const targets=[];
+  S.bracket.ms.filter(m=>m.round===0).forEach(m=>{
+    if(m.p1===null) targets.push({matchId:m.id, slot:1});
+    if(m.p2===null) targets.push({matchId:m.id, slot:2});
+  });
+  const order = shuffle(targets);
+  const players = shuffle([...S.players]);
+
+  for(let i=0;i<players.length;i++){
+    const name=players[i], tgt=order[i];
+    const targetEl = document.querySelector(`#bm-${tgt.matchId} .br-player:nth-child(${tgt.slot})`);
+    await flyNameToSlot(name, targetEl);
+    const m=S.bracket.ms.find(x=>x.id===tgt.matchId);
+    if(tgt.slot===1) m.p1=name; else m.p2=name;
+    maybeResolveBye(m);
+    renderKO();
+    const landed=document.querySelector(`#bm-${tgt.matchId} .br-player:nth-child(${tgt.slot})`);
+    if(landed){ landed.classList.add('just-landed'); setTimeout(()=>landed.classList.remove('just-landed'),700); }
+    await sleep(350);
   }
-
-  el('draw-status').innerHTML='✅ <strong style="color:var(--acc)">Auslosung abgeschlossen!</strong>';
-  S.seeds = seeds;
-  el('draw-actions').innerHTML=`<button class="btn bp" onclick="startKO()">K.O.-Phase starten →</button>`;
-  el('draw-actions').classList.remove('hidden');
+  notify('✅ Auslosung abgeschlossen — K.O.-Baum steht!');
 }
 
 function showBall(name,badge){
@@ -949,7 +1063,7 @@ function checkDone(){
 //  KO PHASE
 // ════════════════════════════════════════
 function startKO(){
-  if(S.cfg.mode!=='direct') S.seeds = computeSeeds();
+  S.seeds = computeSeeds();
   S.bracket = buildBracket(S.cfg.koSize, S.seeds);
   gotoScreen('ko');
   renderKO();
@@ -1000,12 +1114,7 @@ function buildBracket(n, seeds){
     }
     ms.push(...cur); prev=cur;
   }
-  const rn=[];
-  if(n>=16)rn.push('Achtelfinale');
-  if(n>=8) rn.push('Viertelfinale');
-  if(n>=4) rn.push('Halbfinale');
-  rn.push('Finale');
-  return {ms, nr, rn};
+  return {ms, nr, rn:getRoundNames(n)};
 }
 
 function renderKO(){
@@ -1054,14 +1163,17 @@ function buildHalf(all,first,nr,side,rn){
 
 function renderBM(m){
   if(!m)return'';
-  const canPlay=!m.result&&m.p1&&m.p2;
-  const p1c=m.result?(m.winner===m.p1?'win':'lose'):(m.p1?'':'tbd');
-  const p2c=m.result?(m.winner===m.p2?'win':'lose'):(m.p2?'':'tbd');
-  const p1l=m.result?`<span class="br-legs ${m.winner===m.p1?'wl':''}">${m.result.l1}</span>`:'';
-  const p2l=m.result?`<span class="br-legs ${m.winner===m.p2?'wl':''}">${m.result.l2}</span>`:'';
-  return `<div class="br-match ${canPlay?'open':m.result?'done':''}" id="bm-${m.id}">
-    <div class="br-player ${p1c}"><span>${escHtml(m.p1||'TBD')}</span>${p1l}</div>
-    <div class="br-player ${p2c}"><span>${escHtml(m.p2||'TBD')}</span>${p2l}</div>
+  const isBye = m.p1==='BYE' || m.p2==='BYE';
+  const canPlay=!isBye&&!m.result&&m.p1&&m.p2;
+  const p1c = isBye ? (m.p1==='BYE'?'bye':'win') : (m.result?(m.winner===m.p1?'win':'lose'):(m.p1?'':'tbd'));
+  const p2c = isBye ? (m.p2==='BYE'?'bye':'win') : (m.result?(m.winner===m.p2?'win':'lose'):(m.p2?'':'tbd'));
+  const p1l = (!isBye&&m.result) ? `<span class="br-legs ${m.winner===m.p1?'wl':''}">${m.result.l1}</span>`:'';
+  const p2l = (!isBye&&m.result) ? `<span class="br-legs ${m.winner===m.p2?'wl':''}">${m.result.l2}</span>`:'';
+  const p1txt = m.p1==='BYE' ? 'Freilos' : (m.p1 || (m.round===0?'?':'TBD'));
+  const p2txt = m.p2==='BYE' ? 'Freilos' : (m.p2 || (m.round===0?'?':'TBD'));
+  return `<div class="br-match ${canPlay?'open':(m.result||isBye)?'done':''}" id="bm-${m.id}">
+    <div class="br-player ${p1c}"><span>${escHtml(p1txt)}</span>${p1l}</div>
+    <div class="br-player ${p2c}"><span>${escHtml(p2txt)}</span>${p2l}</div>
     ${canPlay?`<button class="score-btn" onclick="openKS('${m.id}')">Ergebnis eintragen</button>`:''}
   </div>`;
 }
