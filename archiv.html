@@ -30,7 +30,6 @@ h1,h2,h3,.bb{font-family:'Bebas Neue',sans-serif;letter-spacing:.5px}
 .hdr-center{text-align:center}
 .hdr h1{font-size:2.6rem;color:var(--acc);line-height:1}
 .hdr .sub{color:var(--txt2);font-size:.75rem;letter-spacing:4px;text-transform:uppercase;margin-top:3px}
-.hdr-back{display:flex;align-items:center;justify-content:flex-end}
 
 /* ── BUTTONS ── */
 .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border-radius:var(--r);border:none;
@@ -124,9 +123,18 @@ tr:last-child td{border-bottom:none}
 ::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:3px}
 
 @media(max-width:700px){.gtables{columns:1}.hdr h1{font-size:2rem}.hdr-logo img{width:52px;height:52px}}
+
+/* ── BACK TO HOME ── */
+.back-bar{padding:12px 20px 0}
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;
+  background:var(--bg2);border:1px solid var(--brd2);color:var(--txt2);text-decoration:none;
+  font-weight:700;font-size:.82rem;letter-spacing:.5px;transition:all .18s}
+.back-btn:hover{border-color:var(--acc);color:var(--acc)}
 </style>
 </head>
 <body>
+
+<div class="back-bar"><a class="back-btn" href="index.html">🏠 Start</a></div>
 
 <header class="hdr">
   <div class="hdr-logo"><img src="assets/logo.png" alt="TSV Pilsting e.V. Logo"></div>
@@ -134,7 +142,7 @@ tr:last-child td{border-bottom:none}
     <h1>📁 Turnier-Archiv</h1>
     <div class="sub">TSV Pilsting · Dart</div>
   </div>
-  <div class="hdr-back"><a class="btn bg btn-sm" href="index.html">← Startseite</a></div>
+  <div></div><!-- spacer for grid balance -->
 </header>
 
 <div class="wrap">
