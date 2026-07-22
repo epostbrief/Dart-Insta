@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🎯 Dart Turnier</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
@@ -25,7 +27,7 @@ h1,h2,h3,.bb{font-family:'Bebas Neue',sans-serif;letter-spacing:.5px}
 .hdr{display:grid;grid-template-columns:88px 1fr 88px;align-items:center;
   padding:14px 20px 14px;border-bottom:1px solid var(--brd);margin-bottom:24px;gap:12px}
 .hdr-logo{display:flex;align-items:center;justify-content:flex-start}
-.hdr-logo svg{width:74px;height:74px;flex-shrink:0;filter:drop-shadow(0 0 8px rgba(0,255,119,.25))}
+.hdr-logo img{width:74px;height:74px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 8px rgba(0,255,119,.25))}
 .hdr-center{text-align:center}
 .hdr h1{font-size:2.6rem;color:var(--acc);line-height:1}
 .hdr .sub{color:var(--txt2);font-size:.75rem;letter-spacing:4px;text-transform:uppercase;margin-top:3px}
@@ -247,63 +249,7 @@ tr:last-child td{border-bottom:none}
 
 <header class="hdr">
   <div class="hdr-logo">
-    <!-- TSV Pilsting Dart Logo -->
-    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#1a1a2e"/>
-          <stop offset="100%" stop-color="#060608"/>
-        </radialGradient>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="1.5" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-      <!-- Outer ring -->
-      <circle cx="60" cy="60" r="58" fill="url(#bgGrad)" stroke="#00ff77" stroke-width="2"/>
-      <circle cx="60" cy="60" r="53" fill="none" stroke="#00cc55" stroke-width="0.6" stroke-dasharray="3 2"/>
-      <!-- Dartboard rings -->
-      <circle cx="60" cy="60" r="44" fill="none" stroke="#1e3a2a" stroke-width="8"/>
-      <circle cx="60" cy="60" r="44" fill="none" stroke="#00ff77" stroke-width="0.5" opacity="0.4"/>
-      <circle cx="60" cy="60" r="36" fill="#0a1a12" stroke="#00cc55" stroke-width="0.5" opacity="0.5"/>
-      <circle cx="60" cy="60" r="28" fill="none" stroke="#00ff77" stroke-width="0.5" opacity="0.3"/>
-      <circle cx="60" cy="60" r="20" fill="#001a0a" stroke="#00ff77" stroke-width="0.8" opacity="0.6"/>
-      <circle cx="60" cy="60" r="12" fill="#003318" stroke="#00ff77" stroke-width="1"/>
-      <!-- Bullseye -->
-      <circle cx="60" cy="60" r="6" fill="#00ff77" opacity="0.9" filter="url(#glow)"/>
-      <circle cx="60" cy="60" r="3" fill="#fff" opacity="0.95"/>
-      <!-- Segment lines on board -->
-      <line x1="60" y1="16" x2="60" y2="104" stroke="#00ff77" stroke-width="0.4" opacity="0.2"/>
-      <line x1="16" y1="60" x2="104" y2="60" stroke="#00ff77" stroke-width="0.4" opacity="0.2"/>
-      <line x1="27" y1="27" x2="93" y2="93" stroke="#00ff77" stroke-width="0.4" opacity="0.2"/>
-      <line x1="93" y1="27" x2="27" y2="93" stroke="#00ff77" stroke-width="0.4" opacity="0.2"/>
-      <!-- Dart (angled, thrown into board) -->
-      <g transform="translate(60,60) rotate(-38)">
-        <!-- dart shaft -->
-        <rect x="8" y="-1" width="30" height="2" rx="1" fill="#888" opacity="0.9"/>
-        <!-- dart barrel -->
-        <rect x="2" y="-2.2" width="8" height="4.4" rx="1.5" fill="#bbb"/>
-        <!-- dart tip -->
-        <polygon points="2,-1.2 2,1.2 -8,0" fill="#ddd"/>
-        <!-- flights -->
-        <polygon points="38,0 48,-7 45,0" fill="#00ff77" opacity="0.85"/>
-        <polygon points="38,0 48,7 45,0" fill="#00cc55" opacity="0.85"/>
-        <line x1="38" y1="0" x2="48" y2="0" stroke="#00ff77" stroke-width="0.8" opacity="0.5"/>
-      </g>
-      <!-- "TSV" top arc text -->
-      <path id="topArc" d="M 18,60 A 42,42 0 0,1 102,60" fill="none"/>
-      <text font-family="'Bebas Neue',sans-serif" font-size="13" fill="#00ff77" letter-spacing="4" filter="url(#glow)">
-        <textPath href="#topArc" startOffset="50%" text-anchor="middle">TSV</textPath>
-      </text>
-      <!-- "PILSTING" bottom arc text -->
-      <path id="botArc" d="M 14,65 A 46,46 0 0,0 106,65" fill="none"/>
-      <text font-family="'Bebas Neue',sans-serif" font-size="9.5" fill="#00cc55" letter-spacing="2.5">
-        <textPath href="#botArc" startOffset="50%" text-anchor="middle">PILSTING</textPath>
-      </text>
-      <!-- Small "DARTS" label -->
-      <text x="60" y="95" font-family="'Bebas Neue',sans-serif" font-size="6.5" fill="#336644"
-        letter-spacing="2" text-anchor="middle">DARTS</text>
-    </svg>
+    <img src="assets/logo.png" alt="TSV Pilsting e.V. Logo">
   </div>
   <div class="hdr-center">
     <h1 id="hdr-title">🎯 Dart Turnier</h1>
