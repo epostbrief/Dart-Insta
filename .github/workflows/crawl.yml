@@ -1,0 +1,54 @@
+name: Liga-Daten crawlen
+
+# Läuft täglich um 06:00 Uhr Europe/Berlin (04:00/05:00 UTC je nach
+# Sommer-/Winterzeit — hier bewusst auf 05:00 UTC gelegt, das entspricht
+# 06:00 bzw. 07:00 MEZ/MESZ) sowie manuell über "Run workflow".
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch: {}
+
+# Verhindert, dass sich mehrere Läufe überschneiden/parallel committen.
+concurrency:
+  group: liga-crawl
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Node.js installieren
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Crawler ausführen
+        run: npm run crawl
+
+      - name: Geänderte Daten committen (nur wenn es Änderungen gibt)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Nur data/parsed wird standardmäßig committed (siehe .gitignore
+          # für data/raw und data/cache). Falls Roh-HTML doch versioniert
+          # werden soll: "git add data/parsed data/raw" statt der Zeile
+          # unten verwenden — dann ggf. .gitignore anpassen.
+          git add data/parsed
+
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen an den Liga-Daten — kein Commit nötig."
+          else
+            git commit -m "chore: update liga data"
+            git push
+          fi

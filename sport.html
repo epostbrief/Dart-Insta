@@ -42,13 +42,16 @@
     </a>
   </div>
 
-  <!-- TABELLEN (Platzhalter) -->
-  <div class="sec-ttl">📊 Tabellen</div>
+  <!-- TABELLEN (automatisch vom Liga-Crawler, siehe crawler/README.md) -->
+  <div class="sec-ttl">📊 Tabelle — 1. Mannschaft</div>
+  <div class="card mb20">
+    <div id="liga-standings-sport"><div class="empty"><span class="big">⏳</span>Lade Liga-Daten…</div></div>
+  </div>
+
+  <!-- LETZTE ERGEBNISSE (automatisch vom Liga-Crawler) -->
+  <div class="sec-ttl">🎯 Letzte Ergebnisse — 1. Mannschaft</div>
   <div class="card">
-    <div class="empty" style="padding:24px 10px">
-      <span class="big">📊</span>
-      Ligatabellen folgen hier, sobald die Saison-Anbindung eingerichtet ist.
-    </div>
+    <div id="liga-results-sport"><div class="empty"><span class="big">⏳</span>Lade Liga-Daten…</div></div>
   </div>
 
   <!-- STATISTIKEN (Platzhalter) -->
@@ -92,5 +95,10 @@
 </nav>
 
 <script src="js/app.js"></script>
+<script src="js/liga-data.js"></script>
+<script>
+  renderStandings('liga-standings-sport', 'team-1');
+  renderLatestResults('liga-results-sport', 'team-1');
+</script>
 </body>
 </html>

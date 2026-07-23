@@ -137,6 +137,10 @@
     <div>Diese Seite ist ein Grundgerüst mit Beispieldaten. Eine echte Kalenderfunktion (Erstellen, Bearbeiten, Erinnerungen) wird hier später ergänzt.</div>
   </div>
 
+  <!-- LIGA-SPIELPLAN (automatisch vom Crawler, siehe crawler/README.md) -->
+  <div class="sec-ttl">📡 Liga-Spielplan — 1. Mannschaft</div>
+  <div id="liga-schedule-team-1" class="mb20"><div class="empty"><span class="big">⏳</span>Lade Liga-Daten…</div></div>
+
 </main>
 
 <!-- BOTTOM NAVIGATION -->
@@ -164,5 +168,9 @@
 </nav>
 
 <script src="js/app.js"></script>
+<script src="js/liga-data.js"></script>
+<script>
+  renderTeamSchedule('liga-schedule-team-1', 'team-1');
+</script>
 </body>
 </html>

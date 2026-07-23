@@ -1,0 +1,28 @@
+{
+  "name": "tsv-pilsting-liga-crawler",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Crawler für öffentliche Liga-Daten (Spielplan, Tabelle, Ergebnisse) von bdv-dart.liga.nu für die TSV Pilsting Dart-App. Crawlt ausschließlich öffentlich zugängliche Seiten, siehe README.md.",
+  "scripts": {
+    "crawl": "tsx src/index.ts",
+    "crawl:debug": "DEBUG=true tsx src/index.ts",
+    "parse:local": "LOCAL_PARSE=true tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'lint later'"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0",
+    "domhandler": "^5.0.3",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
