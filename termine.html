@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Termine – TSV Pilsting Dart-App</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page-hdr">
+  <h1>📅 Termine</h1>
+  <div class="sub">Spiele, Training, Events &amp; mehr</div>
+</div>
+
+<!-- FILTER -->
+<div class="filter-row">
+  <button class="filter-chip active" data-filter="alle">Alle</button>
+  <button class="filter-chip" data-filter="spiel">Spiele</button>
+  <button class="filter-chip" data-filter="training">Training</button>
+  <button class="filter-chip" data-filter="event">Events</button>
+  <button class="filter-chip" data-filter="bus">Bus</button>
+</div>
+
+<main class="wrap" style="padding-top:0">
+
+  <!-- TERMINLISTE -->
+  <div class="card-list">
+
+    <div class="card event-card" data-type="spiel">
+      <div class="event-date"><div class="d">26</div><div class="m">Jul</div></div>
+      <div class="event-body">
+        <div class="event-ttl">1. Mannschaft vs. Buisdingen</div>
+        <div class="event-meta">
+          <span>🕖 19:00 Uhr</span>
+          <span>📍 Vereinsheim (Heim)</span>
+        </div>
+        <div class="event-foot">
+          <span class="chip chip-tag">Spiel</span>
+          <span class="chip chip-ok">Zugesagt</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card event-card" data-type="training">
+      <div class="event-date"><div class="d">23</div><div class="m">Jul</div></div>
+      <div class="event-body">
+        <div class="event-ttl">Training Herren</div>
+        <div class="event-meta">
+          <span>🕡 18:30 Uhr</span>
+          <span>📍 Vereinsheim</span>
+        </div>
+        <div class="event-foot">
+          <span class="chip chip-tag">Training</span>
+          <span class="chip chip-neutral">Keine Antwort</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card event-card" data-type="event">
+      <div class="event-date"><div class="d">15</div><div class="m">Aug</div></div>
+      <div class="event-body">
+        <div class="event-ttl">Jahreshauptversammlung</div>
+        <div class="event-meta">
+          <span>🕗 20:00 Uhr</span>
+          <span>📍 Gasthaus zur Post</span>
+        </div>
+        <div class="event-foot">
+          <span class="chip chip-tag">Versammlung</span>
+          <span class="chip chip-warn">Unsicher</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card event-card" data-type="event">
+      <div class="event-date"><div class="d">02</div><div class="m">Aug</div></div>
+      <div class="event-body">
+        <div class="event-ttl">Arbeitseinsatz Vereinsheim</div>
+        <div class="event-meta">
+          <span>🕘 09:00 Uhr</span>
+          <span>📍 Vereinsheim</span>
+        </div>
+        <div class="event-foot">
+          <span class="chip chip-tag">Arbeitseinsatz</span>
+          <span class="chip chip-danger">Abgesagt</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card event-card" data-type="bus">
+      <div class="event-date"><div class="d">26</div><div class="m">Jul</div></div>
+      <div class="event-body">
+        <div class="event-ttl">Busfahrt Auswärtsspiel Buisdingen</div>
+        <div class="event-meta">
+          <span>🕕 17:30 Uhr Abfahrt</span>
+          <span>📍 Vereinsheim</span>
+        </div>
+        <div class="event-foot">
+          <span class="chip chip-tag">Bus</span>
+          <span class="chip chip-ok">Reserviert</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="filter-empty" class="empty hidden">
+    <span class="big">🗓️</span>
+    Keine Termine in dieser Kategorie.
+  </div>
+
+  <div class="tc mt20 mb16">
+    <button class="btn btn-primary">＋ Termin hinzufügen</button>
+  </div>
+
+  <!-- BUSRESERVIERUNG -->
+  <div class="sec-ttl">🚌 Bus reservieren</div>
+  <div class="card">
+    <p class="sm muted mb12">Der Verein hat aktuell nur <strong style="color:var(--txt)">1 Vereinsbus</strong> zur Verfügung. Reservierungen bitte frühzeitig eintragen, um Doppelbuchungen zu vermeiden.</p>
+    <div class="stat-row">
+      <div class="stat-icon">🚌</div>
+      <div class="stat-body">
+        <div class="stat-lbl">Nächste Reservierung</div>
+        <div class="stat-val">Sa, 26.07. · Auswärtsspiel Buisdingen</div>
+        <div class="stat-sub">Reserviert von: Mannschaftsführer 1. Mannschaft</div>
+      </div>
+    </div>
+    <button class="btn btn-outline btn-block mt16">🚌 Bus für eigenen Termin reservieren</button>
+  </div>
+
+  <div class="notice mt16 mb20">
+    <span class="ico">🛠️</span>
+    <div>Diese Seite ist ein Grundgerüst mit Beispieldaten. Eine echte Kalenderfunktion (Erstellen, Bearbeiten, Erinnerungen) wird hier später ergänzt.</div>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAVIGATION -->
+<nav class="bottom-nav" aria-label="Hauptnavigation">
+  <a href="index.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">🏠</span>
+    <span class="nav-label">Home</span>
+  </a>
+  <a href="termine.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">📅</span>
+    <span class="nav-label">Termine</span>
+  </a>
+  <a href="teams.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">👥</span>
+    <span class="nav-label">Teams</span>
+  </a>
+  <a href="sport.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">🏆</span>
+    <span class="nav-label">Sport</span>
+  </a>
+  <a href="verein.html" class="nav-item">
+    <img src="assets/icons/frosch.png" alt="" class="nav-icon-img">
+    <span class="nav-label">Verein</span>
+  </a>
+</nav>
+
+<script src="js/app.js"></script>
+</body>
+</html>

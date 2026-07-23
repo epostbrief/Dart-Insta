@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verein – TSV Pilsting Dart-App</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page-hdr">
+  <h1><img src="assets/icons/frosch.png" alt="" style="width:1.5rem;height:1.5rem;display:inline-block;vertical-align:-4px;object-fit:contain;margin-right:4px"> Verein</h1>
+  <div class="sub">News, Dokumente, Mitglieder &amp; mehr</div>
+</div>
+
+<main class="wrap" style="padding-top:6px">
+
+  <!-- VEREINSÜBERSICHT -->
+  <div class="card">
+    <div class="team-card-hdr">
+      <div>
+        <div class="team-name" style="color:var(--acc)">TSV Pilsting e.V.</div>
+        <div class="team-capt">Dartabteilung · gegründet 1888</div>
+      </div>
+    </div>
+    <p class="sm muted mt12">Vier Mannschaften, ein Verein — hier findest du alles Organisatorische rund um die Dartabteilung.</p>
+  </div>
+
+  <!-- NEWS -->
+  <div class="sec-ttl">📰 News</div>
+  <div class="card-list">
+    <div class="card">
+      <div class="team-name" style="font-size:1.05rem">Neue Trikots sind eingetroffen</div>
+      <div class="sm muted mt8">Abholung ab sofort im Vereinsheim möglich. Bitte Größe vorab beim Mannschaftsführer erfragen.</div>
+    </div>
+    <div class="card">
+      <div class="team-name" style="font-size:1.05rem">Saisonstart verschoben</div>
+      <div class="sm muted mt8">Der Liga-Auftakt wurde vom Verband um eine Woche nach hinten verlegt.</div>
+    </div>
+  </div>
+
+  <!-- DOKUMENTE -->
+  <div class="sec-ttl">📄 Dokumente</div>
+  <div class="card">
+    <div class="player-row"><span class="player-name">📋 Satzung</span><span class="chip chip-tag">PDF</span></div>
+    <div class="player-row"><span class="player-name">📋 Spielordnung</span><span class="chip chip-tag">PDF</span></div>
+    <div class="player-row"><span class="player-name">📋 Beitragsordnung</span><span class="chip chip-tag">PDF</span></div>
+  </div>
+
+  <!-- MITGLIEDER -->
+  <div class="sec-ttl">👤 Mitglieder <span class="cnt">48 aktiv</span></div>
+  <div class="card">
+    <div class="empty" style="padding:20px 10px">
+      <span class="big">👤</span>
+      Mitgliederverzeichnis folgt hier.
+    </div>
+  </div>
+
+  <!-- SPONSOREN -->
+  <div class="sec-ttl">🤝 Sponsoren</div>
+  <div class="card">
+    <div class="empty" style="padding:20px 10px">
+      <span class="big">🤝</span>
+      Unsere Sponsoren werden hier bald vorgestellt.
+    </div>
+  </div>
+
+  <!-- HELFEREINSÄTZE -->
+  <div class="sec-ttl">🙋 Helfereinsätze</div>
+  <div class="card">
+    <div class="stat-row">
+      <div class="stat-icon">🍻</div>
+      <div class="stat-body">
+        <div class="stat-lbl">Nächster Einsatz</div>
+        <div class="stat-val">Vereinsfest — Theke</div>
+        <div class="stat-sub">Sa, 09.08. · 16:00–20:00 Uhr</div>
+      </div>
+    </div>
+    <button class="btn btn-outline btn-block mt16">Als Helfer eintragen</button>
+  </div>
+
+  <!-- EINSTELLUNGEN -->
+  <div class="sec-ttl">⚙️ Einstellungen</div>
+  <div class="card">
+    <div class="player-row"><span class="player-name">🔔 Benachrichtigungen</span><span class="chip chip-ok">An</span></div>
+    <div class="player-row"><span class="player-name">🌙 Darstellung</span><span class="chip chip-tag">Dunkel</span></div>
+    <div class="player-row"><span class="player-name">ℹ️ App-Version</span><span class="chip chip-tag">0.1.0</span></div>
+  </div>
+
+  <div class="notice mt16 mb20">
+    <span class="ico">🛠️</span>
+    <div>Diese Seite ist ein Grundgerüst mit Beispieldaten. Echte Dokumente, Mitgliederverwaltung und Einstellungen werden hier später ergänzt.</div>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAVIGATION -->
+<nav class="bottom-nav" aria-label="Hauptnavigation">
+  <a href="index.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">🏠</span>
+    <span class="nav-label">Home</span>
+  </a>
+  <a href="termine.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">📅</span>
+    <span class="nav-label">Termine</span>
+  </a>
+  <a href="teams.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">👥</span>
+    <span class="nav-label">Teams</span>
+  </a>
+  <a href="sport.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">🏆</span>
+    <span class="nav-label">Sport</span>
+  </a>
+  <a href="verein.html" class="nav-item">
+    <img src="assets/icons/frosch.png" alt="" class="nav-icon-img">
+    <span class="nav-label">Verein</span>
+  </a>
+</nav>
+
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -18,7 +18,8 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--txt);font-family:'Rajdhani',sans-serif;font-size:16px;min-height:100vh;
   background-image:radial-gradient(ellipse at 15% 40%,rgba(20,80,45,.14) 0,transparent 55%),
-  radial-gradient(ellipse at 85% 15%,rgba(180,30,40,.07) 0,transparent 55%)}
+  radial-gradient(ellipse at 85% 15%,rgba(180,30,40,.07) 0,transparent 55%);
+  padding-bottom:calc(64px + env(safe-area-inset-bottom) + 18px)}
 h1,h2,h3,.bb{font-family:'Bebas Neue',sans-serif;letter-spacing:.5px}
 .wrap{max-width:1100px;margin:0 auto;padding:20px}
 
@@ -124,17 +125,23 @@ tr:last-child td{border-bottom:none}
 
 @media(max-width:700px){.gtables{columns:1}.hdr h1{font-size:2rem}.hdr-logo img{width:52px;height:52px}}
 
-/* ── BACK TO HOME ── */
-.back-bar{padding:12px 20px 0}
-.back-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;
-  background:var(--bg2);border:1px solid var(--brd2);color:var(--txt2);text-decoration:none;
-  font-weight:700;font-size:.82rem;letter-spacing:.5px;transition:all .18s}
-.back-btn:hover{border-color:var(--acc);color:var(--acc)}
+/* ── BOTTOM NAVIGATION ── */
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:200;display:flex;height:64px;
+  padding-bottom:env(safe-area-inset-bottom);background:var(--bg2);border-top:1px solid var(--brd);
+  box-shadow:0 -4px 18px rgba(0,0,0,.35)}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  text-decoration:none;color:var(--txt2);font-size:.64rem;font-weight:700;letter-spacing:.3px;
+  text-transform:uppercase;transition:color .18s;position:relative}
+.nav-item .nav-icon{font-size:1.4rem;line-height:1}
+.nav-item .nav-icon-img{width:24px;height:24px;object-fit:contain}
+.nav-item.active{color:var(--acc)}
+.nav-item.active::before{content:'';position:absolute;top:2px;left:50%;transform:translateX(-50%);
+  width:22px;height:3px;border-radius:3px;background:var(--acc)}
+@media(hover:hover){.nav-item:hover{color:var(--acc)}}
+@media(min-width:700px){.bottom-nav{justify-content:center}.nav-item{flex:0 0 110px}}
 </style>
 </head>
 <body>
-
-<div class="back-bar"><a class="back-btn" href="index.html">🏠 Start</a></div>
 
 <header class="hdr">
   <div class="hdr-logo"><img src="assets/logo.png" alt="TSV Pilsting e.V. Logo"></div>
@@ -160,6 +167,31 @@ tr:last-child td{border-bottom:none}
 
 </div>
 
+<!-- BOTTOM NAVIGATION -->
+<nav class="bottom-nav" aria-label="Hauptnavigation">
+  <a href="index.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">🏠</span>
+    <span class="nav-label">Home</span>
+  </a>
+  <a href="termine.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">📅</span>
+    <span class="nav-label">Termine</span>
+  </a>
+  <a href="teams.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">👥</span>
+    <span class="nav-label">Teams</span>
+  </a>
+  <a href="sport.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">🏆</span>
+    <span class="nav-label">Sport</span>
+  </a>
+  <a href="verein.html" class="nav-item">
+    <img src="assets/icons/frosch.png" alt="" class="nav-icon-img">
+    <span class="nav-label">Verein</span>
+  </a>
+</nav>
+
+<script src="js/app.js"></script>
 <script>
 const ARCHIVE_KEY='dartTurnierArchiv';
 const el = id => document.getElementById(id);

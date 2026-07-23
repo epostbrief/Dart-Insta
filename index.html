@@ -1,291 +1,145 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TSV Pilsting – Dart</title>
-  <link rel="icon" type="image/png" href="assets/favicon.png" />
-  <link rel="apple-touch-icon" href="assets/favicon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:#070d08; --bg2:#0e1a12; --bg3:#142619; --bg4:#1b3320;
-      --acc:#ff4d4d; --acc2:#d81e2c; --red:#a91d2c; --white:#ffffff;
-      --txt:#f1efe6; --txt2:#7c9684; --brd:#1f3526; --brd2:#2d4c34;
-      --radius: 12px;
-    }
-
-    body {
-      font-family: 'Rajdhani', sans-serif;
-      background: var(--bg);
-      color: var(--txt);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-image:
-        radial-gradient(ellipse at 15% 40%, rgba(20,80,45,.14) 0, transparent 55%),
-        radial-gradient(ellipse at 85% 15%, rgba(180,30,40,.07) 0, transparent 55%);
-    }
-
-    /* ── HEADER ───────────────────────────────── */
-    header {
-      width: 100%;
-      border-bottom: 1px solid var(--brd);
-      padding: 18px 32px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .logo-slot {
-      width: 64px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .logo-slot img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 0 8px rgba(255,77,77,.25));
-    }
-
-    .header-info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .header-club {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 24px;
-      letter-spacing: 2px;
-      color: var(--acc);
-      line-height: 1;
-    }
-
-    .header-sub {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--txt2);
-    }
-
-    /* ── MAIN ───────────────────────────────────*/
-    main {
-      flex: 1;
-      width: 100%;
-      max-width: 680px;
-      padding: 48px 24px 64px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-    }
-
-    /* ── TILE GRID ──────────────────────────── */
-    .tile-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
-
-    .tile {
-      background: var(--bg2);
-      border: 1.5px solid var(--brd);
-      border-radius: var(--radius);
-      padding: 28px 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 12px;
-      cursor: pointer;
-      text-decoration: none;
-      color: var(--txt);
-      transition: border-color .2s, transform .15s, background .2s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .tile::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,77,77,.07) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity .2s;
-    }
-
-    .tile:hover {
-      border-color: var(--acc);
-      background: #142a1b;
-      transform: translateY(-3px);
-    }
-
-    .tile:hover::before {
-      opacity: 1;
-    }
-
-    .tile:active {
-      transform: translateY(0);
-    }
-
-    .tile-icon {
-      width: 44px;
-      height: 44px;
-      background: rgba(255,77,77,.12);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--acc);
-    }
-
-    .tile-icon svg {
-      width: 22px;
-      height: 22px;
-    }
-
-    .tile-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 20px;
-      letter-spacing: 1.5px;
-      color: var(--txt);
-      line-height: 1.1;
-    }
-
-    .tile-desc {
-      font-size: 13px;
-      color: var(--txt2);
-      line-height: 1.5;
-    }
-
-    .tile-arrow {
-      margin-top: auto;
-      color: var(--acc);
-      opacity: 0;
-      transform: translateX(-4px);
-      transition: opacity .2s, transform .2s;
-    }
-
-    .tile:hover .tile-arrow {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    /* ── FOOTER ─────────────────────────────── */
-    footer {
-      padding: 16px;
-      font-size: 12px;
-      color: var(--txt2);
-      opacity: .6;
-      text-align: center;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TSV Pilsting – Dart-App</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="logo-slot">
-      <img src="assets/logo.png" alt="TSV Pilsting e.V. Logo" />
+<!-- HEADER -->
+<header class="app-hdr">
+  <div class="logo-box"><img src="assets/logo.png" alt="TSV Pilsting e.V. Logo"></div>
+  <div class="titles">
+    <h1>TSV Pilsting · Dart</h1>
+    <div class="sub">Vereins-App</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- BEGRÜSSUNG -->
+  <div class="mt16">
+    <div class="sm muted" data-today>—</div>
+    <h2 style="font-size:1.5rem;margin-top:2px">Servus! 👋</h2>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="sec-ttl">📊 Überblick</div>
+  <div class="card">
+    <div class="stat-row">
+      <div class="stat-icon">🎯</div>
+      <div class="stat-body">
+        <div class="stat-lbl">Nächstes Spiel</div>
+        <div class="stat-val">1. Mannschaft vs. Buisdingen</div>
+        <div class="stat-sub">Sa, 26.07. · 19:00 Uhr · Heim</div>
+      </div>
     </div>
-    <div class="header-info">
-      <div class="header-club">TSV Pilsting · Dart</div>
-      <div class="header-sub">Web-App</div>
+    <div class="stat-row">
+      <div class="stat-icon">📅</div>
+      <div class="stat-body">
+        <div class="stat-lbl">Nächster Termin</div>
+        <div class="stat-val">Training Herren</div>
+        <div class="stat-sub">Mi, 23.07. · 18:30 Uhr · Vereinsheim</div>
+      </div>
     </div>
-  </header>
-
-  <!-- MAIN -->
-  <main>
-
-    <!-- Kacheln -->
-    <div class="tile-grid">
-
-      <a class="tile" href="spielergebnis.html">
-        <div class="tile-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-          </svg>
-        </div>
-        <div class="tile-title">Spielergebnis erstellen</div>
-        <div class="tile-desc">Ergebnis eines Spiels eintragen und speichern.</div>
-        <div class="tile-arrow">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-          </svg>
-        </div>
-      </a>
-
-      <a class="tile" href="turnier.html">
-        <div class="tile-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
-            <path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
-            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
-            <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
-          </svg>
-        </div>
-        <div class="tile-title">Turnier</div>
-        <div class="tile-desc">Turnierverwaltung, Gruppen und Spielplan.</div>
-        <div class="tile-arrow">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-          </svg>
-        </div>
-      </a>
-
-      <a class="tile" href="marktmeisterschaft.html">
-        <div class="tile-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
-          </svg>
-        </div>
-        <div class="tile-title">Marktmeisterschaft</div>
-        <div class="tile-desc">Verwaltung und Ergebnisse der Marktmeisterschaft.</div>
-        <div class="tile-arrow">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-          </svg>
-        </div>
-      </a>
-
-      <a class="tile" href="archiv.html">
-        <div class="tile-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/>
-          </svg>
-        </div>
-        <div class="tile-title">Turnier-Archiv</div>
-        <div class="tile-desc">Gespielte Turniere, Tabellen und Ergebnisse einsehen.</div>
-        <div class="tile-arrow">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-          </svg>
-        </div>
-      </a>
-
+    <div class="stat-row">
+      <div class="stat-icon">✅</div>
+      <div class="stat-body">
+        <div class="stat-lbl">Offene Zusagen</div>
+        <div class="stat-val">3 Termine warten auf deine Antwort</div>
+        <div class="stat-sub"><a href="termine.html" style="color:var(--acc);text-decoration:none">Jetzt beantworten →</a></div>
+      </div>
     </div>
-  </main>
+    <div class="stat-row">
+      <div class="stat-icon">📰</div>
+      <div class="stat-body">
+        <div class="stat-lbl">Aktuelle News</div>
+        <div class="stat-val">Neue Trikots sind eingetroffen</div>
+        <div class="stat-sub">Abholung ab sofort im Vereinsheim möglich</div>
+      </div>
+    </div>
+  </div>
 
-  <footer>TSV Pilsting · Dart · Web-App</footer>
+  <!-- SCHNELLZUGRIFFE -->
+  <div class="sec-ttl">⚡ Schnellzugriffe</div>
+  <div class="qa-grid">
+    <a class="qa-tile" href="turnier.html">
+      <div class="qa-icon">🏆</div>
+      <div class="qa-lbl">Turnier starten</div>
+      <div class="qa-desc">Internes Turnier verwalten</div>
+    </a>
+    <a class="qa-tile" href="marktmeisterschaft.html">
+      <div class="qa-icon">🎖️</div>
+      <div class="qa-lbl">Marktmeisterschaft</div>
+      <div class="qa-desc">Live-Wertung öffnen</div>
+    </a>
+    <a class="qa-tile" href="spielergebnis.html">
+      <div class="qa-icon">📸</div>
+      <div class="qa-lbl">Spielergebnis erstellen</div>
+      <div class="qa-desc">Ergebnis-Grafik für Social Media</div>
+    </a>
+    <a class="qa-tile" href="archiv.html">
+      <div class="qa-icon">📁</div>
+      <div class="qa-lbl">Archiv</div>
+      <div class="qa-desc">Gespielte Turniere ansehen</div>
+    </a>
+    <a class="qa-tile" href="termine.html">
+      <div class="qa-icon">📅</div>
+      <div class="qa-lbl">Termine</div>
+      <div class="qa-desc">Spiele, Training &amp; Events</div>
+    </a>
+    <a class="qa-tile" href="teams.html">
+      <div class="qa-icon">👥</div>
+      <div class="qa-lbl">Teams</div>
+      <div class="qa-desc">Mannschaften &amp; Verfügbarkeit</div>
+    </a>
+  </div>
 
+  <!-- HEUTE WICHTIG -->
+  <div class="sec-ttl">📌 Heute wichtig</div>
+  <div class="card-list">
+    <div class="notice">
+      <span class="ico">🚌</span>
+      <div>Der Vereinsbus für das Auswärtsspiel am Samstag ist noch nicht reserviert. <a href="termine.html" style="color:var(--acc)">Jetzt reservieren →</a></div>
+    </div>
+    <div class="notice info">
+      <span class="ico">🗳️</span>
+      <div>Die nächste Jahreshauptversammlung findet am 15.08. statt — Termin bitte vormerken.</div>
+    </div>
+  </div>
 
+</main>
+
+<!-- BOTTOM NAVIGATION -->
+<nav class="bottom-nav" aria-label="Hauptnavigation">
+  <a href="index.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">🏠</span>
+    <span class="nav-label">Home</span>
+  </a>
+  <a href="termine.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">📅</span>
+    <span class="nav-label">Termine</span>
+  </a>
+  <a href="teams.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">👥</span>
+    <span class="nav-label">Teams</span>
+  </a>
+  <a href="sport.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">🏆</span>
+    <span class="nav-label">Sport</span>
+  </a>
+  <a href="verein.html" class="nav-item">
+    <img src="assets/icons/frosch.png" alt="" class="nav-icon-img">
+    <span class="nav-label">Verein</span>
+  </a>
+</nav>
+
+<script src="js/app.js"></script>
 </body>
 </html>
