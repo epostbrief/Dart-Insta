@@ -147,6 +147,12 @@
     <div>Diese Seite ist ein Grundgerüst mit Beispieldaten. Echte Spielerlisten, Verfügbarkeiten und Zu-/Absagen werden hier später angebunden.</div>
   </div>
 
+  <!-- LIGA-TABELLE (automatisch vom Crawler, siehe crawler/README.md) -->
+  <div class="sec-ttl">📡 Liga-Tabelle — 1. Mannschaft</div>
+  <div class="card mb20">
+    <div id="liga-standings-team-1"><div class="empty"><span class="big">⏳</span>Lade Liga-Daten…</div></div>
+  </div>
+
 </main>
 
 <!-- BOTTOM NAVIGATION -->
@@ -174,5 +180,9 @@
 </nav>
 
 <script src="js/app.js"></script>
+<script src="js/liga-data.js"></script>
+<script>
+  renderStandings('liga-standings-team-1', 'team-1');
+</script>
 </body>
 </html>

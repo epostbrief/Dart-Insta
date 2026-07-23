@@ -1,0 +1,22 @@
+# Dependencies & Build
+node_modules/
+dist/
+
+# Crawler: Cache und Raw-HTML werden standardmäßig NICHT committed
+# (Raw-HTML kann pro Lauf recht groß werden). data/parsed/*.json wird
+# bewusst NICHT ignoriert — das sind die Daten, die die App nutzt.
+data/cache/
+data/raw/
+
+# Logs
+npm-debug.log*
+*.log
+
+# Editor/OS
+.DS_Store
+.vscode/
+.idea/
+
+# Env
+.env
+.env.local

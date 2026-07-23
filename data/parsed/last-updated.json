@@ -1,0 +1,15 @@
+{
+  "teamsProcessed": 0,
+  "teamsSkipped": 0,
+  "scheduleEntries": 0,
+  "standingEntries": 0,
+  "matchResults": 0,
+  "warnings": 0,
+  "errors": 0,
+  "outputFiles": [],
+  "startedAt": null,
+  "finishedAt": null,
+  "warningMessages": [],
+  "errorMessages": [],
+  "note": "Noch kein Crawl gelaufen. Bitte src/config/teams.config.ts mit echten liga.nu-URLs befüllen und 'npm run crawl' ausführen."
+}
