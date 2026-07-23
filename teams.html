@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teams – TSV Pilsting Dart-App</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page-hdr">
+  <h1>👥 Teams</h1>
+  <div class="sub">Mannschaften, Verfügbarkeit &amp; Ersatzspieler</div>
+</div>
+
+<main class="wrap" style="padding-top:6px">
+
+  <div class="card-list">
+
+    <!-- 1. Mannschaft -->
+    <div class="card">
+      <div class="team-card-hdr">
+        <div>
+          <div class="team-name">1. Mannschaft</div>
+          <div class="team-capt">Mannschaftsführer: Bernd Huber</div>
+        </div>
+        <span class="chip chip-tag">Kreisliga</span>
+      </div>
+      <div class="team-next"><strong>Nächstes Spiel:</strong> Sa, 26.07. vs. Buisdingen (Heim)</div>
+      <div class="team-progress">
+        <div class="team-bar"><span style="width:75%"></span></div>
+        <span>6/8 zugesagt</span>
+      </div>
+      <div class="team-acts">
+        <button class="btn btn-outline btn-sm">Details</button>
+        <button class="btn btn-primary btn-sm">Verfügbarkeit eintragen</button>
+      </div>
+    </div>
+
+    <!-- 2. Mannschaft -->
+    <div class="card">
+      <div class="team-card-hdr">
+        <div>
+          <div class="team-name">2. Mannschaft</div>
+          <div class="team-capt">Mannschaftsführer: Sabine Wagner</div>
+        </div>
+        <span class="chip chip-tag">Bezirksliga</span>
+      </div>
+      <div class="team-next"><strong>Nächstes Spiel:</strong> So, 27.07. vs. Landau (Auswärts)</div>
+      <div class="team-progress">
+        <div class="team-bar"><span style="width:50%"></span></div>
+        <span>4/8 zugesagt</span>
+      </div>
+      <div class="team-acts">
+        <button class="btn btn-outline btn-sm">Details</button>
+        <button class="btn btn-primary btn-sm">Verfügbarkeit eintragen</button>
+      </div>
+    </div>
+
+    <!-- 3. Mannschaft -->
+    <div class="card">
+      <div class="team-card-hdr">
+        <div>
+          <div class="team-name">3. Mannschaft</div>
+          <div class="team-capt">Mannschaftsführer: Michael Fischer</div>
+        </div>
+        <span class="chip chip-tag">Kreisklasse</span>
+      </div>
+      <div class="team-next"><strong>Nächstes Spiel:</strong> Fr, 01.08. vs. Dingolfing (Heim)</div>
+      <div class="team-progress">
+        <div class="team-bar"><span style="width:25%"></span></div>
+        <span>2/8 zugesagt</span>
+      </div>
+      <div class="team-acts">
+        <button class="btn btn-outline btn-sm">Details</button>
+        <button class="btn btn-primary btn-sm">Verfügbarkeit eintragen</button>
+      </div>
+    </div>
+
+    <!-- 4. Mannschaft -->
+    <div class="card">
+      <div class="team-card-hdr">
+        <div>
+          <div class="team-name">4. Mannschaft</div>
+          <div class="team-capt">Mannschaftsführer: Katrin Bauer</div>
+        </div>
+        <span class="chip chip-tag">Freizeitliga</span>
+      </div>
+      <div class="team-next"><strong>Nächstes Spiel:</strong> noch nicht angesetzt</div>
+      <div class="team-progress">
+        <div class="team-bar"><span style="width:0%"></span></div>
+        <span>0/8 zugesagt</span>
+      </div>
+      <div class="team-acts">
+        <button class="btn btn-outline btn-sm">Details</button>
+        <button class="btn btn-primary btn-sm">Verfügbarkeit eintragen</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ERSATZSPIELERPOOL -->
+  <div class="sec-ttl">🔁 Ersatzspielerpool <span class="cnt">5 Spieler</span></div>
+  <div class="card">
+    <div class="player-row" data-rsvp-group>
+      <span class="player-name">Anna Meier</span>
+      <span class="chip chip-ok" data-rsvp-status>Verfügbar</span>
+    </div>
+    <div class="player-row" data-rsvp-group>
+      <span class="player-name">Tobias Wimmer</span>
+      <span class="chip chip-warn" data-rsvp-status>Unsicher</span>
+    </div>
+    <div class="player-row" data-rsvp-group>
+      <span class="player-name">Julia Steiner</span>
+      <span class="chip chip-danger" data-rsvp-status>Nicht verfügbar</span>
+    </div>
+    <div class="player-row" data-rsvp-group>
+      <span class="player-name">Markus Gruber</span>
+      <span class="chip chip-neutral" data-rsvp-status>Keine Antwort</span>
+    </div>
+    <div class="player-row" data-rsvp-group>
+      <span class="player-name">Lena Hofer</span>
+      <span class="chip chip-ok" data-rsvp-status>Verfügbar</span>
+    </div>
+  </div>
+
+  <!-- BEISPIEL: EIGENE VERFÜGBARKEIT -->
+  <div class="sec-ttl">📝 Deine Verfügbarkeit — Beispiel</div>
+  <div class="card" data-rsvp-group>
+    <div class="flex fca fjb mb12">
+      <span class="sm">Sa, 26.07. — 1. Mannschaft vs. Buisdingen</span>
+      <span class="chip chip-neutral" data-rsvp-status>Keine Antwort</span>
+    </div>
+    <div class="flex g8">
+      <button class="btn btn-outline btn-sm" style="flex:1" data-rsvp="ok" data-rsvp-label="Zugesagt">✅ Zusage</button>
+      <button class="btn btn-outline btn-sm" style="flex:1" data-rsvp="danger" data-rsvp-label="Abgesagt">❌ Absage</button>
+      <button class="btn btn-outline btn-sm" style="flex:1" data-rsvp="warn" data-rsvp-label="Unsicher">❓ Unsicher</button>
+    </div>
+  </div>
+
+  <div class="notice mt16 mb20">
+    <span class="ico">🛠️</span>
+    <div>Diese Seite ist ein Grundgerüst mit Beispieldaten. Echte Spielerlisten, Verfügbarkeiten und Zu-/Absagen werden hier später angebunden.</div>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAVIGATION -->
+<nav class="bottom-nav" aria-label="Hauptnavigation">
+  <a href="index.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">🏠</span>
+    <span class="nav-label">Home</span>
+  </a>
+  <a href="termine.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">📅</span>
+    <span class="nav-label">Termine</span>
+  </a>
+  <a href="teams.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">👥</span>
+    <span class="nav-label">Teams</span>
+  </a>
+  <a href="sport.html" class="nav-item">
+    <span class="nav-icon" aria-hidden="true">🏆</span>
+    <span class="nav-label">Sport</span>
+  </a>
+  <a href="verein.html" class="nav-item">
+    <img src="assets/icons/frosch.png" alt="" class="nav-icon-img">
+    <span class="nav-label">Verein</span>
+  </a>
+</nav>
+
+<script src="js/app.js"></script>
+</body>
+</html>
