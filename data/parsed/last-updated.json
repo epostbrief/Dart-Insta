@@ -1,15 +1,19 @@
 {
   "teamsProcessed": 0,
-  "teamsSkipped": 0,
+  "teamsSkipped": 4,
   "scheduleEntries": 0,
   "standingEntries": 0,
   "matchResults": 0,
   "warnings": 0,
   "errors": 0,
-  "outputFiles": [],
-  "startedAt": null,
-  "finishedAt": null,
+  "outputFiles": [
+    "data/parsed/schedules.json",
+    "data/parsed/standings.json",
+    "data/parsed/results.json",
+    "data/parsed/teams.json"
+  ],
+  "startedAt": "2026-07-24T07:23:37.188Z",
+  "finishedAt": "2026-07-24T07:23:37.194Z",
   "warningMessages": [],
-  "errorMessages": [],
-  "note": "Noch kein Crawl gelaufen. Bitte src/config/teams.config.ts mit echten liga.nu-URLs befüllen und 'npm run crawl' ausführen."
+  "errorMessages": []
 }
