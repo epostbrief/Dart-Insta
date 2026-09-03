@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap">
+  <style>
+    body { margin: 0; background: #060606; }
+    a { color: #ffcc33; } a:hover { color: #e63030; }
+  </style>
+</helmet>
+
+<div style="width: 1080px; height: 1350px; position: relative; overflow: hidden; background: #060606; font-family: 'Oswald', 'Liberation Sans', sans-serif;">
+
+  <!-- Vereins-Farbband, wie im bestehenden Ergebnis-Post -->
+  <div style="position: absolute; top: 0; left: 0; right: 0; height: 8px; background: linear-gradient(90deg, #1a7a2e 0%, #2db84a 30%, #b22222 70%, #e63030 100%);"></div>
+
+  <div style="position: absolute; inset: 8px 0 0 0; display: flex; flex-direction: column; padding: 70px 72px 64px 72px;">
+
+    <!-- Kopfzeile -->
+    <div style="display: flex; align-items: center; gap: 22px;">
+      <img src="logo.png" alt="TSV Pilsting e.V." style="width: 82px; height: 82px; object-fit: contain;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="font-size: 32px; font-weight: 500; color: #ffffff; letter-spacing: 6px; line-height: 1;">TSV PILSTING</div>
+        <div style="font-size: 19px; font-weight: 300; color: rgba(255,255,255,.45); letter-spacing: 10px; text-transform: uppercase;">Dart</div>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1.2;"></div>
+
+    <!-- Ziffer als Held der Serie -->
+    <div style="display: flex; flex-direction: column;">
+      <div style="font-size: 24px; font-weight: 300; color: #2db84a; letter-spacing: 11px; text-transform: uppercase; margin-bottom: 14px;">Competition</div>
+      <div style="font-size: 380px; font-weight: 600; color: #ffffff; line-height: .8; letter-spacing: -6px;">1.</div>
+      <div style="font-size: 108px; font-weight: 500; color: #ffffff; line-height: 1.06; letter-spacing: 3px; margin-top: 14px;">DART</div>
+      <div style="font-size: 108px; font-weight: 500; color: #e63030; line-height: 1.06; letter-spacing: 3px;">COMPETITION</div>
+    </div>
+
+    <div style="flex-grow: 1;"></div>
+
+    <!-- Datum -->
+    <div style="height: 2px; background: linear-gradient(90deg, #1a7a2e, #e63030 60%, transparent);"></div>
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 20px; margin-top: 26px;">
+      <div style="font-size: 52px; font-weight: 500; color: #ffcc33; letter-spacing: 3px; line-height: 1;">FR · 11.09.2026</div>
+      <div style="font-size: 20px; font-weight: 300; color: rgba(255,255,255,.45); letter-spacing: 5px; text-transform: uppercase; white-space: nowrap;">jeden 2. Freitag</div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

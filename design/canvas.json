@@ -1,0 +1,38 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1080, "h": 1350, "title": "1 · Ziffer" },
+    { "file": "Bullseye.dc.html", "x": 1240, "y": 0, "w": 1080, "h": 1350, "title": "2 · Bullseye" },
+    { "file": "Ticket.dc.html", "x": 2480, "y": 0, "w": 1080, "h": 1350, "title": "3 · Ticket" }
+  ],
+  "annotations": [
+    {
+      "id": "brief",
+      "x": 0,
+      "y": -220,
+      "w": 1400,
+      "text": "3 Vorschläge für die Instagram-Ankündigung · 1080×1350 (gleiches Format wie die Ergebnis-Posts)\nFarben, Schriften und das Farbband oben sind aus spielergebnis.html übernommen.\nDas Datum 11.09.2026 ist ein Beispielwert — bitte überschreiben. Uhrzeit, Ort und Startgeld sind bewusst nicht drauf."
+    },
+    {
+      "id": "note-ziffer",
+      "x": 0,
+      "y": 1430,
+      "w": 1080,
+      "text": "1 · ZIFFER\nDie fortlaufende Nummer ist der Held: sie wächst mit jeder Ausgabe und macht die Serie über Monate wiedererkennbar. Am schlichtesten, am meisten „Redaktion“, funktioniert auch als kleine Feed-Kachel.\nNachteil: ohne Logo und das Wort „Dart“ wäre nicht sofort klar, dass es um Dart geht — lebt vom Text."
+    },
+    {
+      "id": "note-bullseye",
+      "x": 1240,
+      "y": 1430,
+      "w": 1080,
+      "text": "2 · BULLSEYE\nSofort als Dart lesbar, auch beim schnellen Scrollen. Die Nummer sitzt im Bull, Scheibe in Vereinsgrün/-rot.\nNachteil: die Dartscheibe ist das naheliegendste Motiv überhaupt — vertraut, aber weniger eigenständig als die anderen beiden."
+    },
+    {
+      "id": "note-ticket",
+      "x": 2480,
+      "y": 1430,
+      "w": 1080,
+      "text": "3 · TICKET\nStellt den Termin in den Vordergrund (Tag / Datum / Jahr als eigene Felder) und wirkt wie eine Einladung. Nutzt das Sechseck aus euren Ergebnis-Posts wieder.\nNachteil: mehr Einzelteile, die pro Ausgabe gepflegt werden müssen; das Datum dominiert die Competition-Identität."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

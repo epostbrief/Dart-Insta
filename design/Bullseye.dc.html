@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap">
+  <style>
+    body { margin: 0; background: #060606; }
+    a { color: #ffcc33; } a:hover { color: #e63030; }
+  </style>
+</helmet>
+
+<div style="width: 1080px; height: 1350px; position: relative; overflow: hidden; background: #060606; font-family: 'Oswald', 'Liberation Sans', sans-serif;">
+
+  <div style="position: absolute; top: 0; left: 0; right: 0; height: 8px; background: linear-gradient(90deg, #1a7a2e 0%, #2db84a 30%, #b22222 70%, #e63030 100%);"></div>
+
+  <div style="position: absolute; inset: 8px 0 0 0; display: flex; flex-direction: column; align-items: center; padding: 62px 72px 62px 72px;">
+
+    <!-- Kopfzeile -->
+    <div style="display: flex; align-items: center; gap: 18px;">
+      <img src="logo.png" alt="TSV Pilsting e.V." style="width: 70px; height: 70px; object-fit: contain;">
+      <div style="font-size: 30px; font-weight: 500; color: #ffffff; letter-spacing: 7px; line-height: 1;">TSV PILSTING · DART</div>
+    </div>
+
+    <div style="flex-grow: 1;"></div>
+
+    <!-- Dartscheibe mit der Nummer im Bull -->
+    <div style="position: relative; width: 600px; height: 600px;">
+      <div style="position: absolute; inset: 0; border-radius: 50%; background: #0c0c0c; border: 2px solid rgba(255,255,255,.10); overflow: hidden;">
+        <div style="position: absolute; left: 50%; top: 50%; width: 680px; height: 1px; background: rgba(255,255,255,.07); transform: translate(-50%, -50%);"></div>
+        <div style="position: absolute; left: 50%; top: 50%; width: 680px; height: 1px; background: rgba(255,255,255,.07); transform: translate(-50%, -50%) rotate(45deg);"></div>
+        <div style="position: absolute; left: 50%; top: 50%; width: 680px; height: 1px; background: rgba(255,255,255,.07); transform: translate(-50%, -50%) rotate(90deg);"></div>
+        <div style="position: absolute; left: 50%; top: 50%; width: 680px; height: 1px; background: rgba(255,255,255,.07); transform: translate(-50%, -50%) rotate(135deg);"></div>
+      </div>
+      <div style="position: absolute; inset: 22px; border-radius: 50%; border: 22px solid #17321f;"></div>
+      <div style="position: absolute; inset: 142px; border-radius: 50%; border: 18px solid #3a161a;"></div>
+      <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 228px; height: 228px; border-radius: 50%; background: linear-gradient(135deg, #2db84a, #1a7a2e); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 70px rgba(45,184,74,.28);">
+        <div style="font-size: 130px; font-weight: 600; color: #ffffff; line-height: 1; letter-spacing: -2px;">1.</div>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1;"></div>
+
+    <!-- Titel -->
+    <div style="font-size: 104px; font-weight: 500; color: #ffffff; letter-spacing: 5px; line-height: 1.06; text-align: center; text-wrap: balance;">DART COMPETITION</div>
+
+    <div style="width: 340px; height: 2px; background: linear-gradient(90deg, transparent, #e63030, transparent); margin: 30px 0 26px 0;"></div>
+
+    <!-- Datum -->
+    <div style="font-size: 54px; font-weight: 500; color: #ffcc33; letter-spacing: 4px; line-height: 1;">FREITAG · 11.09.2026</div>
+    <div style="font-size: 20px; font-weight: 300; color: rgba(255,255,255,.45); letter-spacing: 7px; text-transform: uppercase; margin-top: 18px;">jeden 2. Freitag</div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
