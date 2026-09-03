@@ -1,8 +1,7 @@
 {
   "artboards": [
-    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1080, "h": 1350, "title": "1 · Ziffer" },
-    { "file": "Bullseye.dc.html", "x": 1240, "y": 0, "w": 1080, "h": 1350, "title": "2 · Bullseye" },
-    { "file": "Ticket.dc.html", "x": 2480, "y": 0, "w": 1080, "h": 1350, "title": "3 · Ticket" }
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 1080, "h": 1350, "title": "1 · Gritty" },
+    { "file": "Elegant.dc.html", "x": 1240, "y": 0, "w": 1080, "h": 1350, "title": "2 · Elegant" }
   ],
   "annotations": [
     {
@@ -10,28 +9,21 @@
       "x": 0,
       "y": -220,
       "w": 1400,
-      "text": "3 Vorschläge für die Instagram-Ankündigung · 1080×1350 (gleiches Format wie die Ergebnis-Posts)\nFarben, Schriften und das Farbband oben sind aus spielergebnis.html übernommen.\nDas Datum 11.09.2026 ist ein Beispielwert — bitte überschreiben. Uhrzeit, Ort und Startgeld sind bewusst nicht drauf."
+      "text": "Neuer Ansatz nach Vorlage: Plakat-Stil mit Dartscheibe als Blickfang und Icon-Zeilen für die Eckdaten. 1080×1350 (gleiches Format wie die Ergebnis-Posts).\nFarben aus dem TSV-Vereinsauftritt (Grün/Rot/Schwarz) statt der Referenzfarben.\nDas Datum 11.09.2026 ist ein Beispielwert — bitte überschreiben. Uhrzeit und Ort sind als Platzhalter markiert."
     },
     {
-      "id": "note-ziffer",
+      "id": "note-gritty",
       "x": 0,
       "y": 1430,
       "w": 1080,
-      "text": "1 · ZIFFER\nDie fortlaufende Nummer ist der Held: sie wächst mit jeder Ausgabe und macht die Serie über Monate wiedererkennbar. Am schlichtesten, am meisten „Redaktion“, funktioniert auch als kleine Feed-Kachel.\nNachteil: ohne Logo und das Wort „Dart“ wäre nicht sofort klar, dass es um Dart geht — lebt vom Text."
+      "text": "1 · GRITTY\nGrobe Pinselstriche, große Plakat-Typo, ein Dart fliegt von oben rechts ins Bull. Zwei helle Info-Karten (Wann/Wo) heben sich vom dunklen Hintergrund ab, unten ein grüner Banner als Aufruf zum Mitmachen.\nWirkt am kräftigsten im Feed, am meisten „Fight-Night-Poster“."
     },
     {
-      "id": "note-bullseye",
+      "id": "note-elegant",
       "x": 1240,
       "y": 1430,
       "w": 1080,
-      "text": "2 · BULLSEYE\nSofort als Dart lesbar, auch beim schnellen Scrollen. Die Nummer sitzt im Bull, Scheibe in Vereinsgrün/-rot.\nNachteil: die Dartscheibe ist das naheliegendste Motiv überhaupt — vertraut, aber weniger eigenständig als die anderen beiden."
-    },
-    {
-      "id": "note-ticket",
-      "x": 2480,
-      "y": 1430,
-      "w": 1080,
-      "text": "3 · TICKET\nStellt den Termin in den Vordergrund (Tag / Datum / Jahr als eigene Felder) und wirkt wie eine Einladung. Nutzt das Sechseck aus euren Ergebnis-Posts wieder.\nNachteil: mehr Einzelteile, die pro Ausgabe gepflegt werden müssen; das Datum dominiert die Competition-Identität."
+      "text": "2 · ELEGANT\nRuhigerer Verlaufshintergrund, zentrierte Headline, vier Icon-Zeilen (Datum/Uhrzeit/Ort/Turnus) sauber untereinander. Die Dartscheibe sitzt dezenter unten rechts.\nWirkt aufgeräumter und liest sich wie eine Einladung — gut geeignet, wenn regelmäßig neue Ausgaben gepostet werden."
     }
   ],
   "launch": { "view": "canvas" }
