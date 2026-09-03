@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;500;600;700&display=swap">
+  <style>
+    body { margin: 0; background: #060606; }
+    a { color: #ffcc33; } a:hover { color: #e63030; }
+  </style>
+</helmet>
+
+<div style="width: 1080px; height: 1350px; position: relative; overflow: hidden; background: #060606; font-family: 'Oswald', 'Liberation Sans', sans-serif;">
+
+  <!-- Vereins-Farbband -->
+  <div style="position: absolute; top: 0; left: 0; right: 0; height: 8px; background: linear-gradient(90deg, #1a7a2e 0%, #2db84a 30%, #b22222 70%, #e63030 100%); z-index: 30;"></div>
+
+  <!-- Grobe Pinselstriche im Hintergrund -->
+  <div style="position: absolute; top: -60px; left: -140px; width: 620px; height: 220px; background: #123319; opacity: .55; transform: rotate(-9deg); clip-path: polygon(0% 30%, 12% 0%, 40% 15%, 62% 2%, 100% 20%, 96% 65%, 70% 100%, 30% 88%, 8% 100%, 0% 60%);"></div>
+  <div style="position: absolute; top: 60px; left: -80px; width: 700px; height: 140px; background: #1a7a2e; opacity: .18; transform: rotate(-9deg);"></div>
+  <div style="position: absolute; bottom: -40px; right: -160px; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(45,184,74,.16) 0%, transparent 70%);"></div>
+
+  <div style="position: absolute; inset: 8px 0 0 0; display: flex; flex-direction: column;">
+
+    <!-- Kopfzeile -->
+    <div style="display: flex; flex-direction: column; align-items: center; padding-top: 46px; position: relative; z-index: 10;">
+      <img src="logo.png" alt="TSV Pilsting e.V." style="width: 92px; height: 92px; object-fit: contain;">
+      <div style="font-size: 21px; font-weight: 600; color: #2db84a; letter-spacing: 9px; margin-top: 14px;">TSV PILSTING DART</div>
+    </div>
+
+    <!-- Headline -->
+    <div style="position: relative; z-index: 10; padding: 26px 64px 0 64px; font-family: 'Anton', 'Oswald', sans-serif; text-transform: uppercase; line-height: .86;">
+      <div style="font-size: 118px; color: #ffffff;">1.</div>
+      <div style="font-size: 118px; color: #ffffff;">Dart</div>
+      <div style="font-size: 118px; color: #2db84a; text-shadow: 4px 4px 0 rgba(0,0,0,.5);">Competition</div>
+    </div>
+
+    <!-- Turnus-Balken -->
+    <div style="position: relative; z-index: 10; margin: 30px 64px 0 64px; background: #2db84a; padding: 12px 22px; display: inline-flex; align-self: flex-start; transform: skewX(-6deg);">
+      <div style="transform: skewX(6deg); font-size: 26px; font-weight: 600; color: #060606; letter-spacing: 2px;">JEDEN 2. FREITAG IM MONAT</div>
+    </div>
+
+    <div style="flex-grow: 1;"></div>
+
+    <!-- Dartscheibe + fliegender Dart, unten rechts anschneidend -->
+    <div style="position: absolute; right: -70px; bottom: 336px; width: 460px; height: 460px; z-index: 5;">
+      <div style="position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 40px 80px rgba(0,0,0,.65);"></div>
+      <div style="position: absolute; inset: 0; border-radius: 50%; background: #131313; border: 9px solid #1c1c1c;"></div>
+      <div style="position: absolute; inset: 13px; border-radius: 50%; background: conic-gradient(from 9deg,
+        #f2ead9 0deg 18deg, #171310 18deg 36deg, #f2ead9 36deg 54deg, #171310 54deg 72deg,
+        #f2ead9 72deg 90deg, #171310 90deg 108deg, #f2ead9 108deg 126deg, #171310 126deg 144deg,
+        #f2ead9 144deg 162deg, #171310 162deg 180deg, #f2ead9 180deg 198deg, #171310 198deg 216deg,
+        #f2ead9 216deg 234deg, #171310 234deg 252deg, #f2ead9 252deg 270deg, #171310 270deg 288deg,
+        #f2ead9 288deg 306deg, #171310 306deg 324deg, #f2ead9 324deg 342deg, #171310 342deg 360deg);"></div>
+      <div style="position: absolute; inset: 13px; border-radius: 50%; background: conic-gradient(from 9deg,
+        #2db84a 0deg 18deg, #c81f2e 18deg 36deg, #2db84a 36deg 54deg, #c81f2e 54deg 72deg,
+        #2db84a 72deg 90deg, #c81f2e 90deg 108deg, #2db84a 108deg 126deg, #c81f2e 126deg 144deg,
+        #2db84a 144deg 162deg, #c81f2e 162deg 180deg, #2db84a 180deg 198deg, #c81f2e 198deg 216deg,
+        #2db84a 216deg 234deg, #c81f2e 234deg 252deg, #2db84a 252deg 270deg, #c81f2e 270deg 288deg,
+        #2db84a 288deg 306deg, #c81f2e 306deg 324deg, #2db84a 324deg 342deg, #c81f2e 342deg 360deg);
+        -webkit-mask: radial-gradient(circle, transparent 0 55%, #000 55% 64%, transparent 64% 100%);
+        mask: radial-gradient(circle, transparent 0 55%, #000 55% 64%, transparent 64% 100%);"></div>
+      <div style="position: absolute; inset: 13px; border-radius: 50%; background: conic-gradient(from 9deg,
+        #2db84a 0deg 18deg, #c81f2e 18deg 36deg, #2db84a 36deg 54deg, #c81f2e 54deg 72deg,
+        #2db84a 72deg 90deg, #c81f2e 90deg 108deg, #2db84a 108deg 126deg, #c81f2e 126deg 144deg,
+        #2db84a 144deg 162deg, #c81f2e 162deg 180deg, #2db84a 180deg 198deg, #c81f2e 198deg 216deg,
+        #2db84a 216deg 234deg, #c81f2e 234deg 252deg, #2db84a 252deg 270deg, #c81f2e 270deg 288deg,
+        #2db84a 288deg 306deg, #c81f2e 306deg 324deg, #2db84a 324deg 342deg, #c81f2e 342deg 360deg);
+        -webkit-mask: radial-gradient(circle, transparent 0 89%, #000 89% 98%, transparent 98% 100%);
+        mask: radial-gradient(circle, transparent 0 89%, #000 89% 98%, transparent 98% 100%);"></div>
+      <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 82px; height: 82px; border-radius: 50%; background: #2db84a;"></div>
+      <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 34px; height: 34px; border-radius: 50%; background: #e63030; box-shadow: 0 0 26px rgba(230,48,48,.6);"></div>
+
+      <!-- Dart, fliegend von oben rechts ins Bull -->
+      <svg width="220" height="70" viewBox="0 0 220 70" style="position: absolute; right: -60px; top: -30px; transform: rotate(38deg); filter: drop-shadow(0 10px 14px rgba(0,0,0,.55));">
+        <polygon points="0,35 24,26 24,44" fill="#e4e4e4"/>
+        <rect x="24" y="23" width="70" height="24" rx="6" fill="#9a9a9a"/>
+        <rect x="24" y="23" width="70" height="24" rx="6" fill="none" stroke="#6b6b6b" stroke-width="1.5"/>
+        <line x1="38" y1="23" x2="38" y2="47" stroke="#6b6b6b" stroke-width="2"/>
+        <line x1="52" y1="23" x2="52" y2="47" stroke="#6b6b6b" stroke-width="2"/>
+        <line x1="66" y1="23" x2="66" y2="47" stroke="#6b6b6b" stroke-width="2"/>
+        <line x1="80" y1="23" x2="80" y2="47" stroke="#6b6b6b" stroke-width="2"/>
+        <rect x="94" y="29" width="54" height="12" fill="#242424"/>
+        <polygon points="148,14 220,4 178,35" fill="#2db84a"/>
+        <polygon points="148,56 220,66 178,35" fill="#1a7a2e"/>
+      </svg>
+    </div>
+
+    <div style="flex-grow: 1.4;"></div>
+
+    <!-- Infozeilen -->
+    <div style="position: relative; z-index: 10; padding: 0 64px; display: flex; flex-direction: column; gap: 16px;">
+
+      <div style="background: #f2ead9; border-radius: 14px; padding: 20px 26px; display: flex; align-items: center; gap: 20px;">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#060606" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <div style="font-size: 15px; font-weight: 700; color: #1a7a2e; letter-spacing: 3px;">WANN</div>
+          <div style="font-size: 24px; font-weight: 500; color: #060606;">Freitag, 11.09.2026 · ab [UHRZEIT]</div>
+        </div>
+      </div>
+
+      <div style="background: #f2ead9; border-radius: 14px; padding: 20px 26px; display: flex; align-items: center; gap: 20px;">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#060606" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+          <path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>
+        </svg>
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <div style="font-size: 15px; font-weight: 700; color: #1a7a2e; letter-spacing: 3px;">WO</div>
+          <div style="font-size: 24px; font-weight: 500; color: #060606;">[ORT EINTRAGEN]</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Fußzeile -->
+    <div style="position: relative; z-index: 10; margin-top: 30px; background: linear-gradient(90deg, #1a7a2e, #2db84a); padding: 22px 64px; display: flex; align-items: center; justify-content: center; gap: 16px;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#060606" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="#060606"/>
+      </svg>
+      <div style="font-family: 'Anton', 'Oswald', sans-serif; font-size: 30px; color: #060606; letter-spacing: 2px;">SEI DABEI UND WIRF MIT!</div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

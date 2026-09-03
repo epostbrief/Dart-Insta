@@ -8,6 +8,11 @@ dist/
 data/cache/
 data/raw/
 
+# Design-Canvas: die zusammengesetzte Datei ist generiert (~2,5 MB, enthält
+# den kompletten Editor) und wird aus den .dc.html-Quellen neu erzeugt.
+design/*.html
+!design/*.dc.html
+
 # Logs
 npm-debug.log*
 *.log
