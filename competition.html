@@ -100,7 +100,12 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
 .note-text{font-family:'Bebas Neue',cursive;font-size:23px;line-height:1.3;letter-spacing:.5px;}
 
 /* Verpflegung: eigenes Icon (nicht im Hintergrundfoto), gleicher Stil wie die anderen */
-.custom-icon{position:absolute;left:47px;top:1204px;width:70px;height:70px;z-index:10;}
+.row-icon{position:absolute;left:47px;width:70px;height:70px;z-index:10;}
+.icon-datum{top:641px;}
+.icon-uhrzeit{top:783px;}
+.icon-ort{top:920px;}
+.icon-info{top:1061px;}
+.icon-verpflegung{top:1204px;}
 .row-verpflegung{top:1204px;height:70px;}
 
 /* CONTROLS */
@@ -146,7 +151,6 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
 
 <div class="back-bar">
   <a class="back-btn" href="sport.html">🏠 Sport</a>
-  <img class="back-bar-logo" src="assets/logo.png" alt="TSV Pilsting e.V. Logo">
 </div>
 <h1 class="page-ttl">Competition-Ankündigung erstellen</h1>
 
@@ -229,24 +233,27 @@ Auch nicht-aktive Dartspieler sind herzlich zur Competition eingeladen.</textare
     <div class="hl-desc sg3d" id="valDesc">kleines Dart Turnier im KO-Modus<br>Best of 5 legs</div>
   </div>
 
+  <img class="row-icon icon-datum" alt="" src="assets/competition-icon-datum.png">
   <div class="info-row row-datum">
     <div class="info-lbl">DATUM</div><div class="info-val sg3d" id="valDatum">—</div>
   </div>
+  <img class="row-icon icon-uhrzeit" alt="" src="assets/competition-icon-uhrzeit.png">
   <div class="info-row row-uhrzeit">
     <div class="info-lbl">UHRZEIT</div><div class="info-val sg3d" id="valUhrzeit">[UHRZEIT]</div>
   </div>
+  <img class="row-icon icon-ort" alt="" src="assets/competition-icon-ort.png">
   <div class="info-row row-ort">
     <div class="info-lbl">ORT</div><div class="info-val sg3d" id="valOrt">Vereinsheim Pilsting</div>
   </div>
 
+  <img class="row-icon icon-info" alt="" src="assets/competition-icon-info.png">
   <div class="footer-note">
     <div class="note-text sg3d" id="valNote">Teilnahme für alle möglich!<br>Auch nicht-aktive Dartspieler sind herzlich zur Competition eingeladen.</div>
   </div>
 
-  <img class="custom-icon" alt="" src="assets/competition-icon-verpflegung.png">
-
+  <img class="row-icon icon-verpflegung" alt="" src="assets/competition-icon-verpflegung.png">
   <div class="info-row row-verpflegung">
-    <div class="info-val sg3d" id="valVerpflegung">[VERPFLEGUNG EINTRAGEN]</div>
+    <div class="note-text sg3d" id="valVerpflegung">[VERPFLEGUNG EINTRAGEN]</div>
   </div>
 </div>
 </div>
