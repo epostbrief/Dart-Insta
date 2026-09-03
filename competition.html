@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rye&family=League+Gothic&family=Barlow+Condensed:wght@700;800&family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=League+Gothic&family=Barlow+Condensed:wght@700;800&family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
 <script>
 /*!
  * html2canvas 1.4.1 <https://html2canvas.hertzen.com>
@@ -60,9 +60,10 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
 .post{width:1080px;height:1350px;position:relative;overflow:hidden;background:var(--bg);transform-origin:top left;}
 .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
   transform:scaleX(1.12);transform-origin:0 center;}
-/* Frosch-Logo liegt als eigenes Bild obenauf, damit es beim Verschieben
-   der Dartscheibe (scaleX auf .bg) an Ort und Stelle bleibt */
+/* Logos liegen als eigene Bilder obenauf, damit sie beim Verschieben
+   der Dartscheibe (scaleX auf .bg) nicht mit gestreckt/verschoben werden */
 .frog-logo{position:absolute;left:786px;top:6px;width:294px;height:293px;z-index:2;pointer-events:none;}
+.tsv-logo{position:absolute;left:41px;top:23px;width:262px;height:275px;z-index:2;pointer-events:none;}
 
 /* 3D "Spacegrau" Text-Style */
 .sg3d{color:var(--sg);text-shadow:0 1px 0 rgba(255,255,255,.16),0 2px 3px rgba(0,0,0,.65),0 -1px 1px rgba(0,0,0,.35);}
@@ -83,9 +84,9 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
   text-transform:uppercase;z-index:10;}
 
 /* Headline */
-.headline{position:absolute;top:330px;left:56px;width:450px;z-index:10;font-family:'Rye',cursive;font-weight:700;text-transform:uppercase;}
-.hl-line1{font-size:112px;line-height:.85;}
-.hl-line2{font-size:58px;line-height:.85;margin-top:8px;}
+.headline{position:absolute;top:330px;left:56px;width:450px;z-index:10;font-family:'Bebas Neue',cursive;font-weight:400;text-transform:uppercase;}
+.hl-line1{font-size:110px;line-height:.9;}
+.hl-line2{font-size:110px;line-height:.9;margin-top:6px;}
 .hl-desc{font-family:'Bebas Neue',cursive;font-size:22px;line-height:1.25;letter-spacing:.5px;margin-top:16px;}
 
 /* Info-Zeilen: Datum/Uhrzeit/Ort-Icons kommen aus dem Hintergrundfoto, hier nur der Text daneben */
@@ -217,6 +218,7 @@ Auch nicht-aktive Dartspieler sind herzlich zur Competition eingeladen.</textare
 <div class="post" id="post">
 
   <img class="bg" src="assets/competition-bg.jpg" alt="">
+  <img class="tsv-logo" src="assets/competition-tsv-logo.png" alt="">
   <img class="frog-logo" src="assets/competition-frog-logo.png" alt="">
 
   <div class="hdr-title silver3d" id="titleOut">TSV Pilsting Dart</div>
@@ -244,7 +246,7 @@ Auch nicht-aktive Dartspieler sind herzlich zur Competition eingeladen.</textare
   <img class="custom-icon" alt="" src="assets/competition-icon-verpflegung.png">
 
   <div class="info-row row-verpflegung">
-    <div class="info-lbl">VERPFLEGUNG</div><div class="info-val sg3d" id="valVerpflegung">[VERPFLEGUNG EINTRAGEN]</div>
+    <div class="info-val sg3d" id="valVerpflegung">[VERPFLEGUNG EINTRAGEN]</div>
   </div>
 </div>
 </div>
