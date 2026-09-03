@@ -38,7 +38,7 @@
 <style>
 /* Offline-Fallbacks */
 .post * { font-family: inherit; }
-:root{--bg:#04100a;--green:#2db84a;--green-d:#1a7a2e;--acc:#e63030;--sg:#d7dadd;}
+:root{--bg:#04100a;--green:#2db84a;--green-d:#1a7a2e;--acc:#e63030;--sg:#9aa0a6;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{background:#0e0e0e;font-family:'Oswald',sans-serif;display:flex;flex-direction:column;align-items:center;}
 
@@ -65,13 +65,13 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
 
 /* Silber-3D (Vereinsname) — bewusst nur color+text-shadow (kein background-clip:text,
    das html2canvas beim PNG-Export nicht sauber rendert) */
-.silver3d{color:#dde2e5;
-  text-shadow:0 1px 0 rgba(255,255,255,.45),0 2px 2px rgba(0,0,0,.55),0 4px 9px rgba(0,0,0,.55);}
+.silver3d{color:#aeb3b8;
+  text-shadow:0 1px 0 rgba(255,255,255,.28),0 2px 2px rgba(0,0,0,.6),0 4px 9px rgba(0,0,0,.55);}
 
-/* Sichtbarer 3D-Effekt (extrudiert, für die Headline) */
-.silver3d-strong{color:#eef1f3;text-shadow:
-  0 1px 0 #fff, 0 2px 0 #d7dade, 0 3px 0 #bfc3c8, 0 4px 0 #a7abb1,
-  0 5px 2px rgba(0,0,0,.4), 0 8px 14px rgba(0,0,0,.6);}
+/* Sichtbarer 3D-Effekt (extrudiert, für die Headline) — dunkleres Silber */
+.silver3d-strong{color:#b7bbbf;text-shadow:
+  0 1px 0 #d4d7da, 0 2px 0 #b2b6ba, 0 3px 0 #90959a, 0 4px 0 #6e7377,
+  0 5px 2px rgba(0,0,0,.5), 0 8px 14px rgba(0,0,0,.65);}
 
 /* Titel zwischen den Logos (im Hintergrundfoto bereits vorhanden) */
 .hdr-title{position:absolute;top:134px;left:282px;width:538px;text-align:center;white-space:nowrap;
@@ -79,10 +79,10 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
   text-transform:uppercase;z-index:10;}
 
 /* Headline */
-.headline{position:absolute;top:270px;left:56px;width:430px;z-index:10;font-family:'Rye',cursive;font-weight:700;text-transform:uppercase;}
-.hl-line1{font-size:90px;line-height:.85;}
-.hl-line2{font-size:47px;line-height:.85;margin-top:8px;}
-.hl-desc{font-family:'Bebas Neue',cursive;font-size:31px;line-height:1.2;letter-spacing:.5px;margin-top:16px;}
+.headline{position:absolute;top:304px;left:56px;width:430px;z-index:10;font-family:'Rye',cursive;font-weight:700;text-transform:uppercase;}
+.hl-line1{font-size:98px;line-height:.85;}
+.hl-line2{font-size:51px;line-height:.85;margin-top:8px;}
+.hl-desc{font-family:'Bebas Neue',cursive;font-size:22px;line-height:1.25;letter-spacing:.5px;margin-top:16px;}
 
 /* Info-Zeilen: Icons kommen aus dem Hintergrundfoto, hier nur der Text daneben */
 .info-row{position:absolute;left:150px;width:420px;display:flex;flex-direction:column;justify-content:center;z-index:10;}
