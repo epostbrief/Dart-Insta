@@ -17,100 +17,12 @@
   <div class="sub">Spiele, Training, Events &amp; mehr</div>
 </div>
 
-<!-- FILTER -->
-<div class="filter-row">
-  <button class="filter-chip active" data-filter="alle">Alle</button>
-  <button class="filter-chip" data-filter="spiel">Spiele</button>
-  <button class="filter-chip" data-filter="training">Training</button>
-  <button class="filter-chip" data-filter="event">Events</button>
-  <button class="filter-chip" data-filter="bus">Bus</button>
-</div>
-
-<main class="wrap" style="padding-top:0">
+<main class="wrap" style="padding-top:6px">
 
   <!-- TERMINLISTE -->
-  <div class="card-list">
-
-    <div class="card event-card" data-type="spiel">
-      <div class="event-date"><div class="d">26</div><div class="m">Jul</div></div>
-      <div class="event-body">
-        <div class="event-ttl">1. Mannschaft vs. Buisdingen</div>
-        <div class="event-meta">
-          <span>🕖 19:00 Uhr</span>
-          <span>📍 Vereinsheim (Heim)</span>
-        </div>
-        <div class="event-foot">
-          <span class="chip chip-tag">Spiel</span>
-          <span class="chip chip-ok">Zugesagt</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card event-card" data-type="training">
-      <div class="event-date"><div class="d">23</div><div class="m">Jul</div></div>
-      <div class="event-body">
-        <div class="event-ttl">Training Herren</div>
-        <div class="event-meta">
-          <span>🕡 18:30 Uhr</span>
-          <span>📍 Vereinsheim</span>
-        </div>
-        <div class="event-foot">
-          <span class="chip chip-tag">Training</span>
-          <span class="chip chip-neutral">Keine Antwort</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card event-card" data-type="event">
-      <div class="event-date"><div class="d">15</div><div class="m">Aug</div></div>
-      <div class="event-body">
-        <div class="event-ttl">Jahreshauptversammlung</div>
-        <div class="event-meta">
-          <span>🕗 20:00 Uhr</span>
-          <span>📍 Gasthaus zur Post</span>
-        </div>
-        <div class="event-foot">
-          <span class="chip chip-tag">Versammlung</span>
-          <span class="chip chip-warn">Unsicher</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card event-card" data-type="event">
-      <div class="event-date"><div class="d">02</div><div class="m">Aug</div></div>
-      <div class="event-body">
-        <div class="event-ttl">Arbeitseinsatz Vereinsheim</div>
-        <div class="event-meta">
-          <span>🕘 09:00 Uhr</span>
-          <span>📍 Vereinsheim</span>
-        </div>
-        <div class="event-foot">
-          <span class="chip chip-tag">Arbeitseinsatz</span>
-          <span class="chip chip-danger">Abgesagt</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card event-card" data-type="bus">
-      <div class="event-date"><div class="d">26</div><div class="m">Jul</div></div>
-      <div class="event-body">
-        <div class="event-ttl">Busfahrt Auswärtsspiel Buisdingen</div>
-        <div class="event-meta">
-          <span>🕕 17:30 Uhr Abfahrt</span>
-          <span>📍 Vereinsheim</span>
-        </div>
-        <div class="event-foot">
-          <span class="chip chip-tag">Bus</span>
-          <span class="chip chip-ok">Reserviert</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div id="filter-empty" class="empty hidden">
+  <div class="empty">
     <span class="big">🗓️</span>
-    Keine Termine in dieser Kategorie.
+    Noch keine Termine eingetragen.
   </div>
 
   <div class="tc mt20 mb16">
@@ -121,20 +33,11 @@
   <div class="sec-ttl">🚌 Bus reservieren</div>
   <div class="card">
     <p class="sm muted mb12">Der Verein hat aktuell nur <strong style="color:var(--txt)">1 Vereinsbus</strong> zur Verfügung. Reservierungen bitte frühzeitig eintragen, um Doppelbuchungen zu vermeiden.</p>
-    <div class="stat-row">
-      <div class="stat-icon">🚌</div>
-      <div class="stat-body">
-        <div class="stat-lbl">Nächste Reservierung</div>
-        <div class="stat-val">Sa, 26.07. · Auswärtsspiel Buisdingen</div>
-        <div class="stat-sub">Reserviert von: Mannschaftsführer 1. Mannschaft</div>
-      </div>
+    <div class="empty" style="padding:20px 10px">
+      <span class="big">🚌</span>
+      Noch keine Reservierung eingetragen.
     </div>
     <button class="btn btn-outline btn-block mt16">🚌 Bus für eigenen Termin reservieren</button>
-  </div>
-
-  <div class="notice mt16 mb20">
-    <span class="ico">🛠️</span>
-    <div>Diese Seite ist ein Grundgerüst mit Beispieldaten. Eine echte Kalenderfunktion (Erstellen, Bearbeiten, Erinnerungen) wird hier später ergänzt.</div>
   </div>
 
   <!-- LIGA-SPIELPLAN (automatisch vom Crawler, siehe crawler/README.md) -->
