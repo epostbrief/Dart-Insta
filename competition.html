@@ -89,9 +89,9 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
   0 5px 2px rgba(0,0,0,.5), 0 8px 14px rgba(0,0,0,.65);}
 
 /* Titel zwischen den Logos (im Hintergrundfoto bereits vorhanden) */
-.hdr-title{position:absolute;top:12.41cqw;left:26.11cqw;width:49.81cqw;text-align:center;white-space:nowrap;
+.hdr-title{position:absolute;top:12.41cqw;left:26.11cqw;width:49.81cqw;text-align:center;
   font-family:'Bebas Neue',cursive;font-weight:400;font-size:4.26cqw;letter-spacing:0.28cqw;
-  text-transform:uppercase;z-index:10;}
+  text-transform:uppercase;z-index:10;overflow-wrap:break-word;}
 
 /* Headline */
 .headline{position:absolute;top:30.56cqw;left:5.19cqw;width:41.67cqw;z-index:10;font-family:'Bebas Neue',cursive;font-weight:400;text-transform:uppercase;}
@@ -130,7 +130,7 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
 .cal-popup.show{display:block;}
 
 /* Direkt-Bearbeitung in der Vorschau */
-.editable{cursor:text;border-radius:4px;transition:outline-color .15s;outline:1px dashed transparent;outline-offset:4px;}
+.editable{cursor:text;border-radius:4px;transition:outline-color .15s;outline:1px dashed transparent;outline-offset:4px;overflow-wrap:break-word;word-break:break-word;}
 .editable:hover{outline-color:rgba(255,255,255,.3);}
 .editable:focus{outline:1px dashed rgba(45,184,74,.8);}
 .editable-datum{cursor:pointer;}
@@ -233,6 +233,106 @@ function upd(){
     if(e.key==='Enter'){ e.preventDefault(); this.blur(); }
   });
 });
+
+/* ── AUTOMATISCHE SCHRIFTGRÖSSEN-ANPASSUNG ──
+   Alle Textfelder brechen automatisch um (siehe CSS). Wird der Text zu
+   lang, um in seinen vorgesehenen Bereich zu passen (z.B. bevor er die
+   nächste Zeile im Bild überlappt), wird die Schriftgröße schrittweise
+   verkleinert, bis der gesamte Text sichtbar bleibt. 1cqw entspricht
+   1% der Vorschau-Breite — daraus lässt sich der verfügbare Platz in
+   Pixel berechnen, unabhängig von der aktuellen Anzeigegröße. */
+function pxPerCqw(){
+  var pw=document.getElementById('pw');
+  return pw.getBoundingClientRect().width/100;
+}
+
+function autoFit(el, baseCqw, maxHeightCqw, minScale, measureEl){
+  measureEl = measureEl || el;
+  var ppc = pxPerCqw();
+  if(!ppc) return;
+  var maxH = maxHeightCqw*ppc;
+  var scale = 1;
+  el.style.fontSize = (baseCqw*scale)+'cqw';
+  var guard = 0;
+  while(measureEl.scrollHeight > maxH && scale > minScale && guard < 40){
+    scale -= 0.03;
+    el.style.fontSize = (baseCqw*scale)+'cqw';
+    guard++;
+  }
+}
+
+/* Vereinsname, zentriert zwischen den Logos */
+function fitTitle(){
+  var el=document.getElementById('titleOut');
+  autoFit(el, 4.26, 16, 0.45, el);
+}
+
+/* Überschrift (1./2. Zeile + Kurzbeschreibung) — wird als eine Einheit
+   betrachtet und einheitlich skaliert, damit die Proportionen zwischen
+   den drei Zeilen erhalten bleiben. */
+function fitHeadline(){
+  var ppc=pxPerCqw();
+  if(!ppc) return;
+  var headline=document.querySelector('.headline');
+  var l1=document.getElementById('hlLine1'), l2=document.getElementById('hlLine2'), ds=document.getElementById('valDesc');
+  var base1=10.19, base2=10.19, baseD=2.04;
+  var maxH=27*ppc;
+  function apply(s){
+    l1.style.fontSize=(base1*s)+'cqw';
+    l2.style.fontSize=(base2*s)+'cqw';
+    ds.style.fontSize=(baseD*s)+'cqw';
+  }
+  var scale=1;
+  apply(scale);
+  var guard=0;
+  while(headline.scrollHeight>maxH && scale>0.45 && guard<40){
+    scale-=0.03;
+    apply(scale);
+    guard++;
+  }
+}
+
+function fitUhrzeit(){
+  var el=document.getElementById('valUhrzeit');
+  autoFit(el, 3.24, 6.48, 0.4, el.closest('.info-row'));
+}
+function fitOrt(){
+  var el=document.getElementById('valOrt');
+  autoFit(el, 3.24, 6.48, 0.4, el.closest('.info-row'));
+}
+function fitVerpflegung(){
+  var el=document.getElementById('valVerpflegung');
+  autoFit(el, 2.13, 6.48, 0.4, el.closest('.info-row'));
+}
+function fitNote(){
+  var el=document.getElementById('valNote');
+  autoFit(el, 2.13, 11.5, 0.5, el.closest('.footer-note'));
+}
+
+var FIT_HANDLERS = {
+  titleOut: fitTitle,
+  hlLine1: fitHeadline,
+  hlLine2: fitHeadline,
+  valDesc: fitHeadline,
+  valUhrzeit: fitUhrzeit,
+  valOrt: fitOrt,
+  valVerpflegung: fitVerpflegung,
+  valNote: fitNote
+};
+Object.keys(FIT_HANDLERS).forEach(function(id){
+  var el=document.getElementById(id);
+  var fn=FIT_HANDLERS[id];
+  el.addEventListener('input', fn);
+  el.addEventListener('blur', fn);
+});
+Object.keys(FIT_HANDLERS).forEach(function(id){ FIT_HANDLERS[id](); });
+/* Nach dem Laden der Webfont (Bebas Neue) neu berechnen, falls die
+   erste Berechnung noch mit einer Ersatzschrift stattfand. */
+if(document.fonts && document.fonts.ready){
+  document.fonts.ready.then(function(){
+    Object.keys(FIT_HANDLERS).forEach(function(id){ FIT_HANDLERS[id](); });
+  });
+}
 
 /* ── DATUM-KALENDER ── */
 var calY=new Date().getFullYear(), calM=new Date().getMonth();
