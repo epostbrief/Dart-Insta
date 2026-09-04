@@ -141,8 +141,14 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
 }
 
 .date-wrap{position:relative;}
-.cal-popup{display:none;position:absolute;bottom:calc(100% + 8px);left:0;background:#1c1c1c;border:1px solid #333;border-radius:10px;padding:14px;z-index:2000;width:264px;box-shadow:0 6px 24px rgba(0,0,0,.7);}
+.cal-popup{display:none;position:fixed;background:#1c1c1c;border:1px solid #333;border-radius:10px;padding:14px;z-index:2000;width:264px;box-shadow:0 6px 24px rgba(0,0,0,.7);}
 .cal-popup.show{display:block;}
+
+/* Direkt-Bearbeitung in der Vorschau */
+.editable{cursor:text;border-radius:4px;transition:outline-color .15s;outline:1px dashed transparent;outline-offset:4px;}
+.editable:hover{outline-color:rgba(255,255,255,.3);}
+.editable:focus{outline:1px dashed rgba(45,184,74,.8);}
+.editable-datum{cursor:pointer;}
 .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
 .cal-nav{background:none;border:1px solid #333;color:#888;font-size:16px;cursor:pointer;padding:4px 10px;border-radius:5px;line-height:1;}
 .cal-nav:hover{color:#fff;border-color:var(--green);}
@@ -235,35 +241,35 @@ Auch nicht-aktive Dartspieler sind herzlich zur Competition eingeladen.</textare
   <img class="tsv-logo" src="assets/competition-tsv-logo.png" alt="">
   <img class="frog-logo" src="assets/competition-frog-logo.png" alt="">
 
-  <div class="hdr-title silver3d" id="titleOut">TSV Pilsting Dart</div>
+  <div class="hdr-title silver3d editable" id="titleOut" contenteditable="true" spellcheck="false">TSV Pilsting Dart</div>
 
   <div class="headline">
     <div class="hl-line1 silver3d-strong" id="hlLine1">1. DART</div>
     <div class="hl-line2 silver3d-strong" id="hlLine2">COMPETITION</div>
-    <div class="hl-desc sg3d" id="valDesc">kleines Dart Turnier im KO-Modus<br>Best of 5 legs</div>
+    <div class="hl-desc sg3d editable" id="valDesc" contenteditable="true" spellcheck="false">kleines Dart Turnier im KO-Modus<br>Best of 5 legs</div>
   </div>
 
   <img class="row-icon icon-datum" alt="" src="assets/competition-icon-datum.png">
   <div class="info-row row-datum">
-    <div class="info-lbl">DATUM</div><div class="info-val sg3d" id="valDatum">—</div>
+    <div class="info-lbl">DATUM</div><div class="info-val sg3d editable-datum" id="valDatum" onclick="toggleCal(event)">—</div>
   </div>
   <img class="row-icon icon-uhrzeit" alt="" src="assets/competition-icon-uhrzeit.png">
   <div class="info-row row-uhrzeit">
-    <div class="info-lbl">UHRZEIT</div><div class="info-val sg3d" id="valUhrzeit">[UHRZEIT]</div>
+    <div class="info-lbl">UHRZEIT</div><div class="info-val sg3d editable" id="valUhrzeit" contenteditable="true" spellcheck="false">[UHRZEIT]</div>
   </div>
   <img class="row-icon icon-ort" alt="" src="assets/competition-icon-ort.png">
   <div class="info-row row-ort">
-    <div class="info-lbl">ORT</div><div class="info-val sg3d" id="valOrt">Vereinsheim Pilsting</div>
+    <div class="info-lbl">ORT</div><div class="info-val sg3d editable" id="valOrt" contenteditable="true" spellcheck="false">Vereinsheim Pilsting</div>
   </div>
 
   <img class="row-icon icon-info" alt="" src="assets/competition-icon-info.png">
   <div class="footer-note">
-    <div class="note-text sg3d" id="valNote">Teilnahme für alle möglich!<br>Auch nicht-aktive Dartspieler sind herzlich zur Competition eingeladen.</div>
+    <div class="note-text sg3d editable" id="valNote" contenteditable="true" spellcheck="false">Teilnahme für alle möglich!<br>Auch nicht-aktive Dartspieler sind herzlich zur Competition eingeladen.</div>
   </div>
 
   <img class="row-icon icon-verpflegung" alt="" src="assets/competition-icon-verpflegung.png">
   <div class="info-row row-verpflegung">
-    <div class="note-text sg3d" id="valVerpflegung">[VERPFLEGUNG EINTRAGEN]</div>
+    <div class="note-text sg3d editable" id="valVerpflegung" contenteditable="true" spellcheck="false">[VERPFLEGUNG EINTRAGEN]</div>
   </div>
 </div>
 </div>
@@ -317,6 +323,29 @@ function upd(){
   document.getElementById('valNote').innerHTML = (g('note')||'').replace(/\n/g,'<br>');
 }
 
+/* ── DIREKT-BEARBEITUNG IN DER VORSCHAU ──
+   Jedes editierbare Element in der Vorschau ist mit dem zugehörigen
+   Formularfeld verknüpft: Tippen in der Vorschau schreibt live in das
+   Formularfeld zurück (Quelle der Wahrheit bleibt das Formular), beim
+   Verlassen des Feldes (blur) normalisiert upd() die Darstellung. */
+function bindInlineEdit(previewId, formId, multiline){
+  var el=document.getElementById(previewId);
+  var formEl=document.getElementById(formId);
+  el.addEventListener('input', function(){
+    formEl.value = multiline ? el.innerText.replace(/\n{2,}/g,'\n') : el.textContent;
+  });
+  el.addEventListener('blur', function(){ upd(); });
+  el.addEventListener('keydown', function(e){
+    if(e.key==='Enter' && !multiline){ e.preventDefault(); el.blur(); }
+  });
+}
+bindInlineEdit('titleOut','clubName',false);
+bindInlineEdit('valDesc','compDesc',true);
+bindInlineEdit('valUhrzeit','uhrzeit',false);
+bindInlineEdit('valOrt','ort',false);
+bindInlineEdit('valVerpflegung','verpflegung',false);
+bindInlineEdit('valNote','note',true);
+
 /* ── DATUM-KALENDER ── */
 var calY=new Date().getFullYear(), calM=new Date().getMonth();
 var MONATE_K=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
@@ -324,13 +353,36 @@ var MONATE_K=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov'
 function toggleCal(e){
   if(e)e.stopPropagation();
   var pop=document.getElementById('calPop');
+  var trigger=(e&&e.currentTarget)||document.getElementById('dt');
   if(pop.classList.contains('show')){pop.classList.remove('show');return;}
   var val=document.getElementById('dt').value;
   if(val&&/^\d{2}\.\d{2}\.\d{4}$/.test(val)){
     var p=val.split('.'); calM=parseInt(p[1])-1; calY=parseInt(p[2]);
   }
   renderCal();
+  positionCalPop(trigger);
   pop.classList.add('show');
+  pop._trigger=trigger;
+}
+
+/* Positioniert das Kalender-Pop-up neben dem anklickbaren Element,
+   egal ob das Datumsfeld im Formular oder direkt in der Vorschau
+   angeklickt wurde (die Vorschau kann kleiner skaliert dargestellt
+   sein — getBoundingClientRect liefert dafür die echten Bildschirm-
+   koordinaten). Bleibt dabei innerhalb des sichtbaren Fensters. */
+function positionCalPop(trigger){
+  var pop=document.getElementById('calPop');
+  var r=trigger.getBoundingClientRect();
+  var popW=264, popHEstimate=320;
+  var left=r.left;
+  if(left+popW>window.innerWidth-10) left=window.innerWidth-popW-10;
+  if(left<10) left=10;
+  var top;
+  if(r.top-popHEstimate-8>0){ top=r.top-popHEstimate-8; }
+  else { top=Math.min(r.bottom+8, window.innerHeight-popHEstimate-10); }
+  if(top<10) top=10;
+  pop.style.left=left+'px';
+  pop.style.top=top+'px';
 }
 
 function renderCal(){
@@ -375,8 +427,15 @@ function pickDay(d,e){
 }
 
 document.addEventListener('click',function(e){
-  var w=document.querySelector('.date-wrap');
-  if(w&&!w.contains(e.target)) document.getElementById('calPop').classList.remove('show');
+  var pop=document.getElementById('calPop');
+  if(!pop.classList.contains('show')) return;
+  if(pop.contains(e.target)) return;
+  if(pop._trigger && pop._trigger.contains(e.target)) return;
+  pop.classList.remove('show');
+});
+window.addEventListener('resize',function(){
+  var pop=document.getElementById('calPop');
+  if(pop.classList.contains('show') && pop._trigger) positionCalPop(pop._trigger);
 });
 
 /* ── PNG ── */
@@ -397,6 +456,7 @@ function showSaveOverlay(dataUrl){
 }
 
 async function dlpng(){
+  if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
   var btn=document.getElementById('dlb');
   btn.disabled=true;
   btn.innerHTML='&#9203; Generiere&hellip;';
