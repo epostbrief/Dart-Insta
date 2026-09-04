@@ -55,15 +55,30 @@ body{background:#0e0e0e;font-family:'Oswald',sans-serif;display:flex;flex-direct
 h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald',sans-serif;
   font-size:13px;font-weight:400;color:#666;letter-spacing:3px;text-transform:uppercase;}
 
-/* POST PREVIEW */
-.pw{width:100%;max-width:1080px;position:relative;overflow:hidden;}
-.post{width:1080px;height:1350px;position:relative;overflow:hidden;background:var(--bg);transform-origin:top left;}
+.hint-banner{width:100%;max-width:1080px;margin-top:14px;padding:12px 18px;
+  background:rgba(230,164,48,.1);border:1px solid rgba(230,164,48,.35);border-radius:8px;
+  font-family:'Oswald',sans-serif;font-size:13px;line-height:1.5;color:#e6c98f;}
+.hint-banner b{color:#f0d9a8;}
+
+/* POST PREVIEW
+   Rein CSS-basiert responsiv (Container-Query-Einheiten, kein JS nötig):
+   .pw ist der Containment-Kontext, 1cqw = 1% seiner Breite. Da .post im
+   festen Format 1080×1350 designt ist, entspricht 1px im Design genau
+   (1/10.8)cqw — so bleibt die Vorschau auch ohne JavaScript (z.B. in
+   E-Mail-/Messenger-Vorschauen ohne Skript-Ausführung) korrekt skaliert
+   statt abgeschnitten. Für den PNG-Export wird .pw/.post kurz per Klasse
+   auf die echten 1080×1350px fixiert (siehe dlpng()), damit html2canvas
+   in voller Auflösung rendert. */
+.pw{width:100%;max-width:1080px;position:relative;overflow:hidden;container-type:inline-size;}
+.post{width:100%;aspect-ratio:1080/1350;position:relative;overflow:hidden;background:var(--bg);}
+.pw.export-mode{width:1080px;max-width:none;}
+.pw.export-mode .post{width:1080px;height:1350px;aspect-ratio:auto;}
 .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
   transform:scaleX(1.12);transform-origin:0 center;}
 /* Logos liegen als eigene Bilder obenauf, damit sie beim Verschieben
    der Dartscheibe (scaleX auf .bg) nicht mit gestreckt/verschoben werden */
-.frog-logo{position:absolute;left:786px;top:6px;width:294px;height:293px;z-index:2;pointer-events:none;}
-.tsv-logo{position:absolute;left:41px;top:23px;width:262px;height:275px;z-index:2;pointer-events:none;}
+.frog-logo{position:absolute;left:72.78cqw;top:0.56cqw;width:27.22cqw;height:27.13cqw;z-index:2;pointer-events:none;}
+.tsv-logo{position:absolute;left:3.8cqw;top:2.13cqw;width:24.26cqw;height:25.46cqw;z-index:2;pointer-events:none;}
 
 /* 3D "Spacegrau" Text-Style */
 .sg3d{color:var(--sg);text-shadow:0 1px 0 rgba(255,255,255,.16),0 2px 3px rgba(0,0,0,.65),0 -1px 1px rgba(0,0,0,.35);}
@@ -79,34 +94,34 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
   0 5px 2px rgba(0,0,0,.5), 0 8px 14px rgba(0,0,0,.65);}
 
 /* Titel zwischen den Logos (im Hintergrundfoto bereits vorhanden) */
-.hdr-title{position:absolute;top:134px;left:282px;width:538px;text-align:center;white-space:nowrap;
-  font-family:'Bebas Neue',cursive;font-weight:400;font-size:46px;letter-spacing:3px;
+.hdr-title{position:absolute;top:12.41cqw;left:26.11cqw;width:49.81cqw;text-align:center;white-space:nowrap;
+  font-family:'Bebas Neue',cursive;font-weight:400;font-size:4.26cqw;letter-spacing:0.28cqw;
   text-transform:uppercase;z-index:10;}
 
 /* Headline */
-.headline{position:absolute;top:330px;left:56px;width:450px;z-index:10;font-family:'Bebas Neue',cursive;font-weight:400;text-transform:uppercase;}
-.hl-line1{font-size:110px;line-height:.9;}
-.hl-line2{font-size:110px;line-height:.9;margin-top:6px;}
-.hl-desc{font-family:'Bebas Neue',cursive;font-size:22px;line-height:1.25;letter-spacing:.5px;margin-top:16px;}
+.headline{position:absolute;top:30.56cqw;left:5.19cqw;width:41.67cqw;z-index:10;font-family:'Bebas Neue',cursive;font-weight:400;text-transform:uppercase;}
+.hl-line1{font-size:10.19cqw;line-height:.9;}
+.hl-line2{font-size:10.19cqw;line-height:.9;margin-top:0.56cqw;}
+.hl-desc{font-family:'Bebas Neue',cursive;font-size:2.04cqw;line-height:1.25;letter-spacing:0.046cqw;margin-top:1.48cqw;}
 
 /* Info-Zeilen: Datum/Uhrzeit/Ort-Icons kommen aus dem Hintergrundfoto, hier nur der Text daneben */
-.info-row{position:absolute;left:150px;width:420px;display:flex;flex-direction:column;justify-content:center;z-index:10;}
-.info-lbl{font-family:'Bebas Neue',cursive;font-weight:400;font-size:20px;color:var(--green);letter-spacing:3px;margin-bottom:2px;}
-.info-val{font-family:'Bebas Neue',cursive;font-weight:400;font-size:35px;line-height:1.15;letter-spacing:.5px;}
-.row-datum{top:641px;height:70px;}
-.row-uhrzeit{top:783px;height:70px;}
-.row-ort{top:920px;height:70px;}
-.footer-note{position:absolute;left:150px;top:1064px;width:440px;z-index:10;}
-.note-text{font-family:'Bebas Neue',cursive;font-size:23px;line-height:1.3;letter-spacing:.5px;}
+.info-row{position:absolute;left:13.89cqw;width:38.89cqw;display:flex;flex-direction:column;justify-content:center;z-index:10;}
+.info-lbl{font-family:'Bebas Neue',cursive;font-weight:400;font-size:1.85cqw;color:var(--green);letter-spacing:0.28cqw;margin-bottom:0.19cqw;}
+.info-val{font-family:'Bebas Neue',cursive;font-weight:400;font-size:3.24cqw;line-height:1.15;letter-spacing:0.046cqw;}
+.row-datum{top:59.35cqw;height:6.48cqw;}
+.row-uhrzeit{top:72.5cqw;height:6.48cqw;}
+.row-ort{top:85.19cqw;height:6.48cqw;}
+.footer-note{position:absolute;left:13.89cqw;top:98.52cqw;width:40.74cqw;z-index:10;}
+.note-text{font-family:'Bebas Neue',cursive;font-size:2.13cqw;line-height:1.3;letter-spacing:0.046cqw;}
 
 /* Verpflegung: eigenes Icon (nicht im Hintergrundfoto), gleicher Stil wie die anderen */
-.row-icon{position:absolute;left:47px;width:70px;height:70px;z-index:10;}
-.icon-datum{top:641px;}
-.icon-uhrzeit{top:783px;}
-.icon-ort{top:920px;}
-.icon-info{top:1061px;}
-.icon-verpflegung{top:1204px;}
-.row-verpflegung{top:1204px;height:70px;}
+.row-icon{position:absolute;left:4.35cqw;width:6.48cqw;height:6.48cqw;z-index:10;}
+.icon-datum{top:59.35cqw;}
+.icon-uhrzeit{top:72.5cqw;}
+.icon-ort{top:85.19cqw;}
+.icon-info{top:98.24cqw;}
+.icon-verpflegung{top:111.48cqw;}
+.row-verpflegung{top:111.48cqw;height:6.48cqw;}
 
 /* CONTROLS */
 .ctrl{width:100%;max-width:1080px;background:#161616;padding:20px 20px env(safe-area-inset-bottom,32px);-webkit-overflow-scrolling:touch;}
@@ -153,6 +168,12 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
   <a class="back-btn" href="sport.html">🏠 Sport</a>
 </div>
 <h1 class="page-ttl">Competition-Ankündigung erstellen</h1>
+
+<div class="hint-banner">
+  ⚠️ Falls „PNG herunterladen" nicht funktioniert: Diese Seite in <b>Safari öffnen</b> statt in der
+  Mail-/WhatsApp-/Messenger-Vorschau — die App-interne Vorschau blockiert oft das Speichern von Bildern.
+  Meist über „Öffnen in Safari" oder das Teilen-Symbol in der jeweiligen App erreichbar.
+</div>
 
 <div class="ctrl">
   <div class="cs-sec">
@@ -265,14 +286,6 @@ Auch nicht-aktive Dartspieler sind herzlich zur Competition eingeladen.</textare
 
 <script>
 var WOCHENTAGE=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
-function scale(){
-  var w=document.getElementById('pw').offsetWidth;
-  var p=document.getElementById('post');
-  p.style.transform='scale('+(w/1080)+')';
-  document.getElementById('pw').style.height=Math.round(1350*w/1080)+'px';
-}
-window.addEventListener('resize',scale);
-window.addEventListener('load',scale);
 
 function fmtDate(dmy){
   if(!dmy) return '—';
@@ -399,9 +412,14 @@ async function dlpng(){
   btn.disabled=true;
   btn.innerHTML='&#9203; Generiere&hellip;';
   var p=document.getElementById('post');
-  var tr=p.style.transform;
-  p.style.transform='none';
+  var pw=document.getElementById('pw');
   document.documentElement.scrollTop=0;
+
+  // .post ist normalerweise responsiv (cqw-Einheiten, siehe CSS-Kommentar).
+  // Für den Export kurz auf die echten 1080×1350px fixieren, damit
+  // html2canvas in voller Auflösung rendert statt der aktuellen (auf
+  // kleinen Bildschirmen ggf. viel kleineren) Vorschaugröße.
+  pw.classList.add('export-mode');
 
   try{
     var cv=await html2canvas(p,{
@@ -411,7 +429,7 @@ async function dlpng(){
       scrollX:0, scrollY:0,
       logging:false
     });
-    p.style.transform=tr;
+    pw.classList.remove('export-mode');
 
     var fname='TSV_Pilsting_Dart_Competition_'+(document.getElementById('compNum').value||'1')+'.png';
 
@@ -445,9 +463,9 @@ async function dlpng(){
     a.click();
 
   } catch(e){
-    p.style.transform=tr;
     alert('Fehler: '+(e.message||e));
   } finally{
+    pw.classList.remove('export-mode');
     btn.disabled=false;
     btn.innerHTML='&#11015; PNG herunterladen';
   }
@@ -462,7 +480,6 @@ async function dlpng(){
 })();
 
 upd();
-scale();
 </script>
 </body>
 </html>
