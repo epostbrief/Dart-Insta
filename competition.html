@@ -120,27 +120,12 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
 
 /* CONTROLS */
 .ctrl{width:100%;max-width:1080px;background:#161616;padding:20px 20px env(safe-area-inset-bottom,32px);-webkit-overflow-scrolling:touch;}
-.cs-sec{margin-bottom:20px;}
-.cs-ttl{font-size:10px;color:#444;letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #222;}
-.cr{display:grid;gap:10px;margin-bottom:10px;}
-.c4{grid-template-columns:repeat(4,1fr);}
-.c3{grid-template-columns:repeat(3,1fr);}
-.c2{grid-template-columns:repeat(2,1fr);}
-.cf{display:flex;flex-direction:column;gap:4px;}
-.cf label{font-size:10px;color:#555;letter-spacing:2px;text-transform:uppercase;}
-.cf input,.cf textarea{background:#202020;border:1px solid #2e2e2e;color:#fff;padding:10px 12px;border-radius:6px;font-family:'Oswald',sans-serif;font-size:16px;resize:vertical;-webkit-appearance:none;}
-.cf input:focus,.cf textarea:focus{outline:none;border-color:var(--green);}
 .dlbtn{width:100%;padding:18px;border:none;background:linear-gradient(135deg,#1a7a2e,#0a3d17);color:#fff;font-family:'League Gothic','Barlow Condensed',sans-serif;font-weight:normal;font-size:22px;letter-spacing:6px;cursor:pointer;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:6px;text-transform:uppercase;}
 .dlbtn:disabled{opacity:.5;cursor:wait;}
 .note{color:#2a2a2a;font-size:11px;margin-top:12px;letter-spacing:1px;line-height:1.6;}
 
-@media(max-width:680px){
-  .c4{grid-template-columns:repeat(2,1fr);}
-  .c3{grid-template-columns:1fr;}
-  .c2{grid-template-columns:1fr;}
-}
+.hint{width:100%;max-width:1080px;padding:4px 18px 14px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:300;color:#4a4a4a;letter-spacing:.5px;}
 
-.date-wrap{position:relative;}
 .cal-popup{display:none;position:fixed;background:#1c1c1c;border:1px solid #333;border-radius:10px;padding:14px;z-index:2000;width:264px;box-shadow:0 6px 24px rgba(0,0,0,.7);}
 .cal-popup.show{display:block;}
 
@@ -169,70 +154,10 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
   <a class="back-btn" href="sport.html">🏠 Sport</a>
 </div>
 <h1 class="page-ttl">Competition-Ankündigung erstellen</h1>
+<p class="hint">✎ Tippe auf einen Text im Bild, um ihn zu bearbeiten.</p>
 
-<div class="ctrl">
-  <div class="cs-sec">
-    <div class="cs-ttl">Titel</div>
-    <p class="note" style="margin-top:0;margin-bottom:10px;">Logos, Dartscheibe und Icons sind fest im Hintergrundbild — nur der Text unten ist editierbar.</p>
-    <div class="cr c3">
-      <div class="cf">
-        <label>Vereinsname (zwischen den Logos)</label>
-        <input id="clubName" value="TSV Pilsting Dart" oninput="upd()">
-      </div>
-      <div class="cf">
-        <label>Fortlaufende Nummer</label>
-        <input id="compNum" value="1" oninput="upd()">
-      </div>
-      <div class="cf">
-        <label>Titeltext</label>
-        <input id="compTitle" value=". DART COMPETITION" oninput="upd()">
-      </div>
-    </div>
-    <div class="cr c2" style="grid-template-columns:1fr;">
-      <div class="cf">
-        <label>Kurzbeschreibung (unter dem Titel)</label>
-        <textarea id="compDesc" rows="2" oninput="upd()">kleines Dart Turnier im KO-Modus
-Best of 5 legs</textarea>
-      </div>
-    </div>
-  </div>
-
-  <div class="cs-sec">
-    <div class="cs-ttl">Termin &amp; Ort</div>
-    <div class="cr c3">
-      <div class="cf">
-        <label>Datum</label>
-        <div class="date-wrap">
-          <input type="text" id="dt" placeholder="TT.MM.JJJJ" readonly onclick="toggleCal(event)" style="cursor:pointer;">
-          <div class="cal-popup" id="calPop"></div>
-        </div>
-      </div>
-      <div class="cf">
-        <label>Uhrzeit</label>
-        <input id="uhrzeit" value="[UHRZEIT]" oninput="upd()">
-      </div>
-      <div class="cf">
-        <label>Ort</label>
-        <input id="ort" value="Vereinsheim Pilsting" oninput="upd()">
-      </div>
-      <div class="cf">
-        <label>Verpflegung</label>
-        <input id="verpflegung" value="[VERPFLEGUNG EINTRAGEN]" oninput="upd()">
-      </div>
-    </div>
-  </div>
-
-  <div class="cs-sec">
-    <div class="cs-ttl">Hinweis</div>
-    <div class="cr c2" style="grid-template-columns:1fr;">
-      <div class="cf">
-        <label>Teilnahme-Hinweis</label>
-        <textarea id="note" rows="3" oninput="upd()">Teilnahme für alle möglich!
-Auch nicht-aktive Dartspieler sind herzlich zur Competition eingeladen.</textarea>
-      </div>
-    </div>
-  </div>
-</div>
+<input type="hidden" id="dt">
+<div class="cal-popup" id="calPop"></div>
 
 <div class="pw" id="pw">
 <div class="post" id="post">
@@ -244,8 +169,8 @@ Auch nicht-aktive Dartspieler sind herzlich zur Competition eingeladen.</textare
   <div class="hdr-title silver3d editable" id="titleOut" contenteditable="true" spellcheck="false">TSV Pilsting Dart</div>
 
   <div class="headline">
-    <div class="hl-line1 silver3d-strong" id="hlLine1">1. DART</div>
-    <div class="hl-line2 silver3d-strong" id="hlLine2">COMPETITION</div>
+    <div class="hl-line1 silver3d-strong editable" id="hlLine1" contenteditable="true" spellcheck="false">1. DART</div>
+    <div class="hl-line2 silver3d-strong editable" id="hlLine2" contenteditable="true" spellcheck="false">COMPETITION</div>
     <div class="hl-desc sg3d editable" id="valDesc" contenteditable="true" spellcheck="false">kleines Dart Turnier im KO-Modus<br>Best of 5 legs</div>
   </div>
 
@@ -294,57 +219,20 @@ function fmtDate(dmy){
 }
 
 function upd(){
-  var g=function(id){return document.getElementById(id).value;};
-
-  document.getElementById('titleOut').textContent = g('clubName')||'TSV Pilsting Dart';
-
-  var num=(g('compNum')||'').trim();
-  var title=g('compTitle')||'';
-  var idx=title.toUpperCase().indexOf('COMPETITION');
-  var l1,l2;
-  if(idx>=0){
-    l1=(num+title.substring(0,idx)).trim();
-    l2=title.substring(idx).trim();
-  } else {
-    l1=(num+title).trim();
-    l2='';
-  }
-  document.getElementById('hlLine1').textContent=l1;
-  var line2El=document.getElementById('hlLine2');
-  if(l2){ line2El.textContent=l2; line2El.style.display='block'; }
-  else { line2El.style.display='none'; }
-
-  document.getElementById('valDesc').innerHTML = (g('compDesc')||'').replace(/\n/g,'<br>');
-
-  document.getElementById('valDatum').textContent = fmtDate(g('dt'));
-  document.getElementById('valUhrzeit').textContent = g('uhrzeit')||'[UHRZEIT]';
-  document.getElementById('valOrt').textContent = g('ort')||'[ORT]';
-  document.getElementById('valVerpflegung').textContent = g('verpflegung')||'[VERPFLEGUNG EINTRAGEN]';
-  document.getElementById('valNote').innerHTML = (g('note')||'').replace(/\n/g,'<br>');
+  document.getElementById('valDatum').textContent = fmtDate(document.getElementById('dt').value);
 }
 
 /* ── DIREKT-BEARBEITUNG IN DER VORSCHAU ──
-   Jedes editierbare Element in der Vorschau ist mit dem zugehörigen
-   Formularfeld verknüpft: Tippen in der Vorschau schreibt live in das
-   Formularfeld zurück (Quelle der Wahrheit bleibt das Formular), beim
-   Verlassen des Feldes (blur) normalisiert upd() die Darstellung. */
-function bindInlineEdit(previewId, formId, multiline){
-  var el=document.getElementById(previewId);
-  var formEl=document.getElementById(formId);
-  el.addEventListener('input', function(){
-    formEl.value = multiline ? el.innerText.replace(/\n{2,}/g,'\n') : el.textContent;
+   Alle Texte werden direkt im Poster bearbeitet (contenteditable) —
+   die Vorschau selbst ist die Quelle der Wahrheit, es gibt kein
+   separates Formular mehr. Bei einzeiligen Feldern beendet Enter die
+   Bearbeitung (blur), mehrzeilige Felder (Beschreibung, Hinweis)
+   erlauben Zeilenumbrüche. */
+['titleOut','hlLine1','hlLine2','valUhrzeit','valOrt','valVerpflegung'].forEach(function(id){
+  document.getElementById(id).addEventListener('keydown', function(e){
+    if(e.key==='Enter'){ e.preventDefault(); this.blur(); }
   });
-  el.addEventListener('blur', function(){ upd(); });
-  el.addEventListener('keydown', function(e){
-    if(e.key==='Enter' && !multiline){ e.preventDefault(); el.blur(); }
-  });
-}
-bindInlineEdit('titleOut','clubName',false);
-bindInlineEdit('valDesc','compDesc',true);
-bindInlineEdit('valUhrzeit','uhrzeit',false);
-bindInlineEdit('valOrt','ort',false);
-bindInlineEdit('valVerpflegung','verpflegung',false);
-bindInlineEdit('valNote','note',true);
+});
 
 /* ── DATUM-KALENDER ── */
 var calY=new Date().getFullYear(), calM=new Date().getMonth();
@@ -480,7 +368,8 @@ async function dlpng(){
     });
     pw.classList.remove('export-mode');
 
-    var fname='TSV_Pilsting_Dart_Competition_'+(document.getElementById('compNum').value||'1')+'.png';
+    var dtv=(document.getElementById('dt').value||'').split('.').join('-');
+    var fname='TSV_Pilsting_Dart_Competition'+(dtv?('_'+dtv):'')+'.png';
 
     if(navigator.share && navigator.canShare){
       try{
