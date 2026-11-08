@@ -102,15 +102,18 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
 /* Info-Zeilen: Datum/Uhrzeit/Ort-Icons kommen aus dem Hintergrundfoto, hier nur der Text daneben */
 .info-row{position:absolute;left:13.89cqw;width:38.89cqw;display:flex;flex-direction:column;justify-content:center;z-index:10;}
 .info-lbl{font-family:'Bebas Neue',cursive;font-weight:400;font-size:1.85cqw;color:var(--green);letter-spacing:0.28cqw;margin-bottom:0.19cqw;}
-.info-val{font-family:'Bebas Neue',cursive;font-weight:400;font-size:3.24cqw;line-height:1.15;letter-spacing:0.046cqw;}
+.info-val{font-family:'Bebas Neue',cursive;font-weight:400;font-size:3.24cqw;line-height:1.15;letter-spacing:0.046cqw;min-height:1.15em;}
 .row-datum{top:59.35cqw;height:6.48cqw;}
 .row-uhrzeit{top:72.5cqw;height:6.48cqw;}
 .row-ort{top:85.19cqw;height:6.48cqw;}
 .footer-note{position:absolute;left:13.89cqw;top:98.52cqw;width:40.74cqw;z-index:10;}
-.note-text{font-family:'Bebas Neue',cursive;font-size:2.13cqw;line-height:1.3;letter-spacing:0.046cqw;}
+.note-text{font-family:'Bebas Neue',cursive;font-size:2.13cqw;line-height:1.3;letter-spacing:0.046cqw;min-height:1.3em;}
 
 /* Verpflegung: eigenes Icon (nicht im Hintergrundfoto), gleicher Stil wie die anderen */
-.row-icon{position:absolute;left:4.35cqw;width:6.48cqw;height:6.48cqw;z-index:10;}
+.row-icon{position:absolute;left:4.35cqw;width:6.48cqw;height:6.48cqw;z-index:10;transition:opacity .15s,filter .15s;}
+/* Solange das Verpflegungs-Feld leer ist: Icon ausgegraut (Vorschau) bzw.
+   beim PNG-Export per JS ganz ausgeblendet (siehe dlpng()) */
+.row-icon.icon-empty{opacity:.35;filter:grayscale(1);}
 .icon-datum{top:59.35cqw;}
 .icon-uhrzeit{top:72.5cqw;}
 .icon-ort{top:85.19cqw;}
@@ -180,7 +183,7 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
   </div>
   <img class="row-icon icon-uhrzeit" alt="" src="assets/competition-icon-uhrzeit.png">
   <div class="info-row row-uhrzeit">
-    <div class="info-lbl">UHRZEIT</div><div class="info-val sg3d editable" id="valUhrzeit" contenteditable="true" spellcheck="false">[UHRZEIT]</div>
+    <div class="info-lbl">UHRZEIT</div><div class="info-val sg3d editable" id="valUhrzeit" contenteditable="true" spellcheck="false">19:00 UHR</div>
   </div>
   <img class="row-icon icon-ort" alt="" src="assets/competition-icon-ort.png">
   <div class="info-row row-ort">
@@ -194,7 +197,7 @@ h1.page-ttl{width:100%;max-width:1080px;padding:14px 18px 0;font-family:'Oswald'
 
   <img class="row-icon icon-verpflegung" alt="" src="assets/competition-icon-verpflegung.png">
   <div class="info-row row-verpflegung">
-    <div class="note-text sg3d editable" id="valVerpflegung" contenteditable="true" spellcheck="false">[VERPFLEGUNG EINTRAGEN]</div>
+    <div class="note-text sg3d editable" id="valVerpflegung" contenteditable="true" spellcheck="false"></div>
   </div>
 </div>
 </div>
@@ -303,6 +306,9 @@ function fitOrt(){
 function fitVerpflegung(){
   var el=document.getElementById('valVerpflegung');
   autoFit(el, 2.13, 6.48, 0.4, el.closest('.info-row'));
+  var icon=document.querySelector('.icon-verpflegung');
+  var empty = el.textContent.trim()==='';
+  icon.classList.toggle('icon-empty', empty);
 }
 function fitNote(){
   var el=document.getElementById('valNote');
@@ -458,6 +464,12 @@ async function dlpng(){
   // kleinen Bildschirmen ggf. viel kleineren) Vorschaugröße.
   pw.classList.add('export-mode');
 
+  // Ist das Verpflegungs-Feld leer, soll das (sonst nur ausgegraute)
+  // Icon im fertigen Bild komplett fehlen statt sichtbar zu bleiben.
+  var vIcon=document.querySelector('.icon-verpflegung');
+  var vEmpty=document.getElementById('valVerpflegung').textContent.trim()==='';
+  if(vEmpty) vIcon.style.display='none';
+
   try{
     var cv=await html2canvas(p,{
       scale:1, useCORS:true, allowTaint:true,
@@ -504,6 +516,7 @@ async function dlpng(){
     alert('Fehler: '+(e.message||e));
   } finally{
     pw.classList.remove('export-mode');
+    if(vEmpty) vIcon.style.display='';
     btn.disabled=false;
     btn.innerHTML='&#11015; PNG herunterladen';
   }
